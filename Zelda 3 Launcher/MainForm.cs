@@ -15,6 +15,9 @@ namespace Zelda_3_Launcher
             {
                 UpdateMainForm();
             }
+
+            // Controlla se su GitHub c'e' una versione piu' recente del launcher
+            this.Shown += (s, e) => LauncherUpdate.CheckAsync(this);
         }
 
         private void launch_click(object sender, EventArgs e)

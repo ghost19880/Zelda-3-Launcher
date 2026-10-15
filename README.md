@@ -9,6 +9,8 @@ A fork of [RadzPrower/Zelda-3-Launcher](https://github.com/RadzPrower/Zelda-3-La
 - **HD Improvements…** window in the settings: smooth camera, sharp text, smoothness above 60 Hz, dynamic lighting, effects (embers, window rays, item glow, heat haze, rain), Four Swords shader, modern HUD, transitions, X/L/R items in the HUD, dialogue speed, automatic saves.
 - **Italian**: choosing it in the language list downloads the translation from [zelda3-italiano](https://github.com/ghost19880/zelda3-italiano), builds the font with accented letters and switches the launcher itself to Italian.
 - `Update` really updates: new commits are fetched and applied, settings and saves are kept. A warning appears before `Restore`/`Update` if the game sources were edited by hand.
+- When updating, options added in the new version are appended to your `zelda3.ini` with their default value (your existing settings stay as they are).
+- At startup the launcher checks GitHub for a newer launcher release and offers to open the download page.
 
 ## How to use
 1. Download the [latest release](https://github.com/ghost19880/Zelda-3-Launcher/releases/latest) and unzip it (requires the [.NET 7 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/7.0)).

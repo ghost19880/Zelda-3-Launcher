@@ -388,6 +388,7 @@ namespace Zelda_3_Launcher
 
             // Titoli dei messaggi
             ["No ROM"] = "Nessuna ROM",
+            ["Launcher update"] = "Aggiornamento del launcher",
             ["Local changes"] = "Modifiche locali",
             ["Invalid Input"] = "Tasto non valido",
             ["Save Changes"] = "Salva modifiche",
@@ -470,6 +471,9 @@ namespace Zelda_3_Launcher
             ("F1 - F10: Load savestates/replays", "F1 - F10: carica salvataggi rapidi/replay"),
             ("Ctrl: When held while loading a savestate, the game replays itself up to point of the savestate rather than immediately load the savestate.",
                 "Ctrl: tenuto premuto mentre carichi un salvataggio rapido, il gioco ripercorre il replay fino a quel punto invece di caricarlo subito."),
+            ("A new version of the launcher is available (", "È disponibile una nuova versione del launcher ("),
+            (", you have ", ", tu hai la "),
+            ("Do you want to open the download page?", "Vuoi aprire la pagina per scaricarla?"),
             ("Extracting ", "Estrazione di "),
             (" to ", " in "),
         }.OrderByDescending(p => p.Item1.Length).ToArray();

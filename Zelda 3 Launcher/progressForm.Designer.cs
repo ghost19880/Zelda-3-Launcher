@@ -122,7 +122,14 @@ namespace Zelda_3_Launcher
                             OnCheckoutProgress = (clonePath, completed, total) => CheckoutProgress(clonePath, completed, total)
                         });
 
+                    // Dopo il reset zelda3.ini e' quello predefinito della nuova versione:
+                    // si rimettono le impostazioni dell'utente aggiungendo le voci nuove
+                    var defaultsText = File.Exists(iniFile) ? File.ReadAllText(iniFile, System.Text.Encoding.Latin1) : "";
                     File.Copy(iniBackup, iniFile, true);
+                    if (defaultsText.Length > 0)
+                    {
+                        try { IniMerge.AddMissingKeys(iniFile, defaultsText); } catch { }
+                    }
                 }
             }
             catch
