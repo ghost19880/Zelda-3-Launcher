@@ -9,6 +9,7 @@ namespace Zelda_3_Launcher
         public MainForm()
         {
             InitializeComponent();
+            Lang.Apply(this, null);
 
             if (Directory.Exists(Program.repoDir))
             {
@@ -18,20 +19,20 @@ namespace Zelda_3_Launcher
 
         private void launch_click(object sender, EventArgs e)
         {
-            this.launch.Text = "Launching...";
+            this.launch.Text = Lang.T("Launching...");
             this.Enabled = false;
 
             this.build.Enabled= false;
             this.settings.Enabled = false;
 
-            this.launch.Text = "Running...";
+            this.launch.Text = Lang.T("Running...");
             this.WindowState = FormWindowState.Minimized;
             if (runProcess("cmd.exe", "/C zelda3.exe"))
             {
-                MessageBox.Show("Error occurred while launching Zelda 3.\n\nPlease refer to " + Path.Combine(Program.currentDirectory, "zelda3.log") + " for further details.");
+                Lang.Show("Error occurred while launching Zelda 3.\n\nPlease refer to " + Path.Combine(Program.currentDirectory, "zelda3.log") + " for further details.");
             }
 
-            this.launch.Text = "Launch Zelda 3";
+            this.launch.Text = Lang.T("Launch Zelda 3");
             this.Enabled = true;
 
             this.build.Enabled = true;
@@ -40,9 +41,42 @@ namespace Zelda_3_Launcher
             this.WindowState = FormWindowState.Normal;
         }
 
+        // Sorgenti modificati a mano. zelda3.ini non conta: cambia a ogni salvataggio
+        // delle impostazioni e il launcher lo conserva durante l'aggiornamento.
+        private static bool HasSourceChanges(Repository repo)
+        {
+            foreach (var entry in repo.RetrieveStatus(new StatusOptions { IncludeUntracked = false }))
+            {
+                if (entry.State != FileStatus.Unaltered && entry.State != FileStatus.Ignored && entry.FilePath != "zelda3.ini")
+                    return true;
+            }
+            return false;
+        }
+
         private void build_Click(object sender, EventArgs e)
         {
-            this.build.Text = "Downloading...";
+            // Il ripristino del repository riporta i sorgenti allo stato scaricato:
+            // le modifiche fatte a mano ai file del repository andrebbero perse.
+            if (Directory.Exists(Program.repoDir))
+            {
+                bool modified = false;
+                try
+                {
+                    using (var repo = new Repository(Program.repoDir))
+                        modified = HasSourceChanges(repo);
+                }
+                catch { }
+                if (modified)
+                {
+                    var answer = Lang.Show("The zelda3 folder contains local changes to the source files.\n\n" +
+                        this.build.Text + " will reset the source files to the original repository and these changes will be lost.\n\n" +
+                        "Do you want to continue?", "Local changes", MessageBoxButtons.YesNo, MessageBoxIcon.Warning,
+                        MessageBoxDefaultButton.Button2);
+                    if (answer == DialogResult.No) return;
+                }
+            }
+
+            this.build.Text = Lang.T("Downloading...");
             this.build.Enabled = false;
 
             this.launch.Enabled = false;
@@ -72,7 +106,7 @@ namespace Zelda_3_Launcher
 
             if (!File.Exists(Path.Combine(Program.repoDir, "zelda3.sfc")))
             {
-                MessageBox.Show("No ROM provided. Process cancelled.", "No ROM", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Lang.Show("No ROM provided. Process cancelled.", "No ROM", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 UpdateMainForm();
                 return;
             }
@@ -108,7 +142,7 @@ namespace Zelda_3_Launcher
                 }
             }
 
-            this.build.Text = "Building...";
+            this.build.Text = Lang.T("Building...");
 
             progressCompile.Visible = true;
             labelCompileStatus.Visible = true;
@@ -121,7 +155,7 @@ namespace Zelda_3_Launcher
             File.AppendAllText(Program.currentDirectory + "\\zelda3.log", "Starting commandline processess...");
 
             progressCompile.Value++;
-            labelCompileStatus.Text = "Modifying python311._pth...";
+            labelCompileStatus.Text = Lang.T("Modifying python311._pth...");
             // Modify python311._pth to allow for pip installation
             File.Move(python311, python311Old);
             using (var pythonFile = File.AppendText(python311))
@@ -136,34 +170,34 @@ namespace Zelda_3_Launcher
 
             // Download pip
             progressCompile.Value++;
-            labelCompileStatus.Text = "Downloading pip...";
+            labelCompileStatus.Text = Lang.T("Downloading pip...");
             if (runProcess("cmd.exe", "/C " + pythonEXE + @" .\assets\get-pip.py"))
             {
-                MessageBox.Show("Error occurred while downloding pip.\n\nPlease refer to " + Path.Combine(Program.currentDirectory, "zelda3.log") + " for further details.");
+                Lang.Show("Error occurred while downloding pip.\n\nPlease refer to " + Path.Combine(Program.currentDirectory, "zelda3.log") + " for further details.");
                 return;
             }
 
             // Install dependencies
             progressCompile.Value++;
-            labelCompileStatus.Text = "Installing dependencies...";
+            labelCompileStatus.Text = Lang.T("Installing dependencies...");
             if (runProcess("cmd.exe", @"/C " + pythonEXE + " -m pip install --upgrade pip pillow pyyaml"))
             {
-                MessageBox.Show("Error occurred while installing/updating dependencies.\n\nPlease refer to " + Path.Combine(Program.currentDirectory, "zelda3.log") + " for further details.");
+                Lang.Show("Error occurred while installing/updating dependencies.\n\nPlease refer to " + Path.Combine(Program.currentDirectory, "zelda3.log") + " for further details.");
                 return;
             }
 
             // Extract assets
             progressCompile.Value++;
-            labelCompileStatus.Text = "Extracting assets...";
-            if (runProcess("cmd.exe", @"/C cd .\assets && python restool.py --extract-from-rom"))
+            labelCompileStatus.Text = Lang.T("Extracting assets...");
+            if (runProcess("cmd.exe", @"/C cd .\assets && .\python.exe restool.py --extract-from-rom"))
             {
-                MessageBox.Show("Error occurred while extracting resources.\n\nPlease refer to " + Path.Combine(Program.currentDirectory, "zelda3.log") + " for further details.");
+                Lang.Show("Error occurred while extracting resources.\n\nPlease refer to " + Path.Combine(Program.currentDirectory, "zelda3.log") + " for further details.");
                 return;
             }
 
             // Need to make some small modifications to bat before exectuting
             progressCompile.Value++;
-            labelCompileStatus.Text = "Modifying installation bat...";
+            labelCompileStatus.Text = Lang.T("Modifying installation bat...");
             var batOld = Path.Combine(Program.repoDir, "run_with_tcc.bat");
             var batNew = Path.Combine(Program.repoDir, "radzprower.bat");
             using (var pythonFile = File.AppendText(batNew))
@@ -179,21 +213,21 @@ namespace Zelda_3_Launcher
 
             // build zelda3.exe
             progressCompile.Value++;
-            labelCompileStatus.Text = "Building zelda3.exe...";
+            labelCompileStatus.Text = Lang.T("Building zelda3.exe...");
             if (runProcess("cmd.exe", @"/C radzprower.bat"))
             {
-                MessageBox.Show("Error occurred while building executable.\n\nPlease refer to " + Path.Combine(Program.currentDirectory, "zelda3.log") + " for further details.");
+                Lang.Show("Error occurred while building executable.\n\nPlease refer to " + Path.Combine(Program.currentDirectory, "zelda3.log") + " for further details.");
                 return;
             }
 
-            labelCompileStatus.Text = "Backing up zelda3.ini...";
+            labelCompileStatus.Text = Lang.T("Backing up zelda3.ini...");
             var iniFile = Path.Combine(Program.repoDir, "zelda3.ini");
             var iniCopy = Path.Combine(Program.repoDir, "saves", "zelda3.ini");
 
             if (File.Exists(iniCopy)) File.Delete(iniCopy);
             File.Move(iniFile, iniCopy);
 
-            labelCompileStatus.Text = "Modifying zelda3.ini...";
+            labelCompileStatus.Text = Lang.T("Modifying zelda3.ini...");
             using (var modifiedFile = File.AppendText(iniFile))
             {
                 foreach (var line in File.ReadLines(iniCopy))
@@ -222,7 +256,7 @@ namespace Zelda_3_Launcher
 
         private void ExitBuild()
         {
-            progressCompile.Text = "Done";
+            progressCompile.Text = Lang.T("Done");
             progressCompile.Visible = false;
             labelCompileStatus.Visible = false;
 
@@ -232,16 +266,22 @@ namespace Zelda_3_Launcher
 
         private void UpdateMainForm()
         {
-            this.build.Text = "Download";
+            this.build.Text = Lang.T("Download");
             if (Directory.Exists(Program.repoDir))
             {
                 Repository repo = new Repository(Program.repoDir);
 
-                var status = repo.RetrieveStatus();
+                // Controlla se nel repository ci sono novita' (senza connessione si va avanti)
+                try
+                {
+                    var remote = repo.Network.Remotes["origin"];
+                    Commands.Fetch(repo, remote.Name, remote.FetchRefSpecs.Select(x => x.Specification), null, null);
+                }
+                catch { }
 
-                if (repo.Head.TrackingDetails.BehindBy > 0) this.build.Text = "Update";
-                else if (status.IsDirty) this.build.Text = "Restore";
-                else this.build.Text = "Re-build";
+                if (repo.Head.TrackingDetails.BehindBy > 0) this.build.Text = Lang.T("Update");
+                else if (HasSourceChanges(repo)) this.build.Text = Lang.T("Restore");
+                else this.build.Text = Lang.T("Re-build");
             }
             this.build.Enabled = true;
 
@@ -252,11 +292,11 @@ namespace Zelda_3_Launcher
 
                 if (File.Exists(Path.Combine(Program.repoDir, "zelda3.ini")))
                 {
-                    this.settings.Text = "Settings";
+                    this.settings.Text = Lang.T("Settings");
                 }
                 else
                 {
-                    this.settings.Text = "Restore INI";
+                    this.settings.Text = Lang.T("Restore INI");
                 }
             }
         }
@@ -270,6 +310,11 @@ namespace Zelda_3_Launcher
                     settings.Dispose();
                 }
             }
+
+            // La lingua del launcher segue quella dei dialoghi salvata in zelda3.ini
+            Lang.Load();
+            Lang.Apply(this, null);
+            UpdateMainForm();
 
             UpdateMainForm();
         }

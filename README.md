@@ -1,3 +1,30 @@
+# Zelda 3 Launcher – HD fork
+
+A fork of [RadzPrower/Zelda-3-Launcher](https://github.com/RadzPrower/Zelda-3-Launcher) that installs **[Zelda3 HD](https://github.com/ghost19880/zelda3)** instead of the original reimplementation: same one-click download, ROM extraction and build, plus every HD improvement already set up.
+
+> 🇮🇹 *Versione italiana più sotto.*
+
+## What changes in this fork
+- Downloads and builds [ghost19880/zelda3](https://github.com/ghost19880/zelda3) (snesrev/zelda3 + HD improvements, Four Swords style shader included and enabled).
+- **HD Improvements…** window in the settings: smooth camera, sharp text, smoothness above 60 Hz, dynamic lighting, effects (embers, window rays, item glow, heat haze, rain), Four Swords shader, transitions, X/L/R items in the HUD, dialogue speed, automatic saves.
+- **Italian**: choosing it in the language list downloads the translation from [zelda3-italiano](https://github.com/ghost19880/zelda3-italiano), builds the font with accented letters and switches the launcher itself to Italian.
+- `Update` really updates: new commits are fetched and applied, settings and saves are kept. A warning appears before `Restore`/`Update` if the game sources were edited by hand.
+
+## How to use
+1. Download the [latest release](https://github.com/ghost19880/Zelda-3-Launcher/releases/latest) and unzip it (requires the [.NET 7 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/7.0)).
+2. Run `Zelda 3 Launcher.exe` and click **Download**; select your US ROM (`66871d66be19ad2c34c927d6b14cd8eb6fc3181965b6e517cb361f7316009cfb`) when asked.
+3. Wait for the build, then click **Launch Zelda 3**. Settings and *HD Improvements…* can be changed at any time; inside the game the options menu opens with **Esc** or the right stick click.
+
+## Versione italiana
+Fork del launcher di RadzPrower che installa **Zelda3 HD** con tutte le migliorie già configurate.
+1. Scarica l'[ultima release](https://github.com/ghost19880/Zelda-3-Launcher/releases/latest) e scompattala (serve il [.NET 7 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/7.0)).
+2. Avvia `Zelda 3 Launcher.exe`, premi **Download** e indica la ROM americana.
+3. Nelle impostazioni scegli **Italian**: il launcher scarica la traduzione, prepara il font e passa anche lui all'italiano. Da *Migliorie HD…* attivi o disattivi ogni miglioria.
+
+---
+
+*The original README of RadzPrower/Zelda-3-Launcher follows.*
+
 # Zelda 3 Launcher
 This launcher is intended to be a near 1-click tool for downloading, extracting, and compiling steps required to play the Zelda 3 reimplementation (created by [snesrev](https://github.com/snesrev/zelda3)) on Windows.
 # Prerequisites

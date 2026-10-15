@@ -944,6 +944,15 @@
             // 
             // buttonKeymapping
             // 
+            this.buttonHdSettings = new System.Windows.Forms.Button();
+            this.buttonHdSettings.Location = new System.Drawing.Point(12, 491);
+            this.buttonHdSettings.Name = "buttonHdSettings";
+            this.buttonHdSettings.Size = new System.Drawing.Size(797, 35);
+            this.buttonHdSettings.TabIndex = 0;
+            this.buttonHdSettings.Text = "HD Improvements...";
+            this.toolTip1.SetToolTip(this.buttonHdSettings, "HD improvements: camera, lighting, effects, transitions, automatic saves.");
+            this.buttonHdSettings.UseVisualStyleBackColor = true;
+            this.buttonHdSettings.Click += new System.EventHandler(this.buttonHdSettings_Click);
             this.buttonKeymapping.Location = new System.Drawing.Point(12, 450);
             this.buttonKeymapping.Name = "buttonKeymapping";
             this.buttonKeymapping.Size = new System.Drawing.Size(202, 35);
@@ -976,6 +985,7 @@
             "French (CA)",
             "French (EU)",
             "German",
+            "Italian",
             "Polish",
             "Portuguese",
             "Spanish",
@@ -1153,7 +1163,7 @@
             // 
             // labelMSUCopy
             // 
-            this.labelMSUCopy.Location = new System.Drawing.Point(12, 488);
+            this.labelMSUCopy.Location = new System.Drawing.Point(12, 532);
             this.labelMSUCopy.Name = "labelMSUCopy";
             this.labelMSUCopy.Size = new System.Drawing.Size(797, 23);
             this.labelMSUCopy.TabIndex = 6;
@@ -1163,7 +1173,7 @@
             // 
             // progressMSU
             // 
-            this.progressMSU.Location = new System.Drawing.Point(15, 514);
+            this.progressMSU.Location = new System.Drawing.Point(15, 558);
             this.progressMSU.Name = "progressMSU";
             this.progressMSU.Size = new System.Drawing.Size(797, 23);
             this.progressMSU.TabIndex = 7;
@@ -1188,6 +1198,7 @@
             this.Controls.Add(this.comboBoxLanguage);
             this.Controls.Add(this.labelLanguage);
             this.Controls.Add(this.buttonKeymapping);
+            this.Controls.Add(this.buttonHdSettings);
             this.Controls.Add(this.progressMSU);
             this.Controls.Add(this.labelMSUCopy);
             this.Controls.Add(this.labelHoverNote);
@@ -1315,6 +1326,7 @@
         private Label labelMSUCopy;
         private ProgressBar progressMSU;
         private Button buttonKeymapping;
+        private Button buttonHdSettings;
         private LinkLabel linkLabelMinorFixes;
         private LinkLabel linkLabelMajorFixes;
         private CheckBox checkBoxDimFlashing;

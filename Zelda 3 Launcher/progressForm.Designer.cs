@@ -17,8 +17,8 @@ namespace Zelda_3_Launcher
         {
             InitializeComponent();
 
-            this.Text = title;
-            this.updateLabel.Text = message;
+            this.Text = Lang.T(title);
+            this.updateLabel.Text = Lang.T(message);
 
             switch (title)
             {
@@ -75,7 +75,7 @@ namespace Zelda_3_Launcher
                     }
                     else
                     {
-                        var answer = MessageBox.Show("ROM hash is not valid for the English (US) version.\n\n" +
+                        var answer = Lang.Show("ROM hash is not valid for the English (US) version.\n\n" +
                             "The hash of the file selected is " + hashCheck.yourHash + ".\n\n" + 
                             "The correct hash is " + hashCheck.hash + ".\n\n" +
                             "Would you like to select another?", "Invalid ROM Hash", MessageBoxButtons.YesNo, MessageBoxIcon.Error); ;
@@ -94,7 +94,7 @@ namespace Zelda_3_Launcher
 
             if (!IsConnectedToInternet())
             {
-                MessageBox.Show("Unable to connect to the internet.\n\nPlease ensure you have a stable internet connection before updating your repository.", "No Connection", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Lang.Show("Unable to connect to the internet.\n\nPlease ensure you have a stable internet connection before updating your repository.", "No Connection", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.Dispose();
                 return;
             }
@@ -111,7 +111,11 @@ namespace Zelda_3_Launcher
 
                     var trackedBranch = repo.Head.TrackedBranch;
 
-                    Commit originHeadCommit = repo.ObjectDatabase.FindMergeBase(repo.Branches[trackedBranch.FriendlyName].Tip, repo.Head.Tip);
+                    // Scarica le novita' dal repository e porta il gioco all'ultima versione
+                    // (le impostazioni e i salvataggi non sono nel repository e restano)
+                    var remote = repo.Network.Remotes["origin"];
+                    Commands.Fetch(repo, remote.Name, remote.FetchRefSpecs.Select(x => x.Specification), null, null);
+                    Commit originHeadCommit = repo.Branches[trackedBranch.FriendlyName].Tip;
                     repo.Reset(ResetMode.Hard, originHeadCommit,
                         new CheckoutOptions
                         {
@@ -125,7 +129,7 @@ namespace Zelda_3_Launcher
             {
                 Task.Run(() =>
                 {
-                    Repository.Clone("https://github.com/snesrev/zelda3.git", repoDir,
+                    Repository.Clone(Program.GameRepository, repoDir,
                         new CloneOptions
                         {
                             OnCheckoutProgress = (clonePath, completed, total) => CheckoutProgress(clonePath, completed, total)
@@ -190,7 +194,7 @@ namespace Zelda_3_Launcher
 
             if (!IsConnectedToInternet())
             {
-                MessageBox.Show("Unable to connect to the internet.\n\nPlease ensure you have a stable internet connection before downloading TCC files.",
+                Lang.Show("Unable to connect to the internet.\n\nPlease ensure you have a stable internet connection before downloading TCC files.",
                     "No Connection", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.Dispose();
                 return;
@@ -221,7 +225,7 @@ namespace Zelda_3_Launcher
                 progBar.Value = progress;
             } while (progress < 100);
 
-            this.updateLabel.Text = "Extracting " + filename + " to " + folder + "...";
+            this.updateLabel.Text = Lang.M("Extracting " + filename + " to " + folder + "...");
 
             Task.Run(() =>
             {
@@ -255,7 +259,7 @@ namespace Zelda_3_Launcher
 
             if (!IsConnectedToInternet())
             {
-                MessageBox.Show("Unable to connect to the internet.\n\nPlease ensure you have a stable internet connection before downloading TCC files.",
+                Lang.Show("Unable to connect to the internet.\n\nPlease ensure you have a stable internet connection before downloading TCC files.",
                     "No Connection", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.Dispose();
                 return;

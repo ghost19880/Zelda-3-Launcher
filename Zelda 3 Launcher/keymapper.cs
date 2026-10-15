@@ -22,6 +22,7 @@ namespace Zelda_3_Launcher
         public keymapper()
         {
             InitializeComponent();
+            Lang.Apply(this, toolTip1);
 
             ImportINI();
 
@@ -79,7 +80,7 @@ namespace Zelda_3_Launcher
             var rightTrigger = false;
 
             // Clear textbox
-            textBox.Text = "";
+            textBox.Text = Lang.T("");
             this.Refresh();
 
             SDL.SDL_PumpEvents();
@@ -123,13 +124,13 @@ namespace Zelda_3_Launcher
                     case SDL.SDL_EventType.SDL_CONTROLLERAXISMOTION:
                         if (ev.caxis.axis == ((byte)SDL.SDL_GameControllerAxis.SDL_CONTROLLER_AXIS_TRIGGERLEFT) && ev.caxis.axisValue == 0 && leftTrigger)
                         {
-                            textBox.Text = "L2";
+                            textBox.Text = Lang.T("L2");
                             SDL.SDL_DestroyWindow(window);
                             return;
                         }
                         else if (ev.caxis.axis == ((byte)SDL.SDL_GameControllerAxis.SDL_CONTROLLER_AXIS_TRIGGERRIGHT) && ev.caxis.axisValue == 0 && rightTrigger)
                         {
-                            textBox.Text = "R2";
+                            textBox.Text = Lang.T("R2");
                             SDL.SDL_DestroyWindow(window);
                             return;
                         }
@@ -164,37 +165,37 @@ namespace Zelda_3_Launcher
 
             if (result.Contains("Shift"))
             {
-                MessageBox.Show("The Shift keys are not recognized by zelda3.exe and thus cannot be used.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Lang.Show("The Shift keys are not recognized by zelda3.exe and thus cannot be used.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
 
             if (result.Contains("Ctrl"))
             {
-                MessageBox.Show("The Control keys are not recognized by zelda3.exe and thus cannot be used.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Lang.Show("The Control keys are not recognized by zelda3.exe and thus cannot be used.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
 
             if (result.Contains("Alt"))
             {
-                MessageBox.Show("The Alt keys are not recognized by zelda3.exe and thus cannot be used.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Lang.Show("The Alt keys are not recognized by zelda3.exe and thus cannot be used.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
 
             if (result.Contains("F") && result.Length == 2 | result.Length == 3)
             {
-                MessageBox.Show("The function keys are utilized by zelda3.exe's replay/savestate functionality and thus cannot be used for other inputs.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Lang.Show("The function keys are utilized by zelda3.exe's replay/savestate functionality and thus cannot be used for other inputs.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
 
             if (result.IsNumeric())
             {
-                MessageBox.Show("The number keys are utilized by zelda3.exe's replay/savestate functionality and thus cannot be used for other inputs.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Lang.Show("The number keys are utilized by zelda3.exe's replay/savestate functionality and thus cannot be used for other inputs.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
 
             if (result.Equals("-") | result.Equals("=") | result.Equals("Backspace"))
             {
-                MessageBox.Show("The " + result + " key is utilized by zelda3.exe's replay/savestate functionality and thus cannot be used for other inputs.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Lang.Show((Lang.Italian ? "Il tasto " : "The ") + result + " key is utilized by zelda3.exe's replay/savestate functionality and thus cannot be used for other inputs.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
 
@@ -215,10 +216,10 @@ namespace Zelda_3_Launcher
             string result;
 
             var selection = groupBoxInput.Controls.OfType<RadioButton>()
-                .FirstOrDefault(n => n.Checked).Text;
+                .FirstOrDefault(n => n.Checked)!.OrigText();
 
             // Clear textbox
-            textBox.Text = "";
+            textBox.Text = Lang.T("");
             this.Refresh();
 
             if (selection == "Controller") result = controller.GetButtonName();
@@ -279,7 +280,7 @@ namespace Zelda_3_Launcher
         private void SaveINI()
         {
             var selection = groupBoxInput.Controls.OfType<RadioButton>()
-                .FirstOrDefault(n => n.Checked).Text;
+                .FirstOrDefault(n => n.Checked)!.OrigText();
 
             SaveControllerSettings(selection);
 
@@ -381,7 +382,7 @@ namespace Zelda_3_Launcher
             }
             else
             {
-                textBoxRenderer.Text = "r";
+                textBoxRenderer.Text = Lang.T("r");
             }
 
             if (settings["KeyMap"]["DisplayPerf"] != null)
@@ -390,7 +391,7 @@ namespace Zelda_3_Launcher
             }
             else
             {
-                textBoxFPS.Text = "f";
+                textBoxFPS.Text = Lang.T("f");
             }
 
             if (settings["KeyMap"]["Pause"].Contains("Shift"))
@@ -408,7 +409,7 @@ namespace Zelda_3_Launcher
         private void DisplayController()
         {
             var selection = groupBoxInput.Controls.OfType<RadioButton>()
-                .FirstOrDefault(n => n.Checked).Text;
+                .FirstOrDefault(n => n.Checked)!.OrigText();
 
             if (selection == "Controller")
             {
@@ -451,11 +452,11 @@ namespace Zelda_3_Launcher
         private void InputType_CheckedChanged(object sender, EventArgs e)
         {
             var selection = groupBoxInput.Controls.OfType<RadioButton>()
-                .FirstOrDefault(n => !n.Checked).Text;
+                .FirstOrDefault(n => !n.Checked)!.OrigText();
 
             if (changed)
             {
-                var answer = MessageBox.Show("Do you want to save your changes to " + selection + " settings?", "Save Changes", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                var answer = Lang.Show("Do you want to save your changes to " + Lang.T(selection) + " settings?", "Save Changes", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 if (answer == DialogResult.Yes)
                 {
@@ -559,7 +560,7 @@ namespace Zelda_3_Launcher
         {
             if (saving) return;
 
-            var answer = MessageBox.Show("The changes that you have made will not be saved.\n\nDo you wish to continue?", "Confirmation", MessageBoxButtons.YesNo);
+            var answer = Lang.Show("The changes that you have made will not be saved.\n\nDo you wish to continue?", "Confirmation", MessageBoxButtons.YesNo);
 
             if (answer == DialogResult.No) e.Cancel = true;
 
@@ -576,89 +577,89 @@ namespace Zelda_3_Launcher
             EnableWindow(false);
 
             var selection = groupBoxInput.Controls.OfType<RadioButton>()
-                .FirstOrDefault(n => n.Checked).Text;
+                .FirstOrDefault(n => n.Checked)!.OrigText();
 
             // Controller assignments
-            buttonAssignAll.Text = "Up";
+            buttonAssignAll.Text = Lang.T("Up");
             ControllerMappings(textBoxDpadUp);
 
-            buttonAssignAll.Text = "Down";
+            buttonAssignAll.Text = Lang.T("Down");
             ControllerMappings(textBoxDpadDown);
 
-            buttonAssignAll.Text = "Left";
+            buttonAssignAll.Text = Lang.T("Left");
             ControllerMappings(textBoxDpadLeft);
 
-            buttonAssignAll.Text = "Right";
+            buttonAssignAll.Text = Lang.T("Right");
             ControllerMappings(textBoxDpadRight);
 
-            buttonAssignAll.Text = "Select";
+            buttonAssignAll.Text = Lang.T("Select");
             ControllerMappings(textBoxSelect);
 
-            buttonAssignAll.Text = "Start";
+            buttonAssignAll.Text = Lang.T("Start");
             ControllerMappings(textBoxStart);
 
-            buttonAssignAll.Text = "A";
+            buttonAssignAll.Text = Lang.T("A");
             ControllerMappings(textBoxA);
 
-            buttonAssignAll.Text = "B";
+            buttonAssignAll.Text = Lang.T("B");
             ControllerMappings(textBoxB);
 
-            buttonAssignAll.Text = "X";
+            buttonAssignAll.Text = Lang.T("X");
             ControllerMappings(textBoxX);
 
-            buttonAssignAll.Text = "Y";
+            buttonAssignAll.Text = Lang.T("Y");
             ControllerMappings(textBoxY);
 
-            buttonAssignAll.Text = "L";
+            buttonAssignAll.Text = Lang.T("L");
             ControllerMappings(textBoxL);
 
-            buttonAssignAll.Text = "R";
+            buttonAssignAll.Text = Lang.T("R");
             ControllerMappings(textBoxR);
 
             // Assorted functionality assignments
-            buttonAssignAll.Text = "Reset";
+            buttonAssignAll.Text = Lang.T("Reset");
             AssortedMappings(textBoxReset);
 
-            buttonAssignAll.Text = "Pause";
+            buttonAssignAll.Text = Lang.T("Pause");
             AssortedMappings(textBoxPause);
 
-            buttonAssignAll.Text = "Increase Window Size";
+            buttonAssignAll.Text = Lang.T("Increase Window Size");
             AssortedMappings(textBoxIncreaseWindowSize);
 
-            buttonAssignAll.Text = "Decrease Window Size";
+            buttonAssignAll.Text = Lang.T("Decrease Window Size");
             AssortedMappings(textBoxDecreaseWindowSize);
 
-            buttonAssignAll.Text = "Volume Up";
+            buttonAssignAll.Text = Lang.T("Volume Up");
             AssortedMappings(textBoxVolumeUp);
 
-            buttonAssignAll.Text = "Volume Down";
+            buttonAssignAll.Text = Lang.T("Volume Down");
             AssortedMappings(textBoxVolumeDown);
 
-            buttonAssignAll.Text = "Restore Health";
+            buttonAssignAll.Text = Lang.T("Restore Health");
             AssortedMappings(textBoxLife);
 
-            buttonAssignAll.Text = "One Key";
+            buttonAssignAll.Text = Lang.T("One Key");
             AssortedMappings(textBoxKey);
 
-            buttonAssignAll.Text = "No Clip";
+            buttonAssignAll.Text = Lang.T("No Clip");
             AssortedMappings(textBoxNoClip);
 
-            buttonAssignAll.Text = "Turbo";
+            buttonAssignAll.Text = Lang.T("Turbo");
             AssortedMappings(textBoxTurbo);
 
-            buttonAssignAll.Text = "Toggle Replay Speed";
+            buttonAssignAll.Text = Lang.T("Toggle Replay Speed");
             AssortedMappings(textBoxToggleReplay);
 
-            buttonAssignAll.Text = "Stop Replay";
+            buttonAssignAll.Text = Lang.T("Stop Replay");
             AssortedMappings(textBoxStopReplay);
 
-            buttonAssignAll.Text = "Toggle Renderer";
+            buttonAssignAll.Text = Lang.T("Toggle Renderer");
             AssortedMappings(textBoxRenderer);
 
-            buttonAssignAll.Text = "Toggle FPS";
+            buttonAssignAll.Text = Lang.T("Toggle FPS");
             AssortedMappings(textBoxFPS);
 
-            buttonAssignAll.Text = "Assign All";
+            buttonAssignAll.Text = Lang.T("Assign All");
             EnableWindow(true);
         }
 
