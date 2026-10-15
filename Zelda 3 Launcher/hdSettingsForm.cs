@@ -53,6 +53,9 @@ namespace Zelda_3_Launcher
             new("Features", "ContinuousTransitions", "Continuous area transitions",
                 "Between outdoor areas Link keeps walking and the camera eases in and out, without stops.",
                 "Continuous transition between outdoor areas"),
+            new("Features", "ModernHud", "Modern HUD",
+                "Hearts and magic top left, Y/A/B buttons top right with the item, the sword and what the A button does (Talk, Read, Open...), rupees and keys bottom left.",
+                "Modern HUD: hearts and magic top left, Y/A/B buttons top right, rupees and keys bottom left"),
             new("Features", "ShowXLRItemsInHud", "X, L, R items in the HUD",
                 "Shows the items assigned to X, L and R in the HUD (requires Advanced Item Selection).",
                 "Show the items assigned to X, L and R in the HUD (requires ItemSwitchLR)"),
@@ -107,7 +110,7 @@ namespace Zelda_3_Launcher
             foreach (var o in kEffects) y = AddCheck(effects, o, y);
 
             // Colonna destra: gioco e salvataggi
-            var gameplay = MakeGroup("Gameplay", 314, 35, 294, 190);
+            var gameplay = MakeGroup("Gameplay", 314, 35, 294, 215);
             comboTextSpeed = AddCombo(gameplay, "Dialogue speed",
                 new[] { "Original", "Fast holding A or B", "Instant" },
                 "How fast the dialogue text appears.", 22);
@@ -120,7 +123,7 @@ namespace Zelda_3_Launcher
             gameplay.Controls.Add(labelSlots);
             gameplay.Controls.Add(numericSlots);
 
-            var buttonAll = new Button { Text = "Enable all", Location = new Point(314, 239), Size = new Size(142, 30) };
+            var buttonAll = new Button { Text = "Enable all", Location = new Point(314, 264), Size = new Size(142, 30) };
             buttonAll.Click += (s, e) =>
             {
                 foreach (var c in checks.Values) c.Checked = true;
@@ -128,7 +131,7 @@ namespace Zelda_3_Launcher
                 if (comboCamera.SelectedIndex == 0) comboCamera.SelectedIndex = 2;
                 if (comboTextSpeed.SelectedIndex == 0) comboTextSpeed.SelectedIndex = 1;
             };
-            var buttonNone = new Button { Text = "Disable all", Location = new Point(466, 239), Size = new Size(142, 30) };
+            var buttonNone = new Button { Text = "Disable all", Location = new Point(466, 264), Size = new Size(142, 30) };
             buttonNone.Click += (s, e) =>
             {
                 foreach (var c in checks.Values) c.Checked = false;

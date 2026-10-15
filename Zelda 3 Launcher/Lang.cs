@@ -367,6 +367,9 @@ namespace Zelda_3_Launcher
             ["Continuous area transitions"] = "Transizione continua tra aree",
             ["Between outdoor areas Link keeps walking and the camera eases in and out, without stops."] =
                 "Fra le aree esterne Link continua a camminare e la telecamera accelera e frena, senza blocchi.",
+            ["Modern HUD"] = "HUD moderno",
+            ["Hearts and magic top left, Y/A/B buttons top right with the item, the sword and what the A button does (Talk, Read, Open...), rupees and keys bottom left."] =
+                "Cuori e magia in alto a sinistra, tasti Y/A/B in alto a destra con oggetto, spada e azione del tasto A (Parla, Leggi, Apri...), rupie e chiavi in basso a sinistra.",
             ["X, L, R items in the HUD"] = "Oggetti X, L, R nell'HUD",
             ["Shows the items assigned to X, L and R in the HUD (requires Advanced Item Selection)."] =
                 "Mostra nell'HUD gli oggetti assegnati a X, L e R (richiede la selezione oggetti avanzata).",
