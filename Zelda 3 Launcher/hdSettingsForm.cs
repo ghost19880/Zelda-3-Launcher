@@ -43,6 +43,18 @@ namespace Zelda_3_Launcher
             new("Graphics", "FxRain", "Improved rain and lightning",
                 "Denser rain with splashes; a single soft flash instead of the quick flickers.",
                 "Denser rain, splashes and soft lightning"),
+            new("Graphics", "FxMenuBlur", "Blur behind menus and dialogues",
+                "The game is blurred and darkened behind the inventory, dialogues and menus.",
+                "Blurred, darker game behind the inventory, dialogues and menus"),
+            new("Graphics", "FxSpriteShadows", "Shadows of characters and enemies",
+                "Soft shadows under characters, enemies and objects.",
+                "Soft shadows under characters, enemies and objects"),
+            new("Graphics", "FxSoftIris", "Soft transition circle",
+                "Soft edge on the circle transition when entering and leaving places.",
+                "Soft edge on the circle transition (entering and leaving places)"),
+            new("Graphics", "FxButtonHints", "Button hints",
+                "On-screen hints for the buttons in the inventory and on the maps.",
+                "On-screen hints for the buttons in the inventory and on the maps"),
         };
 
         private static readonly BoolOption[] kGameplay =
@@ -53,6 +65,9 @@ namespace Zelda_3_Launcher
             new("Features", "ContinuousTransitions", "Continuous area transitions",
                 "Between outdoor areas Link keeps walking and the camera eases in and out, without stops.",
                 "Continuous transition between outdoor areas"),
+            new("Features", "ContinuousWorld", "Continuous world",
+                "Outdoors you see the neighbouring areas beyond the edge, the camera follows Link across it and the world remembers what you changed while you stay outdoors.",
+                "Continuous world outdoors: neighbouring areas visible, the view follows Link across the edge"),
             new("Features", "ModernHud", "Modern HUD",
                 "Hearts and magic top left, Y/A/B buttons top right with the item, the sword and what the A button does (Talk, Read, Open...), rupees and keys bottom left.",
                 "Modern HUD: hearts and magic top left, Y/A/B buttons top right, rupees and keys bottom left"),
@@ -85,7 +100,7 @@ namespace Zelda_3_Launcher
             StartPosition = FormStartPosition.CenterParent;
             AutoScaleMode = AutoScaleMode.Font;
             Font = new Font("Segoe UI", 9F);
-            ClientSize = new Size(620, 400);
+            ClientSize = new Size(620, 500);
 
             var note = new Label
             {
@@ -105,12 +120,12 @@ namespace Zelda_3_Launcher
             toolTip.SetToolTip(checkShader, "Painted look in the style of Four Swords Adventures (uses OpenGL). The HUD, text and characters stay sharp.");
             graphics.Controls.Add(checkShader);
 
-            var effects = MakeGroup("Effects", 12, 201, 296, 150);
+            var effects = MakeGroup("Effects", 12, 201, 296, 250);
             y = 22;
             foreach (var o in kEffects) y = AddCheck(effects, o, y);
 
             // Colonna destra: gioco e salvataggi
-            var gameplay = MakeGroup("Gameplay", 314, 35, 294, 215);
+            var gameplay = MakeGroup("Gameplay", 314, 35, 294, 240);
             comboTextSpeed = AddCombo(gameplay, "Dialogue speed",
                 new[] { "Original", "Fast holding A or B", "Instant" },
                 "How fast the dialogue text appears.", 22);
@@ -123,7 +138,7 @@ namespace Zelda_3_Launcher
             gameplay.Controls.Add(labelSlots);
             gameplay.Controls.Add(numericSlots);
 
-            var buttonAll = new Button { Text = "Enable all", Location = new Point(314, 264), Size = new Size(142, 30) };
+            var buttonAll = new Button { Text = "Enable all", Location = new Point(314, 289), Size = new Size(142, 30) };
             buttonAll.Click += (s, e) =>
             {
                 foreach (var c in checks.Values) c.Checked = true;
@@ -131,7 +146,7 @@ namespace Zelda_3_Launcher
                 if (comboCamera.SelectedIndex == 0) comboCamera.SelectedIndex = 2;
                 if (comboTextSpeed.SelectedIndex == 0) comboTextSpeed.SelectedIndex = 1;
             };
-            var buttonNone = new Button { Text = "Disable all", Location = new Point(466, 264), Size = new Size(142, 30) };
+            var buttonNone = new Button { Text = "Disable all", Location = new Point(466, 289), Size = new Size(142, 30) };
             buttonNone.Click += (s, e) =>
             {
                 foreach (var c in checks.Values) c.Checked = false;
@@ -142,7 +157,7 @@ namespace Zelda_3_Launcher
             Controls.Add(buttonAll);
             Controls.Add(buttonNone);
 
-            var buttonSave = new Button { Text = "Save", Location = new Point(314, 357), Size = new Size(142, 32) };
+            var buttonSave = new Button { Text = "Save", Location = new Point(314, 457), Size = new Size(142, 32) };
             buttonSave.Click += (s, e) =>
             {
                 try
@@ -155,7 +170,7 @@ namespace Zelda_3_Launcher
                     MessageBox.Show(Lang.T("Unable to save zelda3.ini:\n\n") + ex.Message, Lang.T("Error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             };
-            var buttonCancel = new Button { Text = "Cancel", Location = new Point(466, 357), Size = new Size(142, 32), DialogResult = DialogResult.Cancel };
+            var buttonCancel = new Button { Text = "Cancel", Location = new Point(466, 457), Size = new Size(142, 32), DialogResult = DialogResult.Cancel };
             Controls.Add(buttonSave);
             Controls.Add(buttonCancel);
             AcceptButton = buttonSave;

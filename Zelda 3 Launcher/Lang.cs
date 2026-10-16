@@ -357,6 +357,17 @@ namespace Zelda_3_Launcher
             ["Improved rain and lightning"] = "Pioggia e lampi migliorati",
             ["Denser rain with splashes; a single soft flash instead of the quick flickers."] =
                 "Pioggia più fitta con spruzzi; un solo lampo morbido al posto dei lampeggi rapidi.",
+            ["Blur behind menus and dialogues"] = "Sfocatura dietro menu e dialoghi",
+            ["The game is blurred and darkened behind the inventory, dialogues and menus."] =
+                "Il gioco si sfoca e si scurisce dietro l'inventario, i dialoghi e i menu.",
+            ["Shadows of characters and enemies"] = "Ombre di personaggi e nemici",
+            ["Soft shadows under characters, enemies and objects."] = "Ombre morbide sotto personaggi, nemici e oggetti.",
+            ["Soft transition circle"] = "Cerchio di transizione morbido",
+            ["Soft edge on the circle transition when entering and leaving places."] =
+                "Bordo sfumato nel cerchio di transizione quando si entra e si esce dai luoghi.",
+            ["Button hints"] = "Suggerimenti dei tasti",
+            ["On-screen hints for the buttons in the inventory and on the maps."] =
+                "Suggerimenti a schermo dei tasti nell'inventario e sulle mappe.",
             ["Dialogue speed"] = "Velocità dei dialoghi",
             ["Original"] = "Originale",
             ["Fast holding A or B"] = "Veloce tenendo A o B",
@@ -367,6 +378,9 @@ namespace Zelda_3_Launcher
             ["Continuous area transitions"] = "Transizione continua tra aree",
             ["Between outdoor areas Link keeps walking and the camera eases in and out, without stops."] =
                 "Fra le aree esterne Link continua a camminare e la telecamera accelera e frena, senza blocchi.",
+            ["Continuous world"] = "Mondo continuo",
+            ["Outdoors you see the neighbouring areas beyond the edge, the camera follows Link across it and the world remembers what you changed while you stay outdoors."] =
+                "All'aperto si vedono le aree vicine oltre il bordo, la telecamera segue Link oltre il bordo e il mondo ricorda quello che hai cambiato finché resti all'aperto.",
             ["Modern HUD"] = "HUD moderno",
             ["Hearts and magic top left, Y/A/B buttons top right with the item, the sword and what the A button does (Talk, Read, Open...), rupees and keys bottom left."] =
                 "Cuori e magia in alto a sinistra, tasti Y/A/B in alto a destra con oggetto, spada e azione del tasto A (Parla, Leggi, Apri...), rupie e chiavi in basso a sinistra.",
