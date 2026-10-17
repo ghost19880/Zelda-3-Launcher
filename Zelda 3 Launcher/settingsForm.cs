@@ -59,11 +59,14 @@ namespace Zelda_3_Launcher
             ("Swedish", "sv", "Swedish"),
         };
 
+        // Lingua letta da zelda3.ini (per tornarci se la scelta di un'altra non riesce)
+        private string loadedLanguage = "us";
+
         private void SelectLanguage(string abbreviated)
         {
             foreach (var l in kLanguages)
             {
-                if (l.abbreviated == abbreviated)
+                if (string.Equals(l.abbreviated, abbreviated?.Trim(), StringComparison.OrdinalIgnoreCase))
                 {
                     comboBoxLanguage.SelectedIndex = comboBoxLanguage.Items.IndexOf(l.text);
                     return;
@@ -101,10 +104,10 @@ namespace Zelda_3_Launcher
                     SelectLanguage("us");
                     return;
                 }
-                if (runProcess("cmd.exe", @"/C cd .\assets && .\python.exe restool.py --languages=it"))
+                if (CompileLanguages())
                 {
                     Lang.Show("Error occurred while generating language files.\n\nPlease refer to " + Path.Combine(Program.currentDirectory, "zelda3.log") + " for further details.");
-                    SelectLanguage("us");
+                    SelectLanguage(loadedLanguage);
                 }
                 return;
             }
@@ -150,42 +153,67 @@ namespace Zelda_3_Launcher
                             }
                         }
                     }
-                    else exit = true;
+                    else
+                    {
+                        // nessuna ROM scelta: si torna alla lingua di prima
+                        SelectLanguage(loadedLanguage);
+                        return;
+                    }
                 }
 
                 if (runProcess("cmd.exe", "/C cd .\\assets && .\\python.exe restool.py --extract-dialogue -r " + language.full.ToLower() + ".sfc"))
                 {
                     Lang.Show("Error occurred while extracting dialog.\n\nPlease refer to " + Path.Combine(Program.currentDirectory, "zelda3.log") + " for further details.");
+                    SelectLanguage(loadedLanguage);
                     return;
                 }
 
-                if (runProcess("cmd.exe", @"/C cd .\assets && .\python.exe restool.py --languages=" + language.abbreviated))
+                if (CompileLanguages())
                 {
                     Lang.Show("Error occurred while generating language files.\n\nPlease refer to " + Path.Combine(Program.currentDirectory, "zelda3.log") + " for further details.");
+                    SelectLanguage(loadedLanguage);
                     return;
                 }
             }
         }
 
-        // La traduzione italiana sta in un repository a parte: si scarica la prima volta
-        private static void FetchItalianTranslation(string destination)
+        // Le risorse del gioco si compilano sempre con tutte le lingue pronte:
+        // scegliendone una nuova (o annullando) non se ne perde nessuna.
+        // true se c'e' stato un errore, come runProcess.
+        private bool CompileLanguages()
         {
+            var langs = IniFile.AvailableLanguages();
+            if (langs.Length == 0) return false;
+            return runProcess("cmd.exe", @"/C cd .\assets && .\python.exe restool.py --languages=" + string.Join(",", langs));
+        }
+
+        // La traduzione italiana sta in un repository a parte: si scarica la prima volta
+        // (e a ogni aggiornamento, per le correzioni). Si scrive in un file a parte
+        // e si sostituisce solo a download riuscito: senza connessione resta la
+        // traduzione che c'era.
+        internal static void FetchItalianTranslation(string destination)
+        {
+            var tmp = destination + ".tmp";
             try
             {
                 var source = Program.ItalianTranslation;
                 if (source.StartsWith("http"))
                 {
                     using var client = new HttpClient();
-                    File.WriteAllBytes(destination, client.GetByteArrayAsync(source).Result);
+                    var bytes = client.GetByteArrayAsync(source).Result;
+                    if (bytes.Length == 0) return;
+                    File.WriteAllBytes(tmp, bytes);
                 }
                 else if (File.Exists(source))
                 {
-                    File.Copy(source, destination, true);
+                    File.Copy(source, tmp, true);
                 }
+                else return;
+                File.Move(tmp, destination, true);
             }
             catch
             {
-                if (File.Exists(destination)) File.Delete(destination);
+                if (File.Exists(tmp)) File.Delete(tmp);
             }
         }
 
@@ -229,65 +257,15 @@ namespace Zelda_3_Launcher
                 return;
             }
             
-            restoreINI();
-            try
-            {
+            // Si torna all'ini predefinito della versione installata
+            if (IniFile.RestoreDefaults(IniFile.UserIni))
                 ImportINI();
-            }
-            catch
-            {
-                answer = Lang.Show("INI backup file is corrupted and preventing the settings menu from loading.\n\nDo you want to download a clean copy from the zelda3 repository?", "Corrupted Settings", MessageBoxButtons.YesNo);
-
-                if (answer == DialogResult.No)
-                {
-                    this.Close();
-                    return;
-                }
-
-                File.Delete(Path.Combine(Program.repoDir, "saves", "zelda3.ini"));
-
-                restoreINI();
-                ImportINI();
-            }
 
             this.Enabled = true;
 
             this.buttonReset.Text = Lang.T("Reset");
 
             saving = false;
-        }
-
-        private void restoreINI()
-        {
-            var iniFile = Path.Combine(Program.repoDir, "zelda3.ini");
-            var iniBackup = Path.Combine(Program.repoDir, "saves", "zelda3.ini");
-
-            File.Delete(iniFile);
-
-            if (!File.Exists(iniBackup)) DownloadFreshINI();
-
-            using (var modifiedFile = File.AppendText(iniFile))
-            {
-                foreach (var line in File.ReadLines(iniBackup))
-                {
-                    if (!line.Equals("# Change the appearance of Link by loading a ZSPR file") &&
-                        !line.Equals("# See all sprites here: https://snesrev.github.io/sprites-gfx/snes/zelda3/link/") &&
-                        !line.Equals("# Download the files with \"git clone https://github.com/snesrev/sprites-gfx.git\"") &&
-                        !line.Equals("# LinkGraphics = sprites-gfx/snes/zelda3/link/sheets/megaman-x.2.zspr") &&
-                        !line.Equals("# This default is suitable for QWERTZ keyboards.") &&
-                        !line.Equals("#Controls = Up, Down, Left, Right, Right Shift, Return, x, y, s, a, c, v") &&
-                        !line.Equals("# This one is suitable for AZERTY keyboards.") &&
-                        !line.Equals("#Controls = Up, Down, Left, Right, Right Shift, Return, x, w, s, q, c, v") &&
-                        !line.Equals("# Language = de"))
-                    {
-                        modifiedFile.WriteLine(line);
-                    }
-                    else if (line.Equals("# Language = de"))
-                    {
-                        modifiedFile.WriteLine("Language = us");
-                    }
-                }
-            }
         }
 
         internal static void DownloadFreshINI()
@@ -412,47 +390,13 @@ namespace Zelda_3_Launcher
 
         private void ImportINI()
         {
-            var iniFile = Path.Combine(Program.repoDir, "zelda3.ini");
+            var iniFile = IniFile.UserIni;
 
-            // Check for INI and if missing restore from initial install backup
+            // Ini mancante: si rimette quello predefinito
             if (!File.Exists(iniFile))
-            {
-                var iniBackup = Path.Combine(Program.repoDir, "saves", "zelda3.ini");
+                IniFile.RestoreDefaults(iniFile);
 
-                if (!File.Exists(iniBackup)) DownloadFreshINI();
-
-                using (var modifiedFile = File.AppendText(iniFile))
-                {
-                    foreach (var line in File.ReadLines(iniBackup))
-                    {
-                        if (!line.Equals("# Change the appearance of Link by loading a ZSPR file") &&
-                            !line.Equals("# See all sprites here: https://snesrev.github.io/sprites-gfx/snes/zelda3/link/") &&
-                            !line.Equals("# Download the files with \"git clone https://github.com/snesrev/sprites-gfx.git\"") &&
-                            !line.Equals("# LinkGraphics = sprites-gfx/snes/zelda3/link/sheets/megaman-x.2.zspr") &&
-                            !line.Equals("# This default is suitable for QWERTZ keyboards.") &&
-                            !line.Equals("#Controls = Up, Down, Left, Right, Right Shift, Return, x, y, s, a, c, v") &&
-                            !line.Equals("# This one is suitable for AZERTY keyboards.") &&
-                            !line.Equals("#Controls = Up, Down, Left, Right, Right Shift, Return, x, w, s, q, c, v") &&
-                            !line.Equals("# Language = de"))
-                        {
-                            modifiedFile.WriteLine(line);
-                        }
-                        else if (line.Equals("# Language = de"))
-                        {
-                            modifiedFile.WriteLine("Language = us");
-                        }
-                    }
-                }
-            }
-            var iniText = File.ReadAllText(iniFile);
-
-            // INI parsing
-            var config = new IniParserConfiguration();
-            config.CommentString = "#";
-
-            var parser = new IniDataParser(config);
-
-            var settings = parser.Parse(iniText);
+            var settings = IniFile.Load(iniFile);
 
             // General Settings
 
@@ -485,7 +429,8 @@ namespace Zelda_3_Launcher
 
             // La scelta caricata dall'ini non deve rigenerare i file della lingua
             comboBoxLanguage.SelectedIndexChanged -= comboBoxLanguage_Select;
-            SelectLanguage(settings["General"]["Language"] ?? "us");
+            loadedLanguage = settings["General"]["Language"]?.Trim().ToLowerInvariant() ?? "us";
+            SelectLanguage(loadedLanguage);
             comboBoxLanguage.SelectedIndexChanged += comboBoxLanguage_Select;
 
             // Graphics Settings
@@ -674,15 +619,8 @@ namespace Zelda_3_Launcher
         private void SaveToINI()
         {
             // Build INI data structure from existing zelda3.ini file
-            var iniFile = Path.Combine(Program.repoDir, "zelda3.ini");
-            var iniText = File.ReadAllText(iniFile);
-
-            var config = new IniParserConfiguration();
-            config.CommentString = "#";
-
-            var parser = new IniDataParser(config);
-
-            var settings = parser.Parse(iniText);
+            var iniFile = IniFile.UserIni;
+            var settings = IniFile.Load(iniFile);
 
             //
             // General Settings
@@ -712,7 +650,10 @@ namespace Zelda_3_Launcher
             if (noVisualFixes.Checked) settings["General"]["ExtendedAspectRatio"] += ", no_visual_fixes";
             if (checkBoxExtend.Checked) settings["General"]["ExtendedAspectRatio"] += ", extend_y";
 
-            settings["General"]["Language"] = GetLanguage().abbreviated;
+            // La lingua si scrive solo se e' stata scelta una lingua dell'elenco:
+            // un valore che il launcher non conosce resta com'e'
+            if (comboBoxLanguage.SelectedIndex >= 0)
+                settings["General"]["Language"] = GetLanguage().abbreviated;
 
             //
             // Graphics Settings
@@ -939,9 +880,7 @@ namespace Zelda_3_Launcher
             settings["Features"]["CancelBirdTravel"] = Convert.ToInt32(checkBoxCancelBird.Checked).ToString();
 
             // Save settings to zelda3.ini
-            var filer = new FileIniDataParser();
-            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-            filer.WriteFile(iniFile, settings, Encoding.GetEncoding(1252));
+            IniFile.Save(iniFile, settings);
         }
 
         private string findMSUPrefix(IEnumerable<string> files)
@@ -1062,8 +1001,7 @@ namespace Zelda_3_Launcher
                 if (hd.ShowDialog(this) != DialogResult.OK) return;
             }
 
-            var config = new IniParserConfiguration { CommentString = "#" };
-            var ini = new IniDataParser(config).Parse(File.ReadAllText(Path.Combine(Program.repoDir, "zelda3.ini")));
+            var ini = IniFile.Load(IniFile.UserIni);
             var shader = ini["Graphics"]["Shader"] ?? "";
             checkBoxShader.Checked = shader != "";
             textBoxGLSLShader.Text = shader;

@@ -101,59 +101,82 @@ namespace Zelda_3_Launcher
 
             var repoDir = Path.Combine(Program.currentDirectory, "zelda3");
 
+            Task? cloneTask = null;
             try
             {
-                using (var repo = new Repository(repoDir))
+                if (Repository.IsValid(repoDir))
                 {
+                    using var repo = new Repository(repoDir);
                     var iniFile = Path.Combine(repoDir, "zelda3.ini");
                     var iniBackup = Path.Combine(repoDir, "saves", "zelda3.ini");
-                    if (File.Exists(iniFile)) File.Copy(iniFile, iniBackup, true);
-
-                    var trackedBranch = repo.Head.TrackedBranch;
-
-                    // Scarica le novita' dal repository e porta il gioco all'ultima versione
-                    // (le impostazioni e i salvataggi non sono nel repository e restano)
-                    var remote = repo.Network.Remotes["origin"];
-                    Commands.Fetch(repo, remote.Name, remote.FetchRefSpecs.Select(x => x.Specification), null, null);
-                    Commit originHeadCommit = repo.Branches[trackedBranch.FriendlyName].Tip;
-                    repo.Reset(ResetMode.Hard, originHeadCommit,
-                        new CheckoutOptions
-                        {
-                            OnCheckoutProgress = (clonePath, completed, total) => CheckoutProgress(clonePath, completed, total)
-                        });
-
-                    // Dopo il reset zelda3.ini e' quello predefinito della nuova versione:
-                    // si rimettono le impostazioni dell'utente aggiungendo le voci nuove
-                    var defaultsText = File.Exists(iniFile) ? File.ReadAllText(iniFile, System.Text.Encoding.Latin1) : "";
-                    File.Copy(iniBackup, iniFile, true);
-                    if (defaultsText.Length > 0)
+                    bool hadIni = File.Exists(iniFile);
+                    if (hadIni)
                     {
-                        try { IniMerge.AddMissingKeys(iniFile, defaultsText); } catch { }
+                        Directory.CreateDirectory(Path.GetDirectoryName(iniBackup)!);
+                        File.Copy(iniFile, iniBackup, true);
+                    }
+
+                    try
+                    {
+                        var trackedBranch = repo.Head.TrackedBranch;
+
+                        // Scarica le novita' dal repository e porta il gioco all'ultima versione
+                        // (le impostazioni e i salvataggi non sono nel repository e restano)
+                        var remote = repo.Network.Remotes["origin"];
+                        Commands.Fetch(repo, remote.Name, remote.FetchRefSpecs.Select(x => x.Specification), null, null);
+                        Commit originHeadCommit = repo.Branches[trackedBranch.FriendlyName].Tip;
+                        repo.Reset(ResetMode.Hard, originHeadCommit,
+                            new CheckoutOptions
+                            {
+                                OnCheckoutProgress = (clonePath, completed, total) => CheckoutProgress(clonePath, completed, total)
+                            });
+                    }
+                    finally
+                    {
+                        // Dopo il reset zelda3.ini e' quello predefinito della nuova versione:
+                        // si rimettono le impostazioni dell'utente aggiungendo le voci nuove.
+                        // Succede anche se l'aggiornamento non e' riuscito.
+                        if (hadIni)
+                        {
+                            var defaultsText = File.Exists(iniFile) ? File.ReadAllText(iniFile, IniFile.kBytes) : "";
+                            IniFile.WriteAtomic(iniFile, File.ReadAllText(iniBackup, IniFile.kBytes));
+                            if (defaultsText.Length > 0)
+                            {
+                                try { IniMerge.AddMissingKeys(iniFile, defaultsText); } catch { }
+                            }
+                        }
                     }
                 }
-            }
-            catch
-            {
-                Task.Run(() =>
+                else
                 {
-                    Repository.Clone(Program.GameRepository, repoDir,
-                        new CloneOptions
-                        {
-                            OnCheckoutProgress = (clonePath, completed, total) => CheckoutProgress(clonePath, completed, total)
-                        });
-                });
+                    cloneTask = Task.Run(() =>
+                    {
+                        Repository.Clone(Program.GameRepository, repoDir,
+                            new CloneOptions
+                            {
+                                OnCheckoutProgress = (clonePath, completed, total) => CheckoutProgress(clonePath, completed, total)
+                            });
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                Lang.Show("Unable to update the game:\n\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Close();
+                return;
             }
 
-            while (!Directory.Exists(repoDir))
+            // Download in corso: si aspetta la fine (o l'errore) senza bloccare la finestra
+            while (cloneTask != null && !cloneTask.IsCompleted)
             {
+                int m = Math.Max(max, 1);
+                progBar.Maximum = m;
+                progBar.Value = Math.Clamp(progress, 0, m);
                 Application.DoEvents();
+                Thread.Sleep(15);
             }
-
-            do
-            {
-                progBar.Value = progress;
-                progBar.Maximum = max;
-            } while (progress < max);
+            if (cloneTask != null && cloneTask.IsFaulted)
+                Lang.Show("Unable to download the game:\n\n" + cloneTask.Exception!.GetBaseException().Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             this.Close();
         }

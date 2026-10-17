@@ -35,6 +35,10 @@ namespace Zelda_3_Launcher
                 Lang.Show("Error occurred while launching Zelda 3.\n\nPlease refer to " + Path.Combine(Program.currentDirectory, "zelda3.log") + " for further details.");
             }
 
+            // la lingua puo' essere cambiata dal menu del gioco
+            Lang.Load();
+            Lang.Apply(this, null);
+
             this.launch.Text = Lang.T("Launch Zelda 3");
             this.Enabled = true;
 
@@ -198,6 +202,21 @@ namespace Zelda_3_Launcher
                 return;
             }
 
+            // L'estrazione compila solo l'inglese: si aggiungono le lingue pronte
+            // (l'italiano sempre, se c'e' la traduzione), altrimenti dopo ogni
+            // aggiornamento i dialoghi tornerebbero in inglese
+            var assetsDir = Path.Combine(Program.repoDir, "assets");
+            settingsForm.FetchItalianTranslation(Path.Combine(assetsDir, "dialogue_it.txt"));
+            if (File.Exists(Path.Combine(assetsDir, "dialogue_it.txt")) && !File.Exists(Path.Combine(assetsDir, "font_it.png")))
+                runProcess("cmd.exe", @"/C cd .\assets && .\python.exe make_font_it.py");
+            var langs = IniFile.AvailableLanguages().Where(l => l != "it" || File.Exists(Path.Combine(assetsDir, "font_it.png"))).ToArray();
+            if (langs.Length > 0 &&
+                runProcess("cmd.exe", @"/C cd .\assets && .\python.exe restool.py --languages=" + string.Join(",", langs)))
+            {
+                Lang.Show("Error occurred while generating language files.\n\nPlease refer to " + Path.Combine(Program.currentDirectory, "zelda3.log") + " for further details.");
+                return;
+            }
+
             // Need to make some small modifications to bat before exectuting
             progressCompile.Value++;
             labelCompileStatus.Text = Lang.T("Modifying installation bat...");
@@ -223,36 +242,12 @@ namespace Zelda_3_Launcher
                 return;
             }
 
-            labelCompileStatus.Text = Lang.T("Backing up zelda3.ini...");
-            var iniFile = Path.Combine(Program.repoDir, "zelda3.ini");
-            var iniCopy = Path.Combine(Program.repoDir, "saves", "zelda3.ini");
-
-            if (File.Exists(iniCopy)) File.Delete(iniCopy);
-            File.Move(iniFile, iniCopy);
-
+            // zelda3.ini si sistema sul posto (senza spostarlo e senza creare una
+            // seconda riga Language); se manca si rimette quello predefinito
             labelCompileStatus.Text = Lang.T("Modifying zelda3.ini...");
-            using (var modifiedFile = File.AppendText(iniFile))
-            {
-                foreach (var line in File.ReadLines(iniCopy))
-                {
-                    if (!line.Equals("# Change the appearance of Link by loading a ZSPR file") &&
-                        !line.Equals("# See all sprites here: https://snesrev.github.io/sprites-gfx/snes/zelda3/link/") &&
-                        !line.Equals("# Download the files with \"git clone https://github.com/snesrev/sprites-gfx.git\"") &&
-                        !line.Equals("# LinkGraphics = sprites-gfx/snes/zelda3/link/sheets/megaman-x.2.zspr") &&
-                        !line.Equals("# This default is suitable for QWERTZ keyboards.") &&
-                        !line.Equals("#Controls = Up, Down, Left, Right, Right Shift, Return, x, y, s, a, c, v") &&
-                        !line.Equals("# This one is suitable for AZERTY keyboards.") &&
-                        !line.Equals("#Controls = Up, Down, Left, Right, Right Shift, Return, x, w, s, q, c, v") &&
-                        !line.Equals("# Language = de"))
-                    {
-                        modifiedFile.WriteLine(line);
-                    }
-                    else if (line.Equals("# Language = de"))
-                    {
-                        modifiedFile.WriteLine("Language = us");
-                    }
-                }
-            }
+            var iniFile = IniFile.UserIni;
+            if (File.Exists(iniFile)) IniFile.PrepareInPlace(iniFile);
+            else IniFile.RestoreDefaults(iniFile);
 
             ExitBuild();
         }

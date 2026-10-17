@@ -16,7 +16,7 @@ namespace Zelda_3_Launcher
         bool changed = false;
         bool saving = false;
         IniData settings = new IniData();
-        string iniFile = Path.Combine(Program.repoDir, "zelda3.ini");
+        string iniFile = IniFile.UserIni;
         MyController controller = new MyController();
 
         public keymapper()
@@ -320,45 +320,11 @@ namespace Zelda_3_Launcher
 
         private void ImportINI()
         {
-            // Check for INI and if missing restore from initial install backup
+            // Ini mancante: si rimette quello predefinito
             if (!File.Exists(iniFile))
-            {
-                var iniBackup = Path.Combine(Program.repoDir, "saves", "zelda3.ini");
+                IniFile.RestoreDefaults(iniFile);
 
-                if (!File.Exists(iniBackup)) settingsForm.DownloadFreshINI();
-
-                using (var modifiedFile = File.AppendText(iniFile))
-                {
-                    foreach (var line in File.ReadLines(iniBackup))
-                    {
-                        if (!line.Equals("# Change the appearance of Link by loading a ZSPR file") &&
-                            !line.Equals("# See all sprites here: https://snesrev.github.io/sprites-gfx/snes/zelda3/link/") &&
-                            !line.Equals("# Download the files with \"git clone https://github.com/snesrev/sprites-gfx.git\"") &&
-                            !line.Equals("# LinkGraphics = sprites-gfx/snes/zelda3/link/sheets/megaman-x.2.zspr") &&
-                            !line.Equals("# This default is suitable for QWERTZ keyboards.") &&
-                            !line.Equals("#Controls = Up, Down, Left, Right, Right Shift, Return, x, y, s, a, c, v") &&
-                            !line.Equals("# This one is suitable for AZERTY keyboards.") &&
-                            !line.Equals("#Controls = Up, Down, Left, Right, Right Shift, Return, x, w, s, q, c, v") && 
-                            !line.Equals("# Language = de"))
-                        {
-                            modifiedFile.WriteLine(line);
-                        }
-                        else if (line.Equals("# Language = de"))
-                        {
-                            modifiedFile.WriteLine("Language = us");
-                        }
-                    }
-                }
-            }
-            var iniText = File.ReadAllText(iniFile);
-
-            // INI parsing
-            var config = new IniParserConfiguration();
-            config.CommentString = "#";
-
-            var parser = new IniDataParser(config);
-
-            settings = parser.Parse(iniText);
+            settings = IniFile.Load(iniFile);
 
             // KeyMap Settings
             DisplayController();
@@ -470,9 +436,7 @@ namespace Zelda_3_Launcher
 
         private void FileINI()
         {
-            var filer = new FileIniDataParser();
-            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-            filer.WriteFile(iniFile, settings, Encoding.GetEncoding(1252));
+            IniFile.Save(iniFile, settings);
         }
 
         private void SaveControllerSettings(string selection)
@@ -531,19 +495,16 @@ namespace Zelda_3_Launcher
 
         private void RestoreFromBackupINI()
         {
-            var iniBackup = Path.Combine(Program.repoDir, "saves", "zelda3.ini");
+            // Tasti predefiniti: dall'ini predefinito della versione installata
+            var defaults = IniFile.DefaultsText();
+            if (defaults == null)
+            {
+                Lang.Show("Unable to find the default zelda3.ini and unable to connect to the internet to download it.",
+                    "No Connection", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
-            if (!File.Exists(iniBackup)) settingsForm.DownloadFreshINI();
-
-            var iniText = File.ReadAllText(iniBackup);
-
-            // INI parsing
-            var config = new IniParserConfiguration();
-            config.CommentString = "#";
-
-            var parser = new IniDataParser(config);
-
-            var backupSettings = parser.Parse(iniText);
+            var backupSettings = IniFile.Parse(defaults);
 
             foreach (var option in backupSettings["KeyMap"])
             {

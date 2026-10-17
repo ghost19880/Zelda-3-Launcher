@@ -62,7 +62,7 @@ namespace Zelda_3_Launcher
             }
 
             if (added > 0)
-                File.WriteAllText(userPath, string.Join(crlf ? "\r\n" : "\n", lines), kBytes);
+                IniFile.WriteAtomic(userPath, string.Join(crlf ? "\r\n" : "\n", lines));
             return added;
         }
 

@@ -17,11 +17,10 @@ namespace Zelda_3_Launcher
             Italian = false;
             try
             {
-                var iniFile = Path.Combine(Program.repoDir, "zelda3.ini");
+                var iniFile = IniFile.UserIni;
                 if (!File.Exists(iniFile)) return;
-                var config = new IniParserConfiguration { CommentString = "#" };
-                var ini = new IniDataParser(config).Parse(File.ReadAllText(iniFile));
-                Italian = ini.Sections.ContainsSection("General") && ini["General"]["Language"]?.Trim() == "it";
+                var ini = IniFile.Load(iniFile);
+                Italian = string.Equals(ini["General"]["Language"]?.Trim(), "it", StringComparison.OrdinalIgnoreCase);
             }
             catch { }
         }
@@ -467,6 +466,10 @@ namespace Zelda_3_Launcher
             ("Your INI backup file is missing and you are unable to connect to the internet to download a fresh copy.",
                 "Manca la copia di sicurezza del file INI e non è possibile scaricarne una nuova da internet."),
             ("Please ensure you have a stable internet connection before attempting to reset settings.", "Controlla la connessione prima di ripristinare le impostazioni."),
+            ("Unable to find the default zelda3.ini and unable to connect to the internet to download it.",
+                "Il file zelda3.ini predefinito non si trova e non è possibile scaricarlo da internet."),
+            ("Unable to update the game:", "Impossibile aggiornare il gioco:"),
+            ("Unable to download the game:", "Impossibile scaricare il gioco:"),
             ("A symlink could not be created.", "Non è stato possibile creare il collegamento simbolico."),
             ("It could be due to a lack of privileges, so running as administrator could allow for symlink creation. ",
                 "Potrebbero mancare i permessi: avviando il launcher come amministratore il collegamento potrebbe riuscire. "),

@@ -208,13 +208,9 @@ namespace Zelda_3_Launcher
             return c;
         }
 
-        private static string IniPath => Path.Combine(Program.repoDir, "zelda3.ini");
+        private static string IniPath => IniFile.UserIni;
 
-        private static IniData Parse()
-        {
-            var config = new IniParserConfiguration { CommentString = "#" };
-            return new IniDataParser(config).Parse(File.ReadAllText(IniPath));
-        }
+        private static IniData Parse() => IniFile.Load(IniPath);
 
         // Valore di una chiave: se manca vale come nel gioco (spento / 0)
         private static int GetInt(IniData ini, string section, string key, int def)
@@ -272,9 +268,7 @@ namespace Zelda_3_Launcher
                 ini["Graphics"]["Shader"] = "";
             }
 
-            var filer = new FileIniDataParser();
-            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-            filer.WriteFile(IniPath, ini, Encoding.GetEncoding(1252));
+            IniFile.Save(IniPath, ini);
         }
     }
 }
