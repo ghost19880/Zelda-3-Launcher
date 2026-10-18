@@ -79,7 +79,64 @@ namespace Zelda_3_Launcher
                 "Automatic save at every area change (saves/auto0.sav, auto1.sav, ...)"),
         };
 
+        // Opzioni originali del gioco (prima nelle impostazioni): "Attiva/Disattiva
+        // tutto" non le tocca
+        private static readonly BoolOption[] kItems =
+        {
+            new("Features", "ItemSwitchLR", "Advanced Item Selection",
+                "Allows you to switch items with L/R but also allows you to assign items to X, Y, L, and R.\n\nIf X is assigned an item, select will now open the map. To save and quit, you will need to hit Select while in the item menu.\n\nIf L and/or R are assigned an item, quick item switching will be disabled.",
+                "Item switch on L/R and items on X, L, R"),
+            new("Features", "ItemSwitchLRLimit", "Limit L/R Switch to First 4 Items",
+                "Limit the items you will cycle through to just the first four items",
+                "L/R only cycle through the first four items"),
+            new("Features", "TurnWhileDashing", "Allow Turning While Dashing",
+                "Allows you to turn when dashing",
+                "Allow turning while dashing"),
+            new("Features", "MirrorToDarkworld", "Mirror Teleports to Dark World",
+                "Magic Mirror works in both directions",
+                "Magic Mirror works in both directions"),
+            new("Features", "SwordAndItemsInteraction", "Sword and items world interaction",
+                "Swords and items behave like on GBA and interact with the world",
+                "Swords and items behave like on GBA and interact with the world"),
+            new("Features", "MoreActiveBombs", "More Active Bombs",
+                "Can have 4 active bombs instead of 2",
+                "4 active bombs instead of 2"),
+            new("Features", "CarryMoreRupees", "Larger Wallet",
+                "Can carry 9999 rupees",
+                "Carry up to 9999 rupees"),
+            new("Features", "CancelBirdTravel", "Cancel Bird",
+                "Allows you to cancel bird travel by hitting the X button",
+                "Cancel bird travel with X"),
+            new("Features", "BirdTravelPoint9", "Bird travel point 9",
+                "Adds a ninth point to the bird travel map: the eastern summit of Death Mountain, on the plateau with the pegs above Turtle Rock.",
+                "Ninth bird travel point on the eastern summit of Death Mountain"),
+        };
+
+        private static readonly BoolOption[] kConvenience =
+        {
+            new("Features", "DisableLowHealthBeep", "Disable Low Heart Beep",
+                "Disables the beeping when you are low health",
+                "No beep at low health"),
+            new("Features", "SkipIntroOnKeypress", "Skip Intro w/ Keypress",
+                "Allows you to skip the intro by pressing a key",
+                "Skip the intro with a key"),
+            new("Features", "ShowMaxItemsInYellow", "Indicate Max Resources",
+                "Values will appear as yellow/orange when you have max resources (rupees, arrows, bombs)",
+                "Show maxed rupees, arrows and bombs in yellow"),
+        };
+
+        private static readonly BoolOption[] kFixes =
+        {
+            new("Features", "MiscBugFixes", "Miscellaneous Minor Fixes",
+                "Miscellaneous bug fixes",
+                "Miscellaneous minor bug fixes"),
+            new("Features", "GameChangingBugFixes", "Game Changing Bug Fixes",
+                "Some bug fixes that are significant enough to impact game behavior",
+                "Bug fixes that change game behavior"),
+        };
+
         private readonly Dictionary<BoolOption, CheckBox> checks = new();
+        private readonly Dictionary<BoolOption, CheckBox> classic = new();
         private CheckBox checkShader = null!;
 
         // Shader "Four Swords" incluso nel progetto (percorso relativo alla cartella zelda3)
@@ -100,45 +157,91 @@ namespace Zelda_3_Launcher
             StartPosition = FormStartPosition.CenterParent;
             AutoScaleMode = AutoScaleMode.Font;
             Font = new Font("Segoe UI", 9F);
-            ClientSize = new Size(620, 500);
+            int width = ColX(kColumns) - kGap + 12;
 
             var note = new Label
             {
                 Text = "You can also change these while playing, from the options menu (Esc or right stick click).",
                 Location = new Point(12, 9),
-                Size = new Size(596, 20),
+                Size = new Size(width - 24, 20),
             };
             Controls.Add(note);
 
-            // Colonna sinistra: grafica ed effetti
-            var graphics = MakeGroup("Graphics", 12, 35, 296, 160);
+            // Colonna 1: grafica ed effetti
+            var graphics = MakeGroup("Graphics", 0);
             comboCamera = AddCombo(graphics, "Smooth camera", new[] { "Off", "Light", "Medium", "Strong" },
                 "Follows Link with a slight delay instead of staying locked to him.", 22);
             int y = 52;
-            foreach (var o in kGraphics) y = AddCheck(graphics, o, y);
+            foreach (var o in kGraphics) y = AddCheck(graphics, o, y, checks);
             checkShader = new CheckBox { Text = "Four Swords shader", Location = new Point(10, y), AutoSize = true };
             toolTip.SetToolTip(checkShader, "Painted look in the style of Four Swords Adventures (uses OpenGL). The HUD, text and characters stay sharp.");
             graphics.Controls.Add(checkShader);
+            graphics.Height = y + 25 + 6;
 
-            var effects = MakeGroup("Effects", 12, 201, 296, 250);
-            y = 22;
-            foreach (var o in kEffects) y = AddCheck(effects, o, y);
+            var effects = MakeGroup("Effects", 0);
+            effects.Height = AddChecks(effects, kEffects, 22, checks) + 6;
 
-            // Colonna destra: gioco e salvataggi
-            var gameplay = MakeGroup("Gameplay", 314, 35, 294, 240);
+            // Colonna 2: gioco HD, salvataggi e comodita'
+            var gameplay = MakeGroup("Gameplay", 1);
             comboTextSpeed = AddCombo(gameplay, "Dialogue speed",
                 new[] { "Original", "Fast holding A or B", "Instant" },
                 "How fast the dialogue text appears.", 22);
-            y = 52;
-            foreach (var o in kGameplay) y = AddCheck(gameplay, o, y);
+            y = AddChecks(gameplay, kGameplay, 52, checks);
 
             var labelSlots = new Label { Text = "Rotating automatic saves", Location = new Point(10, y + 4), AutoSize = true };
-            numericSlots = new NumericUpDown { Minimum = 1, Maximum = 9, Value = 3, Location = new Point(230, y), Size = new Size(50, 23) };
+            numericSlots = new NumericUpDown { Minimum = 1, Maximum = 9, Value = 3, Location = new Point(kColW - 60, y), Size = new Size(50, 23) };
             toolTip.SetToolTip(numericSlots, "How many automatic saves to keep (auto0.sav, auto1.sav, ...).");
             gameplay.Controls.Add(labelSlots);
             gameplay.Controls.Add(numericSlots);
+            gameplay.Height = y + 25 + 6;
 
-            var buttonAll = new Button { Text = "Enable all", Location = new Point(314, 289), Size = new Size(142, 30) };
+            var convenience = MakeGroup("Convenience", 1);
+            convenience.Height = AddChecks(convenience, kConvenience, 22, classic) + 6;
+
+            // Colonna 3: oggetti, comandi e correzioni del gioco originale
+            var items = MakeGroup("Items and controls", 2);
+            items.Height = AddChecks(items, kItems, 22, classic) + 6;
+            var quick = classic[kItems[0]];
+            var lrLimit = classic[kItems[1]];
+            quick.CheckedChanged += (s, e) => lrLimit.Enabled = quick.Checked;
+
+            var fixes = MakeGroup("Bug fixes", 2);
+            fixes.Height = AddChecks(fixes, kFixes, 22, classic) + 6;
+            AddHelpLink(fixes, 22, "https://github.com/snesrev/zelda3/wiki/Bug-Fixes-:-Misc.");
+            AddHelpLink(fixes, 47, "https://github.com/snesrev/zelda3/wiki/Bug-Fixes-:-Game-Changing");
+
+            // Colonne della stessa altezza: nelle colonne piu' corte lo spazio in
+            // piu' si divide in parti uguali fra le righe
+            int bottom = 0;
+            for (int c = 0; c < kColumns; c++)
+                bottom = Math.Max(bottom, 35 + columns[c].Sum(g => g.Height + kGap) - kGap);
+            for (int c = 0; c < kColumns; c++)
+            {
+                var rows = columns[c].Select(Rows).ToList();
+                int extra = bottom - (35 + columns[c].Sum(g => g.Height + kGap) - kGap);
+                int total = rows.Sum(r => r.Count), k = 0;
+                int Shift(int row) => extra * row / total;
+                y = 35;
+                for (int i = 0; i < columns[c].Count; i++)
+                {
+                    var g = columns[c][i];
+                    int first = k;
+                    foreach (var row in rows[i])
+                    {
+                        foreach (var ctl in row) ctl.Top += Shift(k) - Shift(first);
+                        k++;
+                    }
+                    g.Location = new Point(ColX(c), y);
+                    g.Height += Shift(k) - Shift(first);
+                    y += g.Height + kGap;
+                }
+            }
+
+            int buttonsY = bottom + 12;
+            ClientSize = new Size(width, buttonsY + 32 + 12);
+
+            var buttonAll = new Button { Text = "Enable all", Location = new Point(ColX(0), buttonsY), Size = new Size(145, 32) };
+            toolTip.SetToolTip(buttonAll, "Only the HD improvements: graphics, effects and gameplay.");
             buttonAll.Click += (s, e) =>
             {
                 foreach (var c in checks.Values) c.Checked = true;
@@ -146,7 +249,8 @@ namespace Zelda_3_Launcher
                 if (comboCamera.SelectedIndex == 0) comboCamera.SelectedIndex = 2;
                 if (comboTextSpeed.SelectedIndex == 0) comboTextSpeed.SelectedIndex = 1;
             };
-            var buttonNone = new Button { Text = "Disable all", Location = new Point(466, 289), Size = new Size(142, 30) };
+            var buttonNone = new Button { Text = "Disable all", Location = new Point(ColX(0) + 151, buttonsY), Size = new Size(145, 32) };
+            toolTip.SetToolTip(buttonNone, "Only the HD improvements: graphics, effects and gameplay.");
             buttonNone.Click += (s, e) =>
             {
                 foreach (var c in checks.Values) c.Checked = false;
@@ -157,7 +261,7 @@ namespace Zelda_3_Launcher
             Controls.Add(buttonAll);
             Controls.Add(buttonNone);
 
-            var buttonSave = new Button { Text = "Save", Location = new Point(314, 457), Size = new Size(142, 32) };
+            var buttonSave = new Button { Text = "Save", Location = new Point(ColX(2), buttonsY), Size = new Size(145, 32) };
             buttonSave.Click += (s, e) =>
             {
                 try
@@ -170,7 +274,7 @@ namespace Zelda_3_Launcher
                     MessageBox.Show(Lang.T("Unable to save zelda3.ini:\n\n") + ex.Message, Lang.T("Error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             };
-            var buttonCancel = new Button { Text = "Cancel", Location = new Point(466, 457), Size = new Size(142, 32), DialogResult = DialogResult.Cancel };
+            var buttonCancel = new Button { Text = "Cancel", Location = new Point(ColX(2) + 151, buttonsY), Size = new Size(145, 32), DialogResult = DialogResult.Cancel };
             Controls.Add(buttonSave);
             Controls.Add(buttonCancel);
             AcceptButton = buttonSave;
@@ -180,20 +284,58 @@ namespace Zelda_3_Launcher
             Lang.Apply(this, toolTip);
         }
 
-        private GroupBox MakeGroup(string title, int x, int y, int w, int h)
+        // Tre colonne larghe uguali; i gruppi si impilano nella loro colonna
+        private const int kColumns = 3, kColW = 296, kGap = 6;
+        private readonly List<GroupBox>[] columns = { new(), new(), new() };
+
+        private static int ColX(int column) => 12 + column * (kColW + kGap);
+
+        private GroupBox MakeGroup(string title, int column)
         {
-            var g = new GroupBox { Text = title, Location = new Point(x, y), Size = new Size(w, h) };
+            var g = new GroupBox { Text = title, Size = new Size(kColW, 50) };
             Controls.Add(g);
+            columns[column].Add(g);
             return g;
         }
 
-        private int AddCheck(GroupBox g, BoolOption o, int y)
+        // Controlli di un gruppo divisi per riga (stessa altezza, a meno di qualche pixel)
+        private static List<List<Control>> Rows(GroupBox g)
+        {
+            var rows = new List<List<Control>>();
+            foreach (var ctl in g.Controls.Cast<Control>().OrderBy(x => x.Top))
+            {
+                if (rows.Count > 0 && ctl.Top - rows[^1][0].Top < 8) rows[^1].Add(ctl);
+                else rows.Add(new List<Control> { ctl });
+            }
+            return rows;
+        }
+
+        private int AddCheck(GroupBox g, BoolOption o, int y, Dictionary<BoolOption, CheckBox> into)
         {
             var c = new CheckBox { Text = o.Text, Location = new Point(10, y), AutoSize = true };
             toolTip.SetToolTip(c, o.Tip);
             g.Controls.Add(c);
-            checks[o] = c;
+            into[o] = c;
             return y + 25;
+        }
+
+        private int AddChecks(GroupBox g, BoolOption[] options, int y, Dictionary<BoolOption, CheckBox> into)
+        {
+            foreach (var o in options) y = AddCheck(g, o, y, into);
+            return y;
+        }
+
+        // "?" in fondo alla riga che apre la spiegazione sul wiki
+        private void AddHelpLink(GroupBox g, int y, string url)
+        {
+            var link = new LinkLabel { Text = "?", Location = new Point(kColW - 24, y + 2), AutoSize = true };
+            link.LinkClicked += (s, e) =>
+            {
+                link.LinkVisited = true;
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(url) { UseShellExecute = true });
+            };
+            g.Controls.Add(link);
+            link.BringToFront();
         }
 
         private ComboBox AddCombo(GroupBox g, string label, string[] items, string tip, int y)
@@ -219,11 +361,22 @@ namespace Zelda_3_Launcher
             return int.TryParse(v?.Trim(), out int n) ? n : def;
         }
 
+        // Si/no come li scrive il launcher originale (1/0) o a mano (true, yes, on)
+        private static bool GetBool(IniData ini, string section, string key)
+        {
+            var v = (ini.Sections.ContainsSection(section) ? ini[section][key] : null)?.Trim().ToLowerInvariant();
+            if (int.TryParse(v, out int n)) return n != 0;
+            return v == "true" || v == "yes" || v == "on";
+        }
+
         private void Load_()
         {
             var ini = Parse();
             foreach (var (o, c) in checks)
                 c.Checked = GetInt(ini, o.Section, o.Key, 0) != 0;
+            foreach (var (o, c) in classic)
+                c.Checked = GetBool(ini, o.Section, o.Key);
+            classic[kItems[1]].Enabled = classic[kItems[0]].Checked;
             comboCamera.SelectedIndex = Math.Clamp(GetInt(ini, "Graphics", "SmoothCamera", 0), 0, 3);
             comboTextSpeed.SelectedIndex = Math.Clamp(GetInt(ini, "Features", "TextSpeed", 0), 0, 2);
             numericSlots.Value = Math.Clamp(GetInt(ini, "General", "AutosaveSlots", 3), 1, 9);
@@ -249,6 +402,11 @@ namespace Zelda_3_Launcher
             var ini = Parse();
             foreach (var (o, c) in checks)
                 Set(ini, o.Section, o.Key, c.Checked ? "1" : "0", o.Comment);
+            // le opzioni originali si riscrivono solo se cambiate, per non
+            // trasformare in 1/0 un "true" scritto a mano
+            foreach (var (o, c) in classic)
+                if (c.Checked != GetBool(ini, o.Section, o.Key))
+                    Set(ini, o.Section, o.Key, c.Checked ? "1" : "0", o.Comment);
             Set(ini, "Graphics", "SmoothCamera", comboCamera.SelectedIndex.ToString(),
                 "Smooth camera: 0 = off, 1 = light, 2 = medium, 3 = strong");
             Set(ini, "Features", "TextSpeed", comboTextSpeed.SelectedIndex.ToString(),

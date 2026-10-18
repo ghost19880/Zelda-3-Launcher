@@ -315,7 +315,6 @@ namespace Zelda_3_Launcher
         {
             buttonSave.Text = Lang.T("Saving...");
 
-            groupBoxGameplay.Enabled = false;
             general.Enabled = false;
             graphics.Enabled = false;
             checkBoxEnableAudio.Enabled = false;
@@ -344,11 +343,6 @@ namespace Zelda_3_Launcher
         private void buttonCancel_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        private void checkBoxQuickSwitch_CheckedChanged(object sender, EventArgs e)
-        {
-            checkBoxLRLimit.Enabled = checkBoxQuickSwitch.Checked;
         }
 
         private void customSizeChange(object sender, EventArgs e)
@@ -588,32 +582,7 @@ namespace Zelda_3_Launcher
                 }
             }
 
-            // Gameplay Settings
-
-            if (settings["Features"]["ItemSwitchLR"].ToBool())
-            {
-                checkBoxQuickSwitch.Checked = true;
-                checkBoxLRLimit.Enabled = true;
-            }
-            else
-            {
-                checkBoxQuickSwitch.Checked = false;
-                checkBoxLRLimit.Enabled = false;
-            }
-
-            checkBoxLRLimit.Checked = settings["Features"]["ItemSwitchLRLimit"].ToBool();
-            checkBoxDashTurning.Checked = settings["Features"]["TurnWhileDashing"].ToBool();
-            checkBoxMirrorDark.Checked = settings["Features"]["MirrorToDarkworld"].ToBool();
-            checkBoxSwordItems.Checked = settings["Features"]["CollectItemsWithSword"].ToBool();
-            checkBoxSwordPots.Checked = settings["Features"]["BreakPotsWithSword"].ToBool();
-            checkBoxHeartBeep.Checked = settings["Features"]["DisableLowHealthBeep"].ToBool();
-            checkBoxIntroSkip.Checked = settings["Features"]["SkipIntroOnKeypress"].ToBool();
-            checkBoxMaxResources.Checked = settings["Features"]["ShowMaxItemsInYellow"].ToBool();
-            checkBoxMoreBombs.Checked = settings["Features"]["MoreActiveBombs"].ToBool();
-            checkBoxLargerWallet.Checked = settings["Features"]["CarryMoreRupees"].ToBool();
-            checkBoxMiscFixes.Checked = settings["Features"]["MiscBugFixes"].ToBool();
-            checkBoxMajorFixes.Checked = settings["Features"]["GameChangingBugFixes"].ToBool();
-            checkBoxCancelBird.Checked = settings["Features"]["CancelBirdTravel"].ToBool();
+            // Le opzioni di gioco sono nella finestra delle migliorie HD
         }
 
         private void SaveToINI()
@@ -859,26 +828,6 @@ namespace Zelda_3_Launcher
             }
             else settings["Sound"]["EnableMSU"] = "false";
 
-            //
-            // Gameplay Settings
-            //
-
-            // Reading simple settings
-            settings["Features"]["ItemSwitchLR"] = Convert.ToInt32(checkBoxQuickSwitch.Checked).ToString();
-            settings["Features"]["ItemSwitchLRLimit"] = Convert.ToInt32(checkBoxLRLimit.Checked).ToString();
-            settings["Features"]["TurnWhileDashing"] = Convert.ToInt32(checkBoxDashTurning.Checked).ToString();
-            settings["Features"]["MirrorToDarkworld"] = Convert.ToInt32(checkBoxMirrorDark.Checked).ToString();
-            settings["Features"]["CollectItemsWithSword"] = Convert.ToInt32(checkBoxSwordItems.Checked).ToString();
-            settings["Features"]["BreakPotsWithSword"] = Convert.ToInt32(checkBoxSwordPots.Checked).ToString();
-            settings["Features"]["DisableLowHealthBeep"] = Convert.ToInt32(checkBoxHeartBeep.Checked).ToString();
-            settings["Features"]["SkipIntroOnKeypress"] = Convert.ToInt32(checkBoxIntroSkip.Checked).ToString();
-            settings["Features"]["ShowMaxItemsInYellow"] = Convert.ToInt32(checkBoxMaxResources.Checked).ToString();
-            settings["Features"]["MoreActiveBombs"] = Convert.ToInt32(checkBoxMoreBombs.Checked).ToString();
-            settings["Features"]["CarryMoreRupees"] = Convert.ToInt32(checkBoxLargerWallet.Checked).ToString();
-            settings["Features"]["MiscBugFixes"] = Convert.ToInt32(checkBoxMiscFixes.Checked).ToString();
-            settings["Features"]["GameChangingBugFixes"] = Convert.ToInt32(checkBoxMajorFixes.Checked).ToString();
-            settings["Features"]["CancelBirdTravel"] = Convert.ToInt32(checkBoxCancelBird.Checked).ToString();
-
             // Save settings to zelda3.ini
             IniFile.Save(iniFile, settings);
         }
@@ -1018,20 +967,6 @@ namespace Zelda_3_Launcher
                     keymapper.Dispose();
                 }
             }
-        }
-
-        private void linkLabelMinorFixes_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            this.linkLabelMinorFixes.LinkVisited = true;
-
-            Process.Start(new ProcessStartInfo("https://github.com/snesrev/zelda3/wiki/Bug-Fixes-:-Misc.") { UseShellExecute = true });
-        }
-
-        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            this.linkLabelMajorFixes.LinkVisited = true;
-
-            Process.Start(new ProcessStartInfo("https://github.com/snesrev/zelda3/wiki/Bug-Fixes-:-Game-Changing") { UseShellExecute = true });
         }
 
         public Boolean runProcess(string filename, string arguments)

@@ -134,7 +134,7 @@ namespace Zelda_3_Launcher
             ["Advanced Item Selection"] = "Selezione oggetti avanzata",
             ["Limit L/R Switch to First 4 Items"] = "L/R solo sui primi 4 oggetti",
             ["Allow Turning While Dashing"] = "Svolta durante la corsa",
-            ["Mirror Teleports to Dark World"] = "Specchio verso il Mondo Oscuro",
+            ["Mirror Teleports to Dark World"] = "Specchio verso il Mondo delle Tenebre",
             ["Collect Items w/ Sword"] = "Raccogli oggetti con la spada",
             ["Break Pots w/ Sword"] = "Rompi vasi con la spada",
             ["Disable Low Heart Beep"] = "Niente bip a pochi cuori",
@@ -145,6 +145,9 @@ namespace Zelda_3_Launcher
             ["Miscellaneous Minor Fixes"] = "Correzioni minori varie",
             ["Game Changing Bug Fixes"] = "Correzioni maggiori",
             ["Cancel Bird"] = "Annulla viaggio uccello",
+            ["Bird travel point 9"] = "Punto di volo 9",
+            ["Adds a ninth point to the bird travel map: the eastern summit of Death Mountain, on the plateau with the pegs above Turtle Rock."] =
+                "Aggiunge un nono punto alla mappa del volo con l'uccello: la cima a est del Monte della Morte, sulla piattaforma dei pioli sopra la Roccia della Tartaruga.",
             ["Autosave"] = "Autosalva",
             ["Performance in Title"] = "Prestazioni nel titolo",
             ["Unchanged Sprites"] = "Sprite invariati",
@@ -396,6 +399,17 @@ namespace Zelda_3_Launcher
             ["Painted look in the style of Four Swords Adventures (uses OpenGL). The HUD, text and characters stay sharp."] =
                 "Aspetto dipinto in stile Four Swords Adventures (usa OpenGL). HUD, testi e personaggi restano nitidi.",
             ["Disable all"] = "Disattiva tutto",
+            ["Only the HD improvements: graphics, effects and gameplay."] = "Solo le migliorie HD: grafica, effetti e gioco.",
+            ["Convenience"] = "Comodità",
+            ["Sword and items world interaction"] = "Spada e oggetti interazione ambiente",
+            ["Softens the intensity of the flashes, not how many there are (like the Virtual Console releases): the screen turns only slightly white during lightning, magic and boss flashes, the intro sword flash is dimmer and the Ether Medallion flickers more slowly."] =
+                "Attenua l'intensità dei lampi, non il loro numero (come nelle versioni Virtual Console): lo schermo diventa solo un po' bianco durante fulmini, magie e lampi dei boss, il lampo della spada nell'introduzione è più tenue e il Medaglione Etere lampeggia più lentamente.",
+            ["Swords and items behave like on GBA and interact with the world"] =
+                "Spade e oggetti si comportano come su GBA e interagiscono con l'ambiente",
+            ["Items and controls"] = "Oggetti e comandi",
+            ["Bug fixes"] = "Correzioni",
+            ["Allows you to switch items with L/R but also allows you to assign items to X, Y, L, and R.\n\nIf X is assigned an item, select will now open the map. To save and quit, you will need to hit Select while in the item menu.\n\nIf L and/or R are assigned an item, quick item switching will be disabled."] =
+                "Puoi cambiare oggetto con L/R e assegnare oggetti a X, Y, L e R.\n\nSe a X è assegnato un oggetto, Select apre la mappa. Per salvare e uscire premi Select nel menu degli oggetti.\n\nSe a L e/o R è assegnato un oggetto, il cambio rapido con L/R si disattiva.",
             ["Unable to save zelda3.ini:\n\n"] = "Impossibile salvare zelda3.ini:\n\n",
             ["Error"] = "Errore",
 

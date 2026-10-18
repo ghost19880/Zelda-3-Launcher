@@ -65,20 +65,6 @@
             this.checkBoxEnableAudio = new System.Windows.Forms.CheckBox();
             this.labelAudioFrequency = new System.Windows.Forms.Label();
             this.labelAudioSamples = new System.Windows.Forms.Label();
-            this.checkBoxQuickSwitch = new System.Windows.Forms.CheckBox();
-            this.checkBoxLRLimit = new System.Windows.Forms.CheckBox();
-            this.checkBoxDashTurning = new System.Windows.Forms.CheckBox();
-            this.checkBoxMirrorDark = new System.Windows.Forms.CheckBox();
-            this.checkBoxSwordItems = new System.Windows.Forms.CheckBox();
-            this.checkBoxSwordPots = new System.Windows.Forms.CheckBox();
-            this.checkBoxHeartBeep = new System.Windows.Forms.CheckBox();
-            this.checkBoxIntroSkip = new System.Windows.Forms.CheckBox();
-            this.checkBoxMaxResources = new System.Windows.Forms.CheckBox();
-            this.checkBoxMoreBombs = new System.Windows.Forms.CheckBox();
-            this.checkBoxLargerWallet = new System.Windows.Forms.CheckBox();
-            this.checkBoxMiscFixes = new System.Windows.Forms.CheckBox();
-            this.checkBoxMajorFixes = new System.Windows.Forms.CheckBox();
-            this.checkBoxCancelBird = new System.Windows.Forms.CheckBox();
             this.groupBoxMSUSettings = new System.Windows.Forms.GroupBox();
             this.comboBoxMSU = new System.Windows.Forms.ComboBox();
             this.textBoxMSUDirectory = new System.Windows.Forms.TextBox();
@@ -100,7 +86,6 @@
             this.comboRenderMethod = new System.Windows.Forms.ComboBox();
             this.linkLabelCustomSprites = new System.Windows.Forms.LinkLabel();
             this.buttonKeymapping = new System.Windows.Forms.Button();
-            this.linkLabelMinorFixes = new System.Windows.Forms.LinkLabel();
             this.comboBoxLanguage = new System.Windows.Forms.ComboBox();
             this.graphics = new System.Windows.Forms.GroupBox();
             this.checkBoxDimFlashing = new System.Windows.Forms.CheckBox();
@@ -110,8 +95,6 @@
             this.windowSizeX = new System.Windows.Forms.Label();
             this.groupBoxSound = new System.Windows.Forms.GroupBox();
             this.groupBoxAudioChannels = new System.Windows.Forms.GroupBox();
-            this.groupBoxGameplay = new System.Windows.Forms.GroupBox();
-            this.linkLabelMajorFixes = new System.Windows.Forms.LinkLabel();
             this.labelHoverNote = new System.Windows.Forms.Label();
             this.labelMSUCopy = new System.Windows.Forms.Label();
             this.progressMSU = new System.Windows.Forms.ProgressBar();
@@ -126,7 +109,6 @@
             this.windowSize.SuspendLayout();
             this.groupBoxSound.SuspendLayout();
             this.groupBoxAudioChannels.SuspendLayout();
-            this.groupBoxGameplay.SuspendLayout();
             this.SuspendLayout();
             // 
             // general
@@ -138,7 +120,7 @@
             this.general.Controls.Add(this.aspectRatio);
             this.general.Controls.Add(this.performance);
             this.general.Controls.Add(this.autosaveCheck);
-            this.general.Location = new System.Drawing.Point(220, 35);
+            this.general.Location = new System.Drawing.Point(12, 35);
             this.general.Name = "general";
             this.general.Size = new System.Drawing.Size(381, 127);
             this.general.TabIndex = 5;
@@ -509,7 +491,7 @@
             this.checkBoxEnableAudio.AutoSize = true;
             this.checkBoxEnableAudio.Checked = true;
             this.checkBoxEnableAudio.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxEnableAudio.Location = new System.Drawing.Point(619, 47);
+            this.checkBoxEnableAudio.Location = new System.Drawing.Point(411, 47);
             this.checkBoxEnableAudio.Name = "checkBoxEnableAudio";
             this.checkBoxEnableAudio.Size = new System.Drawing.Size(96, 19);
             this.checkBoxEnableAudio.TabIndex = 7;
@@ -537,162 +519,6 @@
             this.labelAudioSamples.TabIndex = 2;
             this.labelAudioSamples.Text = "Audio Samples:";
             this.toolTip1.SetToolTip(this.labelAudioSamples, "Audio buffer size in samples");
-            // 
-            // checkBoxQuickSwitch
-            // 
-            this.checkBoxQuickSwitch.AutoSize = true;
-            this.checkBoxQuickSwitch.Location = new System.Drawing.Point(6, 26);
-            this.checkBoxQuickSwitch.Name = "checkBoxQuickSwitch";
-            this.checkBoxQuickSwitch.Size = new System.Drawing.Size(157, 19);
-            this.checkBoxQuickSwitch.TabIndex = 0;
-            this.checkBoxQuickSwitch.Text = "Advanced Item Selection";
-            this.toolTip1.SetToolTip(this.checkBoxQuickSwitch, resources.GetString("checkBoxQuickSwitch.ToolTip"));
-            this.checkBoxQuickSwitch.UseVisualStyleBackColor = true;
-            this.checkBoxQuickSwitch.CheckedChanged += new System.EventHandler(this.checkBoxQuickSwitch_CheckedChanged);
-            // 
-            // checkBoxLRLimit
-            // 
-            this.checkBoxLRLimit.AutoSize = true;
-            this.checkBoxLRLimit.Location = new System.Drawing.Point(6, 51);
-            this.checkBoxLRLimit.Name = "checkBoxLRLimit";
-            this.checkBoxLRLimit.Size = new System.Drawing.Size(192, 19);
-            this.checkBoxLRLimit.TabIndex = 1;
-            this.checkBoxLRLimit.Text = "Limit L/R Switch to First 4 Items";
-            this.toolTip1.SetToolTip(this.checkBoxLRLimit, "Limit the items you will cycle through to just the first four items");
-            this.checkBoxLRLimit.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxDashTurning
-            // 
-            this.checkBoxDashTurning.AutoSize = true;
-            this.checkBoxDashTurning.Location = new System.Drawing.Point(6, 76);
-            this.checkBoxDashTurning.Name = "checkBoxDashTurning";
-            this.checkBoxDashTurning.Size = new System.Drawing.Size(179, 19);
-            this.checkBoxDashTurning.TabIndex = 2;
-            this.checkBoxDashTurning.Text = "Allow Turning While Dashing";
-            this.toolTip1.SetToolTip(this.checkBoxDashTurning, "Allows you to turn when dashing");
-            this.checkBoxDashTurning.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxMirrorDark
-            // 
-            this.checkBoxMirrorDark.AutoSize = true;
-            this.checkBoxMirrorDark.Location = new System.Drawing.Point(6, 101);
-            this.checkBoxMirrorDark.Name = "checkBoxMirrorDark";
-            this.checkBoxMirrorDark.Size = new System.Drawing.Size(185, 19);
-            this.checkBoxMirrorDark.TabIndex = 3;
-            this.checkBoxMirrorDark.Text = "Mirror Teleports to Dark World";
-            this.toolTip1.SetToolTip(this.checkBoxMirrorDark, "Magic Mirror works in both directions");
-            this.checkBoxMirrorDark.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxSwordItems
-            // 
-            this.checkBoxSwordItems.AutoSize = true;
-            this.checkBoxSwordItems.Location = new System.Drawing.Point(6, 126);
-            this.checkBoxSwordItems.Name = "checkBoxSwordItems";
-            this.checkBoxSwordItems.Size = new System.Drawing.Size(148, 19);
-            this.checkBoxSwordItems.TabIndex = 4;
-            this.checkBoxSwordItems.Text = "Collect Items w/ Sword";
-            this.toolTip1.SetToolTip(this.checkBoxSwordItems, "You can collect items with your sword from a distance");
-            this.checkBoxSwordItems.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxSwordPots
-            // 
-            this.checkBoxSwordPots.AutoSize = true;
-            this.checkBoxSwordPots.Location = new System.Drawing.Point(6, 151);
-            this.checkBoxSwordPots.Name = "checkBoxSwordPots";
-            this.checkBoxSwordPots.Size = new System.Drawing.Size(134, 19);
-            this.checkBoxSwordPots.TabIndex = 5;
-            this.checkBoxSwordPots.Text = "Break Pots w/ Sword";
-            this.toolTip1.SetToolTip(this.checkBoxSwordPots, "You can break pots if you have a L2 or higher sword");
-            this.checkBoxSwordPots.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxHeartBeep
-            // 
-            this.checkBoxHeartBeep.AutoSize = true;
-            this.checkBoxHeartBeep.Location = new System.Drawing.Point(6, 176);
-            this.checkBoxHeartBeep.Name = "checkBoxHeartBeep";
-            this.checkBoxHeartBeep.Size = new System.Drawing.Size(150, 19);
-            this.checkBoxHeartBeep.TabIndex = 6;
-            this.checkBoxHeartBeep.Text = "Disable Low Heart Beep";
-            this.toolTip1.SetToolTip(this.checkBoxHeartBeep, "Disables the beeping when you are low health");
-            this.checkBoxHeartBeep.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxIntroSkip
-            // 
-            this.checkBoxIntroSkip.AutoSize = true;
-            this.checkBoxIntroSkip.Location = new System.Drawing.Point(6, 201);
-            this.checkBoxIntroSkip.Name = "checkBoxIntroSkip";
-            this.checkBoxIntroSkip.Size = new System.Drawing.Size(142, 19);
-            this.checkBoxIntroSkip.TabIndex = 7;
-            this.checkBoxIntroSkip.Text = "Skip Intro w/ Keypress";
-            this.toolTip1.SetToolTip(this.checkBoxIntroSkip, "Allows you to skip the intro by pressing a key");
-            this.checkBoxIntroSkip.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxMaxResources
-            // 
-            this.checkBoxMaxResources.AutoSize = true;
-            this.checkBoxMaxResources.Location = new System.Drawing.Point(6, 226);
-            this.checkBoxMaxResources.Name = "checkBoxMaxResources";
-            this.checkBoxMaxResources.Size = new System.Drawing.Size(150, 19);
-            this.checkBoxMaxResources.TabIndex = 8;
-            this.checkBoxMaxResources.Text = "Indicate Max Resources";
-            this.toolTip1.SetToolTip(this.checkBoxMaxResources, "Values will appear as yellow/orange when you have max resources (rupees, arrows, " +
-        "bombs)");
-            this.checkBoxMaxResources.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxMoreBombs
-            // 
-            this.checkBoxMoreBombs.AutoSize = true;
-            this.checkBoxMoreBombs.Location = new System.Drawing.Point(6, 251);
-            this.checkBoxMoreBombs.Name = "checkBoxMoreBombs";
-            this.checkBoxMoreBombs.Size = new System.Drawing.Size(130, 19);
-            this.checkBoxMoreBombs.TabIndex = 9;
-            this.checkBoxMoreBombs.Text = "More Active Bombs";
-            this.toolTip1.SetToolTip(this.checkBoxMoreBombs, "Can have 4 active bombs instead of 2");
-            this.checkBoxMoreBombs.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxLargerWallet
-            // 
-            this.checkBoxLargerWallet.AutoSize = true;
-            this.checkBoxLargerWallet.Location = new System.Drawing.Point(6, 276);
-            this.checkBoxLargerWallet.Name = "checkBoxLargerWallet";
-            this.checkBoxLargerWallet.Size = new System.Drawing.Size(95, 19);
-            this.checkBoxLargerWallet.TabIndex = 10;
-            this.checkBoxLargerWallet.Text = "Larger Wallet";
-            this.toolTip1.SetToolTip(this.checkBoxLargerWallet, "Can carry 9999 rupees");
-            this.checkBoxLargerWallet.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxMiscFixes
-            // 
-            this.checkBoxMiscFixes.AutoSize = true;
-            this.checkBoxMiscFixes.Location = new System.Drawing.Point(6, 301);
-            this.checkBoxMiscFixes.Name = "checkBoxMiscFixes";
-            this.checkBoxMiscFixes.Size = new System.Drawing.Size(165, 19);
-            this.checkBoxMiscFixes.TabIndex = 11;
-            this.checkBoxMiscFixes.Text = "Miscellaneous Minor Fixes";
-            this.toolTip1.SetToolTip(this.checkBoxMiscFixes, "Miscellaneous bug fixes");
-            this.checkBoxMiscFixes.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxMajorFixes
-            // 
-            this.checkBoxMajorFixes.AutoSize = true;
-            this.checkBoxMajorFixes.Location = new System.Drawing.Point(6, 326);
-            this.checkBoxMajorFixes.Name = "checkBoxMajorFixes";
-            this.checkBoxMajorFixes.Size = new System.Drawing.Size(165, 19);
-            this.checkBoxMajorFixes.TabIndex = 12;
-            this.checkBoxMajorFixes.Text = "Game Changing Bug Fixes";
-            this.toolTip1.SetToolTip(this.checkBoxMajorFixes, "Some bug fixes that are significant enough to impact game behavior");
-            this.checkBoxMajorFixes.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxCancelBird
-            // 
-            this.checkBoxCancelBird.AutoSize = true;
-            this.checkBoxCancelBird.Location = new System.Drawing.Point(6, 351);
-            this.checkBoxCancelBird.Name = "checkBoxCancelBird";
-            this.checkBoxCancelBird.Size = new System.Drawing.Size(86, 19);
-            this.checkBoxCancelBird.TabIndex = 13;
-            this.checkBoxCancelBird.Text = "Cancel Bird";
-            this.toolTip1.SetToolTip(this.checkBoxCancelBird, "Allows you to cancel bird travel by hitting the X button");
-            this.checkBoxCancelBird.UseVisualStyleBackColor = true;
             // 
             // groupBoxMSUSettings
             // 
@@ -872,9 +698,9 @@
             // 
             // buttonReset
             // 
-            this.buttonReset.Location = new System.Drawing.Point(607, 373);
+            this.buttonReset.Location = new System.Drawing.Point(12, 494);
             this.buttonReset.Name = "buttonReset";
-            this.buttonReset.Size = new System.Drawing.Size(202, 35);
+            this.buttonReset.Size = new System.Drawing.Size(193, 35);
             this.buttonReset.TabIndex = 3;
             this.buttonReset.Text = "Reset";
             this.toolTip1.SetToolTip(this.buttonReset, "Reset all settings to their default values");
@@ -883,9 +709,9 @@
             // 
             // buttonSave
             // 
-            this.buttonSave.Location = new System.Drawing.Point(607, 412);
+            this.buttonSave.Location = new System.Drawing.Point(210, 494);
             this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(202, 35);
+            this.buttonSave.Size = new System.Drawing.Size(193, 35);
             this.buttonSave.TabIndex = 2;
             this.buttonSave.Text = "Save";
             this.toolTip1.SetToolTip(this.buttonSave, "Save current settings and close window");
@@ -894,9 +720,9 @@
             // 
             // buttonCancel
             // 
-            this.buttonCancel.Location = new System.Drawing.Point(607, 450);
+            this.buttonCancel.Location = new System.Drawing.Point(408, 494);
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(202, 35);
+            this.buttonCancel.Size = new System.Drawing.Size(193, 35);
             this.buttonCancel.TabIndex = 1;
             this.buttonCancel.Text = "Cancel";
             this.toolTip1.SetToolTip(this.buttonCancel, "Close window without saving any settings");
@@ -945,15 +771,15 @@
             // buttonKeymapping
             // 
             this.buttonHdSettings = new System.Windows.Forms.Button();
-            this.buttonHdSettings.Location = new System.Drawing.Point(12, 491);
+            this.buttonHdSettings.Location = new System.Drawing.Point(399, 450);
             this.buttonHdSettings.Name = "buttonHdSettings";
-            this.buttonHdSettings.Size = new System.Drawing.Size(797, 35);
+            this.buttonHdSettings.Size = new System.Drawing.Size(202, 35);
             this.buttonHdSettings.TabIndex = 0;
             this.buttonHdSettings.Text = "HD Improvements...";
             this.toolTip1.SetToolTip(this.buttonHdSettings, "HD improvements: camera, lighting, effects, transitions, automatic saves.");
             this.buttonHdSettings.UseVisualStyleBackColor = true;
             this.buttonHdSettings.Click += new System.EventHandler(this.buttonHdSettings_Click);
-            this.buttonKeymapping.Location = new System.Drawing.Point(12, 450);
+            this.buttonKeymapping.Location = new System.Drawing.Point(399, 409);
             this.buttonKeymapping.Name = "buttonKeymapping";
             this.buttonKeymapping.Size = new System.Drawing.Size(202, 35);
             this.buttonKeymapping.TabIndex = 0;
@@ -961,18 +787,6 @@
             this.toolTip1.SetToolTip(this.buttonKeymapping, "Open a new settings menu exclusively for configuring keymappings for the game");
             this.buttonKeymapping.UseVisualStyleBackColor = true;
             this.buttonKeymapping.Click += new System.EventHandler(this.buttonKeymapping_Click);
-            // 
-            // linkLabelMinorFixes
-            // 
-            this.linkLabelMinorFixes.AutoSize = true;
-            this.linkLabelMinorFixes.Location = new System.Drawing.Point(165, 302);
-            this.linkLabelMinorFixes.Name = "linkLabelMinorFixes";
-            this.linkLabelMinorFixes.Size = new System.Drawing.Size(12, 15);
-            this.linkLabelMinorFixes.TabIndex = 9;
-            this.linkLabelMinorFixes.TabStop = true;
-            this.linkLabelMinorFixes.Text = "?";
-            this.toolTip1.SetToolTip(this.linkLabelMinorFixes, "This webpage will list the specific fixes");
-            this.linkLabelMinorFixes.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelMinorFixes_LinkClicked);
             // 
             // comboBoxLanguage
             // 
@@ -991,9 +805,9 @@
             "Portuguese",
             "Spanish",
             "Swedish"});
-            this.comboBoxLanguage.Location = new System.Drawing.Point(76, 421);
+            this.comboBoxLanguage.Location = new System.Drawing.Point(467, 380);
             this.comboBoxLanguage.Name = "comboBoxLanguage";
-            this.comboBoxLanguage.Size = new System.Drawing.Size(138, 23);
+            this.comboBoxLanguage.Size = new System.Drawing.Size(134, 23);
             this.comboBoxLanguage.Sorted = true;
             this.comboBoxLanguage.TabIndex = 10;
             this.toolTip1.SetToolTip(this.comboBoxLanguage, "Select the language you would like to use.");
@@ -1021,7 +835,7 @@
             this.graphics.Controls.Add(this.checkPPU);
             this.graphics.Controls.Add(this.fullscreenMode);
             this.graphics.Controls.Add(this.windowSize);
-            this.graphics.Location = new System.Drawing.Point(220, 168);
+            this.graphics.Location = new System.Drawing.Point(12, 168);
             this.graphics.Name = "graphics";
             this.graphics.Size = new System.Drawing.Size(381, 317);
             this.graphics.TabIndex = 6;
@@ -1036,6 +850,7 @@
             this.checkBoxDimFlashing.Size = new System.Drawing.Size(95, 19);
             this.checkBoxDimFlashing.TabIndex = 9;
             this.checkBoxDimFlashing.Text = "Dim Flashing";
+            this.toolTip1.SetToolTip(this.checkBoxDimFlashing, "Softens the intensity of the flashes, not how many there are (like the Virtual Console releases): the screen turns only slightly white during lightning, magic and boss flashes, the intro sword flash is dimmer and the Ether Medallion flickers more slowly.");
             this.checkBoxDimFlashing.UseVisualStyleBackColor = true;
             // 
             // linkLabelGLSLShaders
@@ -1097,7 +912,7 @@
             this.groupBoxSound.Controls.Add(this.groupBoxAudioChannels);
             this.groupBoxSound.Controls.Add(this.labelAudioSamples);
             this.groupBoxSound.Controls.Add(this.labelAudioFrequency);
-            this.groupBoxSound.Location = new System.Drawing.Point(607, 66);
+            this.groupBoxSound.Location = new System.Drawing.Point(399, 66);
             this.groupBoxSound.Name = "groupBoxSound";
             this.groupBoxSound.Size = new System.Drawing.Size(202, 305);
             this.groupBoxSound.TabIndex = 8;
@@ -1116,47 +931,11 @@
             this.groupBoxAudioChannels.TabStop = false;
             this.groupBoxAudioChannels.Text = "Audio Channels";
             // 
-            // groupBoxGameplay
-            // 
-            this.groupBoxGameplay.Controls.Add(this.linkLabelMajorFixes);
-            this.groupBoxGameplay.Controls.Add(this.checkBoxCancelBird);
-            this.groupBoxGameplay.Controls.Add(this.linkLabelMinorFixes);
-            this.groupBoxGameplay.Controls.Add(this.checkBoxMajorFixes);
-            this.groupBoxGameplay.Controls.Add(this.checkBoxLargerWallet);
-            this.groupBoxGameplay.Controls.Add(this.checkBoxMoreBombs);
-            this.groupBoxGameplay.Controls.Add(this.checkBoxMiscFixes);
-            this.groupBoxGameplay.Controls.Add(this.checkBoxMaxResources);
-            this.groupBoxGameplay.Controls.Add(this.checkBoxIntroSkip);
-            this.groupBoxGameplay.Controls.Add(this.checkBoxHeartBeep);
-            this.groupBoxGameplay.Controls.Add(this.checkBoxSwordPots);
-            this.groupBoxGameplay.Controls.Add(this.checkBoxSwordItems);
-            this.groupBoxGameplay.Controls.Add(this.checkBoxMirrorDark);
-            this.groupBoxGameplay.Controls.Add(this.checkBoxDashTurning);
-            this.groupBoxGameplay.Controls.Add(this.checkBoxLRLimit);
-            this.groupBoxGameplay.Controls.Add(this.checkBoxQuickSwitch);
-            this.groupBoxGameplay.Location = new System.Drawing.Point(12, 35);
-            this.groupBoxGameplay.Name = "groupBoxGameplay";
-            this.groupBoxGameplay.Size = new System.Drawing.Size(202, 380);
-            this.groupBoxGameplay.TabIndex = 4;
-            this.groupBoxGameplay.TabStop = false;
-            this.groupBoxGameplay.Text = "Gameplay";
-            // 
-            // linkLabelMajorFixes
-            // 
-            this.linkLabelMajorFixes.AutoSize = true;
-            this.linkLabelMajorFixes.Location = new System.Drawing.Point(165, 327);
-            this.linkLabelMajorFixes.Name = "linkLabelMajorFixes";
-            this.linkLabelMajorFixes.Size = new System.Drawing.Size(12, 15);
-            this.linkLabelMajorFixes.TabIndex = 9;
-            this.linkLabelMajorFixes.TabStop = true;
-            this.linkLabelMajorFixes.Text = "?";
-            this.linkLabelMajorFixes.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
-            // 
             // labelHoverNote
             // 
-            this.labelHoverNote.Location = new System.Drawing.Point(6, 9);
+            this.labelHoverNote.Location = new System.Drawing.Point(12, 9);
             this.labelHoverNote.Name = "labelHoverNote";
-            this.labelHoverNote.Size = new System.Drawing.Size(797, 23);
+            this.labelHoverNote.Size = new System.Drawing.Size(589, 23);
             this.labelHoverNote.TabIndex = 5;
             this.labelHoverNote.Text = "NOTE: You can hover over an option to get a more detailed description of what eac" +
     "h setting does.";
@@ -1164,9 +943,9 @@
             // 
             // labelMSUCopy
             // 
-            this.labelMSUCopy.Location = new System.Drawing.Point(12, 532);
+            this.labelMSUCopy.Location = new System.Drawing.Point(12, 535);
             this.labelMSUCopy.Name = "labelMSUCopy";
-            this.labelMSUCopy.Size = new System.Drawing.Size(797, 23);
+            this.labelMSUCopy.Size = new System.Drawing.Size(589, 23);
             this.labelMSUCopy.TabIndex = 6;
             this.labelMSUCopy.Text = "Copying MSU Files...";
             this.labelMSUCopy.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1174,16 +953,16 @@
             // 
             // progressMSU
             // 
-            this.progressMSU.Location = new System.Drawing.Point(15, 558);
+            this.progressMSU.Location = new System.Drawing.Point(12, 561);
             this.progressMSU.Name = "progressMSU";
-            this.progressMSU.Size = new System.Drawing.Size(797, 23);
+            this.progressMSU.Size = new System.Drawing.Size(589, 23);
             this.progressMSU.TabIndex = 7;
             this.progressMSU.Visible = false;
             // 
             // labelLanguage
             // 
             this.labelLanguage.AutoSize = true;
-            this.labelLanguage.Location = new System.Drawing.Point(8, 424);
+            this.labelLanguage.Location = new System.Drawing.Point(399, 383);
             this.labelLanguage.Name = "labelLanguage";
             this.labelLanguage.Size = new System.Drawing.Size(62, 15);
             this.labelLanguage.TabIndex = 9;
@@ -1195,7 +974,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(821, 619);
+            this.ClientSize = new System.Drawing.Size(613, 596);
             this.Controls.Add(this.comboBoxLanguage);
             this.Controls.Add(this.labelLanguage);
             this.Controls.Add(this.buttonKeymapping);
@@ -1206,7 +985,6 @@
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonSave);
             this.Controls.Add(this.buttonReset);
-            this.Controls.Add(this.groupBoxGameplay);
             this.Controls.Add(this.groupBoxSound);
             this.Controls.Add(this.graphics);
             this.Controls.Add(this.general);
@@ -1237,8 +1015,6 @@
             this.groupBoxSound.PerformLayout();
             this.groupBoxAudioChannels.ResumeLayout(false);
             this.groupBoxAudioChannels.PerformLayout();
-            this.groupBoxGameplay.ResumeLayout(false);
-            this.groupBoxGameplay.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1300,21 +1076,6 @@
         private TextBox textBoxMSUDirectory;
         private Label labelMSUDirectory;
         private Button buttonMSUDirectory;
-        private GroupBox groupBoxGameplay;
-        private CheckBox checkBoxCancelBird;
-        private CheckBox checkBoxMajorFixes;
-        private CheckBox checkBoxMiscFixes;
-        private CheckBox checkBoxLargerWallet;
-        private CheckBox checkBoxMoreBombs;
-        private CheckBox checkBoxMaxResources;
-        private CheckBox checkBoxIntroSkip;
-        private CheckBox checkBoxHeartBeep;
-        private CheckBox checkBoxSwordPots;
-        private CheckBox checkBoxSwordItems;
-        private CheckBox checkBoxMirrorDark;
-        private CheckBox checkBoxDashTurning;
-        private CheckBox checkBoxLRLimit;
-        private CheckBox checkBoxQuickSwitch;
         private Button buttonReset;
         private Button buttonSave;
         private Button buttonCancel;
@@ -1328,8 +1089,6 @@
         private ProgressBar progressMSU;
         private Button buttonKeymapping;
         private Button buttonHdSettings;
-        private LinkLabel linkLabelMinorFixes;
-        private LinkLabel linkLabelMajorFixes;
         private CheckBox checkBoxDimFlashing;
         private Label labelLanguage;
         private ComboBox comboBoxLanguage;
