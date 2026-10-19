@@ -389,6 +389,9 @@ namespace Zelda_3_Launcher
             ["X, L, R items in the HUD"] = "Oggetti X, L, R nell'HUD",
             ["Shows the items assigned to X, L and R in the HUD (requires Advanced Item Selection)."] =
                 "Mostra nell'HUD gli oggetti assegnati a X, L e R (richiede la selezione oggetti avanzata).",
+            ["Dungeon names"] = "Nomi dei dungeon",
+            ["When Link enters a dungeon from outside, its name appears in the middle of the screen like on GBA and disappears as soon as he moves."] =
+                "Quando Link entra in un dungeon dall'esterno, il nome compare al centro dello schermo come su GBA e sparisce appena si muove.",
             ["Automatic save"] = "Salvataggio automatico",
             ["Silently saves at every area change and when entering or leaving dungeons and houses. Load it from the in-game menu."] =
                 "Salva in silenzio a ogni cambio di area e a ogni ingresso o uscita da labirinti e case. Si carica dal menu del gioco.",
