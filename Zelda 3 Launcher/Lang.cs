@@ -359,11 +359,11 @@ namespace Zelda_3_Launcher
             ["Improved rain and lightning"] = "Pioggia e lampi migliorati",
             ["Denser rain with splashes; a single soft flash instead of the quick flickers."] =
                 "Pioggia più fitta con spruzzi; un solo lampo morbido al posto dei lampeggi rapidi.",
-            ["Blur behind menus and dialogues"] = "Sfocatura dietro menu e dialoghi",
-            ["The game is blurred and darkened behind the inventory, dialogues and menus."] =
-                "Il gioco si sfoca e si scurisce dietro l'inventario, i dialoghi e i menu.",
+            ["Blur behind menus"] = "Sfocatura dietro menu",
+            ["The game is blurred and darkened behind the inventory and menus."] =
+                "Il gioco si sfoca e si scurisce dietro l'inventario e i menu.",
             ["Shadows of characters and enemies"] = "Ombre di personaggi e nemici",
-            ["Soft shadows under characters, enemies and objects."] = "Ombre morbide sotto personaggi, nemici e oggetti.",
+            ["Soft shadows under Link and enemies walking on the ground."] = "Ombre morbide sotto Link e i nemici che camminano a terra.",
             ["Soft transition circle"] = "Cerchio di transizione morbido",
             ["Soft edge on the circle transition when entering and leaving places."] =
                 "Bordo sfumato nel cerchio di transizione quando si entra e si esce dai luoghi.",
