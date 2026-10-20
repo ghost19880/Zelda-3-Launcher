@@ -9,9 +9,9 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<PackageIcon>ЯP Flat Blue Small.png</PackageIcon>
 		<ApplicationIcon>RadzPrower.ico</ApplicationIcon>
-		<FileVersion>1.4.7.0</FileVersion>
-		<AssemblyVersion>1.4.7.0</AssemblyVersion>
-		<Version>1.4.7.0</Version>
+		<FileVersion>1.4.8.0</FileVersion>
+		<AssemblyVersion>1.4.8.0</AssemblyVersion>
+		<Version>1.4.8.0</Version>
 		<Platforms>AnyCPU;x86;x64</Platforms>
 	</PropertyGroup>
 

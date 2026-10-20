@@ -405,6 +405,8 @@ namespace Zelda_3_Launcher
             ["Only the HD improvements: graphics, effects and gameplay."] = "Solo le migliorie HD: grafica, effetti e gioco.",
             ["Convenience"] = "Comodità",
             ["Sword and items world interaction"] = "Spada e oggetti interazione ambiente",
+            ["Burn and freeze interaction"] = "Interazione bruciatura e congelamento",
+            ["The world physically reacts to fire and ice."] = "Il mondo reagisce fisicamente a fuoco e ghiaccio.",
             ["Softens the intensity of the flashes, not how many there are (like the Virtual Console releases): the screen turns only slightly white during lightning, magic and boss flashes, the intro sword flash is dimmer and the Ether Medallion flickers more slowly."] =
                 "Attenua l'intensità dei lampi, non il loro numero (come nelle versioni Virtual Console): lo schermo diventa solo un po' bianco durante fulmini, magie e lampi dei boss, il lampo della spada nell'introduzione è più tenue e il Medaglione Etere lampeggia più lentamente.",
             ["Swords and items behave like on GBA and interact with the world"] =
