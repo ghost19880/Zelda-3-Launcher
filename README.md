@@ -6,9 +6,15 @@ A fork of [RadzPrower/Zelda-3-Launcher](https://github.com/RadzPrower/Zelda-3-La
 
 ## What changes in this fork
 - Downloads and builds [ghost19880/zelda3](https://github.com/ghost19880/zelda3) (snesrev/zelda3 + HD improvements, Four Swords style shader included and enabled).
-- **HD Improvements…** window in the settings: smooth camera, sharp text, smoothness above 60 Hz, dynamic lighting, effects (embers, window rays, item glow, heat haze, rain, blur behind menus, character shadows, soft transition circle, button hints), Four Swords shader, modern HUD, transitions, continuous world, X/L/R items in the HUD, dialogue speed, automatic saves.
+- **HD Improvements…** window in the settings, with a description of every option and *Enable all* / *Disable all* buttons:
+  - **Graphics**: sharp dialogue text, smoothness above 60 Hz, dynamic lighting, effects (embers, window rays, item glow, heat haze, rain, blur behind menus, shadows of characters and enemies, soft transition circle, button hints), smooth camera (4 levels), Four Swords shader.
+  - **Gameplay**: fast and continuous transitions, continuous world, modern HUD, X/L/R items in the HUD, dungeon names, automatic saves, dialogue speed.
+  - **Items**: the original item options (advanced item selection, turning while dashing, Mirror to the Dark World, larger wallet, cancel bird) plus sword and items world interaction, burn and freeze interaction, up to 10 active bombs and bird travel point 9.
+  - **Convenience** and **Fixes**: the original options (low heart beep, skip intro, max resources in yellow, bug fixes).
 - **Italian**: choosing it in the language list downloads the translation from [zelda3-italiano](https://github.com/ghost19880/zelda3-italiano), builds the font with accented letters and switches the launcher itself to Italian.
-- `Update` really updates: new commits are fetched and applied, settings and saves are kept. A warning appears before `Restore`/`Update` if the game sources were edited by hand.
+- `Update` really updates: new commits are fetched and applied, settings and saves are kept (and restored even if the update fails). A warning appears before `Restore`/`Update` if the game sources were edited by hand.
+- `zelda3.ini` is never broken: the launcher reads it like the game and writes back only the values you changed, keeping comments, order and unknown keys. `zelda3.user.ini` is used when present, like the game does.
+- Dialogues keep their language after an update, and the Italian translation is downloaded again to get fixes (the old one is kept if the download fails). The launcher language follows the one chosen in the game menu.
 - When updating, options added in the new version are appended to your `zelda3.ini` with their default value (your existing settings stay as they are).
 - At startup the launcher checks GitHub for a newer launcher release and offers to open the download page.
 
@@ -21,7 +27,9 @@ A fork of [RadzPrower/Zelda-3-Launcher](https://github.com/RadzPrower/Zelda-3-La
 Fork del launcher di RadzPrower che installa **Zelda3 HD** con tutte le migliorie già configurate.
 1. Scarica l'[ultima release](https://github.com/ghost19880/Zelda-3-Launcher/releases/latest) e scompattala (serve il [.NET 7 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/7.0)).
 2. Avvia `Zelda 3 Launcher.exe`, premi **Download** e indica la ROM americana.
-3. Nelle impostazioni scegli **Italian**: il launcher scarica la traduzione, prepara il font e passa anche lui all'italiano. Da *Migliorie HD…* attivi o disattivi ogni miglioria.
+3. Nelle impostazioni scegli **Italian**: il launcher scarica la traduzione, prepara il font e passa anche lui all'italiano. Da *Migliorie HD…* attivi o disattivi ogni miglioria (con la descrizione di ognuna e i pulsanti *Attiva tutto* / *Disattiva tutto*): grafica ed effetti, telecamera fluida e shader Four Swords; transizioni, mondo continuo, HUD moderno, oggetti X/L/R, nomi dei dungeon, salvataggi automatici e velocità del testo; le opzioni degli oggetti con spada e oggetti che interagiscono con l'ambiente, bruciatura e congelamento, fino a 10 bombe e il punto di volo 9.
+
+`Aggiorna` scarica le novità tenendo impostazioni e salvataggi, aggiunge a `zelda3.ini` le opzioni nuove senza toccare le tue, e i dialoghi restano in italiano. All'avvio il launcher ti avvisa se c'è una versione nuova.
 
 ---
 

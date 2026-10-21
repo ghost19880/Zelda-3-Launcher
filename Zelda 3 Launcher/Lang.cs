@@ -201,7 +201,7 @@ namespace Zelda_3_Launcher
             ["Allows you to skip the intro by pressing a key"] = "Puoi saltare l'introduzione premendo un tasto",
             ["Values will appear as yellow/orange when you have max resources (rupees, arrows, bombs)"] =
                 "I valori diventano gialli/arancioni quando rupie, frecce o bombe sono al massimo",
-            ["Can have 4 active bombs instead of 2"] = "Puoi avere 4 bombe attive invece di 2",
+            ["Can have 10 active bombs instead of 2"] = "Puoi avere 10 bombe attive invece di 2",
             ["Can carry 9999 rupees"] = "Puoi portare 9999 rupie",
             ["Miscellaneous bug fixes"] = "Correzioni di errori varie",
             ["Some bug fixes that are significant enough to impact game behavior"] = "Correzioni di errori abbastanza importanti da cambiare il comportamento del gioco",
