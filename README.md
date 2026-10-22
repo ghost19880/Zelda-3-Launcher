@@ -51,12 +51,12 @@ And that's it outside of this exectuable itself.
 2. Unzip the file.
 3. Run `Zelda 3 Launcher.exe` at which point you will be greeted by a window that looks like this:
 
-![image](https://user-images.githubusercontent.com/37708128/216780011-98f4ff41-01a6-4b95-9621-f1eef447df77.png)
+<img width="202,2" height="300" alt="first" src="https://github.com/user-attachments/assets/b0e185de-4c93-4c85-afe1-332f9da75b29" />
 
 4. Click the download button. If you happen to have a `zelda3.sfc` file in the same directory as the executable, it will copy it over automatically for you, but if not, a file selection dialog will open and allow you to select your ROM file (naming is not important).
 5. The button will change from `Download` to indicate `Downloading...` This will quickly pop up a number of windows indicating download progress. Once the files are downloaded, the button will change to indicate `Building...` at which point it may take up to several minutes to complete the process depending on your system. You will know the process is complete when the window looks like this:
 
-![image](https://user-images.githubusercontent.com/37708128/218764570-c36e7ffd-f604-4de0-8116-6e1f18174b57.png)
+<img width="202,2" height="300" alt="Launcher" src="https://github.com/user-attachments/assets/a21f99c9-53c9-4939-8573-18024069eabf" />
 
 6. Click `Launch Zelda 3` and enjoy your time revisiting this classic natively on modern hardware.
 
@@ -65,7 +65,7 @@ The top button at this point should say `Restore` which will completely re-do th
 NOTE: There have been no updates since this functionality was programmed, so there is a chance it will not work. If you notice that it is not working, please let me know.
 
 # Settings Menu
-![image](https://user-images.githubusercontent.com/37708128/226472052-a12d4d64-4fe6-443c-85b0-283c5a335d1f.png)
+<img width="1182" height="732" alt="setting" src="https://github.com/user-attachments/assets/3bf70c26-ac34-4396-9f91-4870bf641890" />
 
 There are a number of settings available for you to change here. I will briefly explain them here.
 
@@ -128,7 +128,7 @@ There are a number of settings available for you to change here. I will briefly 
   * MSU Directory: The default MSU directory and the current file naming convention are always displayed here and only changes if the directory of a new set of MSU files. The files are copied into the required directory for use by `zelda3` and will be stored in the `msu` directory.
 
 # Keymapper Utility
-![image](https://user-images.githubusercontent.com/37708128/223178075-c2030a81-55d4-45c6-a2e6-842267aa2789.png)
+<img width="1182" height="732" alt="controller" src="https://github.com/user-attachments/assets/e4692754-f9b5-4f6e-a485-ae3165ea25fe" />
 
 This utility allows you to set all the available standard controls (SNES controller) and additional hotkeys for `zelda3` exclusive functionality. The keyboard and gamepad settings are stored simultaneously for the main controls in the INI, so you must select which version you want to set for those controls specifically. The hotkeys however are unique so they can be freely set to either a gamepad or keyboard input.
 
