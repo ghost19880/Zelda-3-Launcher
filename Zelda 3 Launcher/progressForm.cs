@@ -15,28 +15,42 @@ namespace Zelda_3_Launcher
         public progressForm()
         {
             InitializeComponent();
+            ApplyTheme();
+        }
+
+        // Riquadro scuro con il bordo, come il resto del launcher
+        private void ApplyTheme()
+        {
+            BackColor = Theme.Back;
+            ForeColor = Theme.Text;
+            updateLabel.Font = Theme.Body;
+            updateLabel.ForeColor = Theme.Text;
+            Paint += (s, e) =>
+            {
+                using var pen = new Pen(Theme.CardBorder);
+                e.Graphics.DrawRectangle(pen, 0, 0, Width - 1, Height - 1);
+            };
         }
 
         private void InitializeComponent()
         {
-            this.progBar = new System.Windows.Forms.ProgressBar();
+            this.progBar = new SlimProgress();
             this.updateLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // progBar
             // 
-            this.progBar.Location = new System.Drawing.Point(12, 27);
+            this.progBar.Location = new System.Drawing.Point(16, 40);
             this.progBar.Maximum = 999999;
             this.progBar.Name = "progBar";
-            this.progBar.Size = new System.Drawing.Size(500, 25);
+            this.progBar.Size = new System.Drawing.Size(500, 8);
             this.progBar.TabIndex = 0;
-            this.progBar.Click += new System.EventHandler(this.progressBar1_Click);
             // 
             // updateLabel
             // 
-            this.updateLabel.Location = new System.Drawing.Point(12, 9);
+            this.updateLabel.Location = new System.Drawing.Point(16, 12);
             this.updateLabel.Name = "updateLabel";
-            this.updateLabel.Size = new System.Drawing.Size(500, 15);
+            this.updateLabel.Size = new System.Drawing.Size(500, 20);
             this.updateLabel.TabIndex = 1;
             this.updateLabel.Text = "Update Status";
             this.updateLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -50,15 +64,11 @@ namespace Zelda_3_Launcher
             this.Controls.Add(this.progBar);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "progressForm";
-            this.Padding = new System.Windows.Forms.Padding(12, 6, 12, 6);
+            this.Padding = new System.Windows.Forms.Padding(16, 6, 16, 14);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.ResumeLayout(false);
 
         }
 
-        private void progressBar1_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }

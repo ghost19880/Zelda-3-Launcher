@@ -75,7 +75,13 @@ namespace Zelda_3_Launcher
         public static void Save(string path, IniData data)
         {
             baselines.TryGetValue(data, out var baseline);
-            var changes = new List<(string section, string key, string value, List<string> comments)>();
+            // value null = chiave tolta (RemoveKey): si toglie dal file
+            var changes = new List<(string section, string key, string? value, List<string> comments)>();
+            if (baseline != null)
+                foreach (var sec in baseline.Sections)
+                    foreach (var kd in sec.Keys)
+                        if (!data.Sections.ContainsSection(sec.SectionName) || !data[sec.SectionName].ContainsKey(kd.KeyName))
+                            changes.Add((sec.SectionName, kd.KeyName, null, new List<string>()));
             foreach (var sec in data.Sections)
             {
                 var old = baseline != null && baseline.Sections.ContainsSection(sec.SectionName) ? baseline[sec.SectionName] : null;
@@ -95,7 +101,7 @@ namespace Zelda_3_Launcher
         private static bool IsSection(string t) => t.StartsWith("[") && t.EndsWith("]");
 
         // Aggiorna nel file le chiavi indicate (tutte le loro righe)
-        private static void WriteValues(string path, List<(string section, string key, string value, List<string> comments)> changes)
+        private static void WriteValues(string path, List<(string section, string key, string? value, List<string> comments)> changes)
         {
             var text = File.Exists(path) ? File.ReadAllText(path, kBytes) : "";
             var nl = text.Contains("\r\n") ? "\r\n" : "\n";
@@ -121,6 +127,7 @@ namespace Zelda_3_Launcher
                 }
             }
             var done = new bool[changes.Count];
+            var removed = new HashSet<int>();
 
             string section = "";
             for (int i = 0; i < lines.Count; i++)
@@ -143,6 +150,17 @@ namespace Zelda_3_Launcher
                     if (!changes[k].section.Equals(section, StringComparison.OrdinalIgnoreCase) ||
                         !changes[k].key.Equals(key, StringComparison.OrdinalIgnoreCase))
                         continue;
+                    if (changes[k].value == null)
+                    {
+                        // la riga, i commenti subito sopra e la riga vuota che li separava
+                        removed.Add(i);
+                        int j = i - 1;
+                        while (j >= 0 && lines[j].Trim().StartsWith("#")) removed.Add(j--);
+                        if (j >= 0 && lines[j].Trim().Length == 0 && (i + 1 >= lines.Count || lines[i + 1].Trim().Length == 0))
+                            removed.Add(j);
+                        done[k] = true;
+                        break;
+                    }
                     var indent = line.Substring(0, line.Length - line.TrimStart().Length);
                     var comment = hash >= 0 ? " " + line.Substring(hash) : "";
                     lines[i] = indent + key + " = " + changes[k].value + comment;
@@ -151,10 +169,16 @@ namespace Zelda_3_Launcher
                 }
             }
 
+            foreach (var i in removed.OrderByDescending(x => x))
+            {
+                lines.RemoveAt(i);
+                eols.RemoveAt(i);
+            }
+
             // Chiavi non presenti: in fondo alla loro sezione, o in una sezione nuova
             for (int k = 0; k < changes.Count; k++)
             {
-                if (done[k]) continue;
+                if (done[k] || changes[k].value == null) continue;
                 var (sec, key, value, comments) = changes[k];
                 int start = lines.FindIndex(l =>
                 {

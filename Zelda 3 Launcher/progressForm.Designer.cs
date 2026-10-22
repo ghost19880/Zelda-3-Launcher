@@ -16,6 +16,7 @@ namespace Zelda_3_Launcher
         public progressForm(string title, string message)
         {
             InitializeComponent();
+            ApplyTheme();
 
             this.Text = Lang.T(title);
             this.updateLabel.Text = Lang.T(message);
@@ -425,7 +426,7 @@ namespace Zelda_3_Launcher
             return (false, "NULL", "NULL");
         }
 
-        private ProgressBar progBar;
+        private SlimProgress progBar;
         private Label updateLabel;
     }
 }

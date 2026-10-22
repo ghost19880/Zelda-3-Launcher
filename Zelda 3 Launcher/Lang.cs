@@ -137,7 +137,7 @@ namespace Zelda_3_Launcher
             ["Mirror Teleports to Dark World"] = "Specchio verso il Mondo delle Tenebre",
             ["Collect Items w/ Sword"] = "Raccogli oggetti con la spada",
             ["Break Pots w/ Sword"] = "Rompi vasi con la spada",
-            ["Disable Low Heart Beep"] = "Niente bip a pochi cuori",
+            ["Disable Low Heart Beep"] = "Niente bip con pochi cuori",
             ["Skip Intro w/ Keypress"] = "Salta intro con un tasto",
             ["Indicate Max Resources"] = "Evidenzia risorse al massimo",
             ["More Active Bombs"] = "Più bombe attive",
@@ -146,6 +146,7 @@ namespace Zelda_3_Launcher
             ["Game Changing Bug Fixes"] = "Correzioni maggiori",
             ["Cancel Bird"] = "Annulla viaggio uccello",
             ["Bird travel point 9"] = "Punto di volo 9",
+            ["Adds bird travel point 9 like the GBA version."] = "Aggiunge il punto di volo 9 come nella versione GBA",
             ["Adds a ninth point to the bird travel map: the eastern summit of Death Mountain, on the plateau with the pegs above Turtle Rock."] =
                 "Aggiunge un nono punto alla mappa del volo con l'uccello: la cima a est del Monte della Morte, sulla piattaforma dei pioli sopra la Roccia della Tartaruga.",
             ["Autosave"] = "Autosalva",
@@ -201,7 +202,7 @@ namespace Zelda_3_Launcher
             ["Allows you to skip the intro by pressing a key"] = "Puoi saltare l'introduzione premendo un tasto",
             ["Values will appear as yellow/orange when you have max resources (rupees, arrows, bombs)"] =
                 "I valori diventano gialli/arancioni quando rupie, frecce o bombe sono al massimo",
-            ["Can have 10 active bombs instead of 2"] = "Puoi avere 10 bombe attive invece di 2",
+            ["Can have 10 active bombs instead of 2"] = "Puoi avere fino a 10 bombe attive anziché 2",
             ["Can carry 9999 rupees"] = "Puoi portare 9999 rupie",
             ["Miscellaneous bug fixes"] = "Correzioni di errori varie",
             ["Some bug fixes that are significant enough to impact game behavior"] = "Correzioni di errori abbastanza importanti da cambiare il comportamento del gioco",
@@ -329,6 +330,26 @@ namespace Zelda_3_Launcher
             ["Stop Replay"] = "Ferma replay",
             ["Toggle Renderer"] = "Cambia renderer",
             ["Toggle FPS"] = "Mostra FPS",
+            ["Reset Game"] = "Riavvia il gioco",
+            ["Default keys"] = "Tasti predefiniti",
+            ["Give One Key"] = "Dai una chiave",
+            ["Stop"] = "Ferma",
+            ["Press..."] = "Premi...",
+            ["Press a key"] = "Premi un tasto",
+            ["Press the controller button. Esc cancels, after 5 seconds the previous one stays."] =
+                "Premi il pulsante del controller. Esc annulla; dopo 5 secondi resta quello di prima.",
+            ["Press the key. Esc cancels, after 5 seconds the previous one stays."] =
+                "Premi il tasto. Esc annulla; dopo 5 secondi resta quello di prima.",
+            ["Press the key (Ctrl, Shift and Alt can go with it) or a controller button. Esc cancels, after 5 seconds the previous one stays."] =
+                "Premi il tasto (anche insieme a Ctrl, Maiusc o Alt) oppure un pulsante del controller. Esc annulla; dopo 5 secondi resta quello di prima.",
+            ["Select the input type you want to configure. Controller can be chosen when one is connected."] =
+                "Scegli se configurare la tastiera o il controller. Controller si può scegliere quando ne è collegato uno.",
+            ["Puts back the default keys of both keyboard and controller. They are saved with Save."] =
+                "Rimette i tasti predefiniti della tastiera e del controller. Si salvano con Salva.",
+            ["Click the box and press the key, or the controller button if Controller is chosen above. Esc cancels; after 5 seconds the previous one stays."] =
+                "Fai clic sulla casella e premi il tasto, o il pulsante del controller se sopra è scelto Controller. Esc annulla; dopo 5 secondi resta quello di prima.",
+            ["Switches between the renderers while playing."] = "Cambia il sistema di rendering durante il gioco.",
+            ["Shows or hides the frames per second while playing."] = "Mostra o nasconde i fotogrammi al secondo durante il gioco.",
 
             // Migliorie HD
             ["You can also change these while playing, from the options menu (Esc or right stick click)."] =
@@ -377,9 +398,6 @@ namespace Zelda_3_Launcher
             ["How fast the dialogue text appears."] = "Quanto velocemente compare il testo dei dialoghi.",
             ["Fast transitions"] = "Transizioni veloci",
             ["Moving between areas and rooms happens at double speed."] = "Il passaggio tra aree e stanze avviene a velocità doppia.",
-            ["Continuous area transitions"] = "Transizione continua tra aree",
-            ["Between outdoor areas Link keeps walking and the camera eases in and out, without stops."] =
-                "Fra le aree esterne Link continua a camminare e la telecamera accelera e frena, senza blocchi.",
             ["Continuous world"] = "Mondo continuo",
             ["Outdoors you see the neighbouring areas beyond the edge, the camera follows Link across it and the world remembers what you changed while you stay outdoors."] =
                 "All'aperto si vedono le aree vicine oltre il bordo, la telecamera segue Link oltre il bordo e il mondo ricorda quello che hai cambiato finché resti all'aperto.",
@@ -417,6 +435,110 @@ namespace Zelda_3_Launcher
                 "Puoi cambiare oggetto con L/R e assegnare oggetti a X, Y, L e R.\n\nSe a X è assegnato un oggetto, Select apre la mappa. Per salvare e uscire premi Select nel menu degli oggetti.\n\nSe a L e/o R è assegnato un oggetto, il cambio rapido con L/R si disattiva.",
             ["Unable to save zelda3.ini:\n\n"] = "Impossibile salvare zelda3.ini:\n\n",
             ["Error"] = "Errore",
+
+            // Finestra principale nuova
+            ["Play"] = "Gioca",
+            ["Checking for updates..."] = "Controllo aggiornamenti...",
+            ["{0} new"] = "{0} novità",
+            ["no news"] = "nessuna novità",
+            ["offline"] = "senza connessione",
+            ["Game"] = "Gioco",
+            ["not downloaded"] = "non scaricato",
+            ["Modified locally (1 file)"] = "Modificato in locale (1 file)",
+            ["Modified locally ({0} files)"] = "Modificato in locale ({0} file)",
+            ["Not built yet"] = "Non ancora compilato",
+            ["No local changes"] = "Nessuna modifica locale",
+            ["Press Download to get the game"] = "Premi Scarica per avere il gioco",
+
+            // Finestra unica delle impostazioni
+            ["You can also change these in game (Esc)"] = "Si cambiano anche in gioco (Esc)",
+            ["Items"] = "Oggetti",
+            ["Audio"] = "Audio",
+            ["Controls"] = "Controlli",
+            ["Advanced"] = "Avanzate",
+            ["Window, rendering and performance"] = "Finestra, rendering e prestazioni",
+            ["Image, HD look and effects"] = "Immagine, aspetto HD ed effetti",
+            ["How the world moves, what the screen shows, dialogue and saves"] =
+                "Come si muove il mondo, cosa mostra lo schermo, dialoghi e salvataggi",
+            ["Items, controls and fixes of the original game"] = "Oggetti, comandi e correzioni del gioco originale",
+            ["Sound output and MSU music"] = "Uscita audio e musica MSU",
+            ["Keyboard and controller buttons"] = "Tasti della tastiera e del controller",
+            ["Compatibility, custom files and maintenance"] = "Compatibilità, file personalizzati e manutenzione",
+            ["Move the mouse over an option to read what it does."] = "Passa il mouse su un'opzione per leggere cosa fa.",
+            ["Click a box and press the key or button to assign. Hover over an item for details."] =
+                "Fai clic su una casella e premi il tasto o il pulsante da assegnare. Passa il mouse su una voce per i dettagli.",
+            ["Window"] = "Finestra",
+            ["Image"] = "Immagine",
+            ["HD look"] = "Aspetto HD",
+            ["World and transitions"] = "Mondo e transizioni",
+            ["Dialogue"] = "Dialoghi",
+            ["Interface"] = "Interfaccia",
+            ["Saves and convenience"] = "Salvataggi e comodità",
+            ["Item selection"] = "Selezione degli oggetti",
+            ["Movement and travel"] = "Movimento e viaggi",
+            ["World and items"] = "Mondo e oggetti",
+            ["Output"] = "Uscita",
+            ["MSU music"] = "Musica MSU",
+            ["Compatibility"] = "Compatibilità",
+            ["Maintenance"] = "Manutenzione",
+            ["Custom files"] = "File personalizzati",
+            ["Display mode"] = "Modalità schermo",
+            ["Width × height"] = "Larghezza × altezza",
+            ["Window scaling"] = "Scala della finestra",
+            ["Render method"] = "Metodo di rendering",
+            ["SDL (Default)"] = "SDL (predefinito)",
+            ["Aspect ratio"] = "Proporzioni",
+            ["Speed"] = "Velocità",
+            ["Language"] = "Lingua",
+            ["Resume where you left off"] = "Riprendi da dove avevi lasciato",
+            ["Saves the game state when you quit and reloads it at the next start."] =
+                "Salva lo stato del gioco quando esci e lo ricarica al prossimo avvio.",
+            ["Automatic save at area changes"] = "Salvataggio automatico ai cambi di area",
+            ["Frequency"] = "Frequenza",
+            ["Buffer"] = "Buffer",
+            ["Channels"] = "Canali",
+            ["Folder"] = "Cartella",
+            ["MSU volume"] = "Volume MSU",
+            ["Default settings"] = "Impostazioni predefinite",
+            ["Game files"] = "File del gioco",
+            ["Rebuild"] = "Ricompila",
+            ["List on the wiki:"] = "Elenco sul wiki:",
+            ["Minor"] = "Minori",
+            ["Game changing"] = "Che cambiano il gioco",
+            ["What the fixes change, on the zelda3 wiki."] = "Cosa cambiano le correzioni, sul wiki di zelda3.",
+            ["Shaders you can download"] = "Shader che puoi scaricare",
+            ["Dutch"] = "Olandese",
+            ["English (EU)"] = "Inglese (EU)",
+            ["English (Redux)"] = "Inglese (Redux)",
+            ["English (US)"] = "Inglese (US)",
+            ["French (CA)"] = "Francese (CA)",
+            ["French (EU)"] = "Francese (EU)",
+            ["German"] = "Tedesco",
+            ["Polish"] = "Polacco",
+            ["Portuguese"] = "Portoghese",
+            ["Spanish"] = "Spagnolo",
+            ["Swedish"] = "Svedese",
+            ["Windowed: the game plays within a window at your aspect ratio and window scaling. Borderless: fullscreen without changing the screen mode. Fullscreen: exclusive fullscreen mode."] =
+                "Finestra: il gioco sta in una finestra con le proporzioni e la scala scelte. Senza bordi: schermo intero senza cambiare la modalità dello schermo. Esclusivo: schermo intero esclusivo.",
+            ["Auto resizes the window to match the selected aspect ratio; Custom uses the width and height below."] =
+                "Automatica adatta la finestra alle proporzioni scelte; Personalizzata usa larghezza e altezza qui sotto.",
+            ["Window size in pixels when Window Size is Custom."] = "Dimensione della finestra in pixel quando è Personalizzata.",
+            ["Size of the game window when not fullscreen: 1 = 100%, 2 = 200%, 3 = 300%..."] =
+                "Grandezza della finestra del gioco quando non è a schermo intero: 1 = 100%, 2 = 200%, 3 = 300%...",
+            ["Rendering software used. SDL-software rendering may give better performance on Raspberry Pi. Shaders need OpenGL: choosing SDL turns them off."] =
+                "Il sistema di rendering usato. SDL-Software può andare meglio su Raspberry Pi. Gli shader richiedono OpenGL: scegliendo SDL si spengono.",
+            ["Language of the dialogue. Other languages need a ROM of that version; the launcher is in Italian when the dialogue is."] =
+                "Lingua dei dialoghi. Le altre lingue richiedono una ROM di quella versione; il launcher è in italiano quando lo sono i dialoghi.",
+            ["Mono: uniform audio output across all speakers. Stereo: outputs audio to the left or right speakers based where the sound is generated on screen."] =
+                "Mono: lo stesso suono da tutti gli altoparlanti. Stereo: il suono esce a sinistra o a destra secondo dove nasce sullo schermo.",
+            ["Enable MSU support for audio.\n\nSupports MSU or MSU Deluxe in PCM or OPUZ format."] =
+                "Attiva la musica MSU.\n\nSupporta MSU e MSU Deluxe in formato PCM o OPUZ.",
+            ["Reset all settings to their default values. The keys are reset in Controls."] =
+                "Riporta tutte le impostazioni ai valori predefiniti. I tasti si ripristinano in Controlli.",
+            ["Downloads the latest version, puts back the game files changed by hand (it asks first) and rebuilds zelda3.exe. Settings and saves are kept."] =
+                "Scarica l'ultima versione, rimette i file del gioco modificati a mano (prima chiede) e ricompila zelda3.exe. Impostazioni e salvataggi restano.",
+            ["The game will be downloaded again if there is a newer version, the game files changed by hand will be put back and zelda3.exe will be rebuilt.\n\nSettings and saves are kept; the changes made here are saved first.\n\nDo you want to continue?"] =
+                "Se c'è una versione più recente il gioco viene scaricato di nuovo, i file del gioco modificati a mano vengono rimessi com'erano e zelda3.exe viene ricompilato.\n\nImpostazioni e salvataggi restano; le modifiche fatte qui vengono salvate prima.\n\nVuoi continuare?",
 
             // Titoli dei messaggi
             ["No ROM"] = "Nessuna ROM",
