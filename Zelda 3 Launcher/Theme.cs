@@ -238,6 +238,9 @@ namespace Zelda_3_Launcher
         public Kind Style { get; set; } = Kind.Normal;
         public int Radius { get; set; } = 9;
         private bool hover, down;
+        // ultima scelta fatta con la tastiera (Tab o frecce): si mostra il
+        // riquadro del pulsante col focus anche se Windows nasconde i segni
+        public static bool KeyboardCues;
 
         public FlatButton()
         {
@@ -251,7 +254,9 @@ namespace Zelda_3_Launcher
 
         protected override void OnMouseEnter(EventArgs e) { hover = true; Invalidate(); base.OnMouseEnter(e); }
         protected override void OnMouseLeave(EventArgs e) { hover = down = false; Invalidate(); base.OnMouseLeave(e); }
-        protected override void OnMouseDown(MouseEventArgs e) { down = true; Invalidate(); base.OnMouseDown(e); }
+        protected override void OnMouseDown(MouseEventArgs e) { down = true; KeyboardCues = false; Invalidate(); base.OnMouseDown(e); }
+        protected override void OnGotFocus(EventArgs e) { Invalidate(); base.OnGotFocus(e); }
+        protected override void OnLostFocus(EventArgs e) { Invalidate(); base.OnLostFocus(e); }
         protected override void OnMouseUp(MouseEventArgs e) { down = false; Invalidate(); base.OnMouseUp(e); }
         protected override void OnEnabledChanged(EventArgs e) { Invalidate(); base.OnEnabledChanged(e); }
 
@@ -282,7 +287,7 @@ namespace Zelda_3_Launcher
                 Theme.DrawRound(g, Style == Kind.Danger ? Theme.Danger : Theme.ButtonBorder, r, Radius);
                 fore = Style == Kind.Danger ? Theme.Danger : Theme.Text;
             }
-            if (Focused && ShowFocusCues && Enabled)
+            if (Focused && (ShowFocusCues || KeyboardCues) && Enabled)
                 Theme.DrawRound(g, Theme.AccentLight, new RectangleF(1.5f, 1.5f, Width - 4, Height - 4), Radius - 1);
             TextRenderer.DrawText(g, Text, Font, new Rectangle(4, 0, Width - 8, Height), fore,
                 TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter | TextFormatFlags.EndEllipsis);
@@ -409,6 +414,8 @@ namespace Zelda_3_Launcher
         private ToolStripDropDown? popup;
         private DropList? list;
         private DateTime closedAt;
+        // elenco aperto sopra la casella (sotto non c'e' posto sullo schermo)
+        private bool above;
 
         public const int ItemHeight = 28, Radius = 7;
 
@@ -479,15 +486,24 @@ namespace Zelda_3_Launcher
             list!.Hot = selected;
             var size = new Size(Width, Items.Count * ItemHeight + 6);
             list.Size = size;
+            list.Pressed = false;
             ((ToolStripControlHost)popup.Items[0]).Size = size;
             popup.Size = size;
-            // angoli in basso arrotondati: quelli in alto toccano la casella
-            using (var path = Theme.Round(new RectangleF(0, -1, size.Width, size.Height + 1), Radius + 1, false, true))
+            // Sotto la casella, oppure sopra se sotto non ci sta: mai sopra la
+            // casella stessa (Windows lo sposterebbe lì e il rilascio del clic
+            // che lo apre cadrebbe su una voce)
+            var screen = Screen.FromControl(this).WorkingArea;
+            var at = PointToScreen(Point.Empty);
+            above = at.Y + Height - 1 + size.Height > screen.Bottom && at.Y + 1 - size.Height >= screen.Top;
+            // angoli arrotondati dal lato lontano dalla casella
+            using (var path = above
+                ? Theme.Round(new RectangleF(0, 0, size.Width, size.Height + 1), Radius + 1, true, false)
+                : Theme.Round(new RectangleF(0, -1, size.Width, size.Height + 1), Radius + 1, false, true))
                 popup.Region = new Region(path);
             open = true;
             Invalidate();
             Update();
-            popup.Show(this, new Point(0, Height - 1));
+            popup.Show(this, above ? new Point(0, 1 - size.Height) : new Point(0, Height - 1));
         }
 
         internal void Pick(int index)
@@ -502,19 +518,28 @@ namespace Zelda_3_Launcher
             var g = e.Graphics;
             g.Clear(Parent?.BackColor ?? Theme.CardBack);
             Theme.Smooth(g);
-            var r = new RectangleF(0.5f, 0.5f, Width - 2, open ? Height : Height - 2);
-            using (var path = Theme.Round(r, Radius, true, !open))
+            var r = !open ? new RectangleF(0.5f, 0.5f, Width - 2, Height - 2)
+                : above ? new RectangleF(0.5f, -1, Width - 2, Height - 0.5f)
+                : new RectangleF(0.5f, 0.5f, Width - 2, Height);
+            using (var path = Theme.Round(r, Radius, !open || !above, !open || above))
             {
-                using (var b = new SolidBrush(!Enabled ? Theme.Deep : hover || open ? Theme.Hover : Theme.Input))
+                // aperta: stesso fondo dell'elenco, un solo ovale lungo
+                using (var b = new SolidBrush(!Enabled ? Theme.Deep : open ? Theme.Input : hover ? Theme.Hover : Theme.Input))
                     g.FillPath(b, path);
                 if (open || Focused)
                     using (var pen = new Pen(Theme.Accent))
                         g.DrawPath(pen, path);
             }
-            // con l'elenco aperto il bordo prosegue in basso: niente riga di chiusura
             if (open)
-                using (var b = new SolidBrush(Theme.Hover))
-                    g.FillRectangle(b, 1.5f, Height - 1.5f, Width - 3.5f, 2);
+            {
+                // con l'elenco aperto il bordo prosegue verso l'elenco: niente riga di chiusura
+                using (var b = new SolidBrush(Theme.Input))
+                    g.FillRectangle(b, 1.5f, above ? -0.5f : Height - 1.5f, Width - 3.5f, 2);
+                // ovale piccolo sulla casella: l'elenco parte da qui
+                var pill = new RectangleF(3.5f, 3.5f, Width - 8, Height - 7);
+                Theme.FillRound(g, Theme.Hover, pill, Radius - 1);
+                Theme.DrawRound(g, Theme.AccentLight, pill, Radius - 1);
+            }
             TextRenderer.DrawText(g, selected >= 0 ? Items[selected]?.ToString() : "", Font,
                 new Rectangle(10, 0, Width - 34, Height), Enabled ? Theme.Text : Theme.Faint,
                 TextFormatFlags.VerticalCenter | TextFormatFlags.Left | TextFormatFlags.EndEllipsis | TextFormatFlags.NoPrefix);
@@ -537,6 +562,8 @@ namespace Zelda_3_Launcher
         {
             private readonly DarkComboBox owner;
             public int Hot;
+            // il clic e' cominciato sull'elenco (non e' il rilascio di quello che l'ha aperto)
+            public bool Pressed;
 
             public DropList(DarkComboBox owner)
             {
@@ -546,7 +573,14 @@ namespace Zelda_3_Launcher
                 Cursor = Cursors.Hand;
             }
 
-            private int IndexAt(Point p) => p.Y < 2 ? -1 : Math.Min((p.Y - 2) / ItemHeight, owner.Items.Count - 1);
+            private int IndexAt(Point p) =>
+                p.X < 0 || p.X >= Width || p.Y < 2 || (p.Y - 2) / ItemHeight >= owner.Items.Count ? -1 : (p.Y - 2) / ItemHeight;
+
+            protected override void OnMouseDown(MouseEventArgs e)
+            {
+                Pressed = true;
+                base.OnMouseDown(e);
+            }
 
             protected override void OnMouseMove(MouseEventArgs e)
             {
@@ -558,6 +592,8 @@ namespace Zelda_3_Launcher
             protected override void OnMouseUp(MouseEventArgs e)
             {
                 base.OnMouseUp(e);
+                if (!Pressed) return;
+                Pressed = false;
                 int i = IndexAt(e.Location);
                 if (i >= 0) owner.Pick(i);
             }
@@ -567,17 +603,15 @@ namespace Zelda_3_Launcher
                 var g = e.Graphics;
                 g.Clear(Theme.CardBack);
                 Theme.Smooth(g);
-                var r = new RectangleF(0.5f, -1, Width - 2, Height - 0.5f);
-                using (var path = Theme.Round(r, Radius, false, true))
+                bool up = owner.above;
+                var r = up ? new RectangleF(0.5f, 0.5f, Width - 2, Height + 0.5f) : new RectangleF(0.5f, -1, Width - 2, Height - 0.5f);
+                using (var path = Theme.Round(r, Radius, up, !up))
                 {
                     using (var b = new SolidBrush(Theme.Input))
                         g.FillPath(b, path);
                     using (var pen = new Pen(Theme.Accent))
                         g.DrawPath(pen, path);
                 }
-                // sottile separazione dalla casella
-                using (var sep = new Pen(Theme.CardBorder))
-                    g.DrawLine(sep, 8, 0.5f, Width - 9, 0.5f);
                 for (int i = 0; i < owner.Items.Count; i++)
                 {
                     var item = new Rectangle(4, 2 + i * ItemHeight, Width - 9, ItemHeight);
@@ -803,6 +837,8 @@ namespace Zelda_3_Launcher
         public TriforceLogo()
         {
             SetStyle(ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer, true);
+            SetStyle(ControlStyles.Selectable, false);
+            TabStop = false;
             Size = new Size(64, 56);
         }
 

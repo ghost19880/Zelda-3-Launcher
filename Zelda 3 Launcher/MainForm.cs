@@ -19,7 +19,42 @@ namespace Zelda_3_Launcher
             RefreshStatus(fetch: true);
 
             // Controlla se su GitHub c'e' una versione piu' recente del launcher
-            this.Shown += (s, e) => LauncherUpdate.CheckAsync(this);
+            this.Shown += (s, e) => { KeepFocus(); LauncherUpdate.CheckAsync(this); };
+        }
+
+        private FlatButton[] Buttons => new[] { launch, settings, build };
+
+        // Il focus resta su un pulsante attivo: se quello che lo aveva si spegne
+        // (Gioca mentre il gioco gira, Aggiorna durante il controllo) passa al primo
+        private void KeepFocus()
+        {
+            if (ActiveControl is FlatButton { Enabled: true }) return;
+            var first = Buttons.FirstOrDefault(b => b.Enabled && b.Visible);
+            if (first != null) ActiveControl = first;
+        }
+
+        // Tab, Maiusc+Tab e le frecce passano da un pulsante all'altro; Invio e
+        // Spazio premono quello scelto
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            var key = keyData & Keys.KeyCode;
+            if ((key is Keys.Tab or Keys.Up or Keys.Down or Keys.Left or Keys.Right) && (keyData & (Keys.Control | Keys.Alt)) == 0)
+            {
+                bool forward = key is Keys.Down or Keys.Right || (key == Keys.Tab && (keyData & Keys.Shift) == 0);
+                var list = Buttons.Where(b => b.Enabled && b.Visible).ToList();
+                if (list.Count > 0)
+                {
+                    int i = ActiveControl is FlatButton fb ? list.IndexOf(fb) : -1;
+                    // Tab fa il giro, le frecce si fermano al primo e all'ultimo
+                    int next = i < 0 ? 0 : key == Keys.Tab ? (i + (forward ? 1 : list.Count - 1)) % list.Count
+                        : Math.Clamp(i + (forward ? 1 : -1), 0, list.Count - 1);
+                    FlatButton.KeyboardCues = true;
+                    ActiveControl = list[next];
+                    foreach (var b in Buttons) b.Invalidate();
+                }
+                return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
         }
 
         private void Relocalize()
@@ -61,6 +96,7 @@ namespace Zelda_3_Launcher
             }
             if (building) build.Text = Lang.T("Building...");
 
+            if (ContainsFocus || ActiveControl == null) KeepFocus();
             status.Invalidate();
         }
 
@@ -409,6 +445,8 @@ namespace Zelda_3_Launcher
             {
                 this.form = form;
                 SetStyle(ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
+                SetStyle(ControlStyles.Selectable, false);
+                TabStop = false;
             }
 
             protected override void OnPaint(PaintEventArgs e)

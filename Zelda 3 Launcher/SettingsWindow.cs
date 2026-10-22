@@ -530,6 +530,7 @@ namespace Zelda_3_Launcher
                     fourSwords.Checked = customShader.Checked = false;
             };
             ppu = Toggle(perf, "Optimized SNES PPU", "Use an optimized SNES PPU implementation (potentially buggy)");
+            ppu.CheckedChanged += (s, e) => ApplyRendererRule();
             frameDelay = Toggle(perf, "Disable Frame Delay", "Disable the SDL_Delay that happens on each frame (Gives slightly better performance if your display is set to exactly 60Hz)");
             performance = Toggle(perf, "Performance in Title", "Show current performance in window title");
         }
@@ -589,6 +590,7 @@ namespace Zelda_3_Launcher
             var saves = AddCard(p, 1, "Saves and convenience");
             Toggle(saves, AreaAutosave);
             stepSlots = Step(saves, "Rotating automatic saves", 1, 9, 1, "How many automatic saves to keep (auto0.sav, auto1.sav, ...).");
+            options[AreaAutosave].CheckedChanged += (s, e) => stepSlots.Enabled = options[AreaAutosave].Checked;
             resume = Toggle(saves, "Resume where you left off", "Saves the game state when you quit and reloads it at the next start.");
             Toggle(saves, SkipIntro);
             Toggle(saves, NoLowHealthBeep);
@@ -602,7 +604,7 @@ namespace Zelda_3_Launcher
             var selection = AddCard(p, 0, "Item selection");
             var quick = Toggle(selection, ItemSwitch);
             var limit = Toggle(selection, ItemSwitchLimit);
-            quick.CheckedChanged += (s, e) => limit.Enabled = options[XlrInHud].Enabled = quick.Checked;
+            quick.CheckedChanged += (s, e) => ApplyItemSwitchRule();
 
             var travel = AddCard(p, 0, "Movement and travel");
             Toggle(travel, TurnWhileDashing);
@@ -645,6 +647,7 @@ namespace Zelda_3_Launcher
             resumeMsu = Toggle(msu, "Resume MSU", "Resume MSU music from the same point in the track when returning to an area");
             foreach (Control c in msu.Controls) if (c != enableMsu) msuRows.Add(c);
             enableMsu.CheckedChanged += (s, e) => UpdateAudioState();
+            comboMsu.SelectedIndexChanged += (s, e) => UpdateAudioState();
         }
 
         private void BuildControls()
@@ -755,12 +758,42 @@ namespace Zelda_3_Launcher
             foreach (var c in audioRows) c.Enabled = enableAudio.Checked;
             enableMsu.Enabled = enableAudio.Checked;
             foreach (var c in msuRows) c.Enabled = enableAudio.Checked && enableMsu.Checked;
+            // con l'MSU la frequenza e' quella dei suoi file (i opuz a 48 kHz, i pcm
+            // a 44,1 kHz): si mostra quella che si salvera' e non si puo' cambiare
+            comboFrequency.Enabled = !enableMsu.Checked;
+            if (enableMsu.Checked)
+                comboFrequency.SelectedIndex = Math.Max(0, comboMsu.SelectedIndex) >= 2 ? 0 : 1;
+        }
+
+        // Senza la PPU ottimizzata il vecchio renderer disegna solo 256 pixel (lo
+        // schermo largo resterebbe nero ai lati) e la mappa del mondo a bassa
+        // risoluzione: Mode 7 migliorato e rapporto d'aspetto largo si spengono
+        private void ApplyRendererRule()
+        {
+            bool on = ppu.Checked;
+            mode7.Enabled = comboAspect.Enabled = on;
+            if (!on)
+            {
+                mode7.Checked = false;
+                comboAspect.SelectedIndex = 0;
+            }
+        }
+
+        // Senza la selezione oggetti avanzata non ci sono oggetti su X, L e R:
+        // le opzioni che ne dipendono si spengono e non si possono accendere
+        private void ApplyItemSwitchRule()
+        {
+            bool on = options[ItemSwitch].Checked;
+            options[ItemSwitchLimit].Enabled = options[XlrInHud].Enabled = on;
+            if (!on)
+                options[XlrInHud].Checked = false;
         }
 
         private void SetAllHd(bool on)
         {
             foreach (var (o, t) in options)
                 if (o.Hd) t.Checked = on;
+            ApplyItemSwitchRule();
             fourSwords.Checked = on;
             if (on)
             {
@@ -864,10 +897,11 @@ namespace Zelda_3_Launcher
 
             foreach (var (o, t) in options)
                 t.Checked = o.Hd ? GetInt(ini, o.Section, o.Key, 0) != 0 : GetBool(ini, o.Section, o.Key);
-            options[ItemSwitchLimit].Enabled = options[XlrInHud].Enabled = options[ItemSwitch].Checked;
+            ApplyItemSwitchRule();
             comboCamera.SelectedIndex = Math.Clamp(GetInt(ini, "Graphics", "SmoothCamera", 0), 0, 3);
             comboTextSpeed.SelectedIndex = Math.Clamp(GetInt(ini, "Features", "TextSpeed", 0), 0, 2);
             stepSlots.Value = Math.Clamp(GetInt(ini, "General", "AutosaveSlots", 3), 1, 9);
+            stepSlots.Enabled = options[AreaAutosave].Checked;
 
             // Generale
             resume.Checked = GetBool(ini, "General", "Autosave");
@@ -914,6 +948,7 @@ namespace Zelda_3_Launcher
             stepScale.Value = Math.Clamp(GetInt(ini, "Graphics", "WindowScale", 2), 1, 10);
             ppu.Checked = GetBool(ini, "Graphics", "NewRenderer");
             mode7.Checked = GetBool(ini, "Graphics", "EnhancedMode7");
+            ApplyRendererRule();
             stretch.Checked = GetBool(ini, "Graphics", "IgnoreAspectRatio");
             spriteLimit.Checked = GetBool(ini, "Graphics", "NoSpriteLimits");
             linear.Checked = GetBool(ini, "Graphics", "LinearFiltering");
@@ -1443,16 +1478,27 @@ namespace Zelda_3_Launcher
             process.OutputDataReceived += (s, e) => BeginInvoke(new MethodInvoker(() => File.AppendAllText(logFile, e.Data + "\n")));
             process.ErrorDataReceived += (s, e) => BeginInvoke(new MethodInvoker(() => File.AppendAllText(logFile, e.Data + "\n")));
 
+            // Mentre lavora la finestra non accetta clic e tasti: un clic in attesa
+            // cambierebbe un'altra scelta (per esempio la lingua) a meta' lavoro
             UseWaitCursor = true;
-            process.Start();
-            process.BeginOutputReadLine();
-            process.BeginErrorReadLine();
-            while (!process.HasExited)
+            bool wasEnabled = Enabled;
+            Enabled = false;
+            try
             {
-                Application.DoEvents();
-                Thread.Sleep(15);
+                process.Start();
+                process.BeginOutputReadLine();
+                process.BeginErrorReadLine();
+                while (!process.HasExited)
+                {
+                    Application.DoEvents();
+                    Thread.Sleep(15);
+                }
             }
-            UseWaitCursor = false;
+            finally
+            {
+                Enabled = wasEnabled;
+                UseWaitCursor = false;
+            }
 
             if (process.ExitCode > 0) return true;
 
