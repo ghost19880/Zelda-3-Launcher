@@ -343,24 +343,33 @@ namespace Zelda_3_Launcher
                 return;
             }
 
-            // Need to make some small modifications to bat before exectuting
-            Step("Modifying installation bat...");
-            var batOld = Path.Combine(Program.repoDir, "run_with_tcc.bat");
-            var batNew = Path.Combine(Program.repoDir, "radzprower.bat");
-            using (var pythonFile = File.AppendText(batNew))
+            // Se su GitHub c'e' l'exe veloce (MSVC) di questo commit si usa quello
+            Step("Downloading zelda3.exe...");
+            if (GameExe.TryDownload())
             {
-                foreach (var line in File.ReadLines(batOld))
-                {
-                    if (line != "pause" && line != "echo Running..." && line != "zelda3.exe") pythonFile.WriteLine(line);
-                }
+                progressCompile.Value += 2;
             }
-
-            // build zelda3.exe
-            Step("Building zelda3.exe...");
-            if (runProcess("cmd.exe", @"/C radzprower.bat"))
+            else
             {
-                Lang.Show("Error occurred while building executable.\n\nPlease refer to " + Path.Combine(Program.currentDirectory, "zelda3.log") + " for further details.");
-                return;
+                // Need to make some small modifications to bat before exectuting
+                Step("Modifying installation bat...");
+                var batOld = Path.Combine(Program.repoDir, "run_with_tcc.bat");
+                var batNew = Path.Combine(Program.repoDir, "radzprower.bat");
+                using (var pythonFile = File.AppendText(batNew))
+                {
+                    foreach (var line in File.ReadLines(batOld))
+                    {
+                        if (line != "pause" && line != "echo Running..." && line != "zelda3.exe") pythonFile.WriteLine(line);
+                    }
+                }
+
+                // build zelda3.exe
+                Step("Building zelda3.exe...");
+                if (runProcess("cmd.exe", @"/C radzprower.bat"))
+                {
+                    Lang.Show("Error occurred while building executable.\n\nPlease refer to " + Path.Combine(Program.currentDirectory, "zelda3.log") + " for further details.");
+                    return;
+                }
             }
 
             // zelda3.ini si sistema sul posto (senza spostarlo e senza creare una
@@ -395,7 +404,7 @@ namespace Zelda_3_Launcher
             this.settings = new FlatButton { Height = 40, TabIndex = 1 };
             this.build = new FlatButton { Height = 40, TabIndex = 2 };
             this.labelCompileStatus = new Label { AutoSize = false, TextAlign = ContentAlignment.MiddleLeft, ForeColor = Theme.Muted, Font = Theme.Small, Visible = false };
-            this.progressCompile = new SlimProgress { Maximum = 7, Visible = false };
+            this.progressCompile = new SlimProgress { Maximum = 8, Visible = false };
             this.status = new StatusPanel(this);
             this.SuspendLayout();
 

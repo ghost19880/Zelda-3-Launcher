@@ -6,6 +6,7 @@ A fork of [RadzPrower/Zelda-3-Launcher](https://github.com/RadzPrower/Zelda-3-La
 
 ## What changes in this fork
 - Downloads and builds [ghost19880/zelda3](https://github.com/ghost19880/zelda3) (snesrev/zelda3 + HD improvements, Four Swords style shader included and enabled).
+- Fast game: instead of building with TCC (which does not optimize, and the HD improvements stutter with it), the launcher downloads the `zelda3.exe` built with MSVC for the downloaded commit from the [exe release](https://github.com/ghost19880/zelda3/releases/tag/exe). It contains only the game code; the game data still comes from your own ROM. If it is missing, it builds with TCC as before.
 - New dark look: Triforce logo, a big **Play** button, **Update** enabled only when there is something new (the repository is checked in the background) and a status box.
 - One **Settings** window with tabs, toggle switches and a description of every option (*Enable all* / *Disable all* for the HD improvements):
   - **General**: window, rendering and performance.

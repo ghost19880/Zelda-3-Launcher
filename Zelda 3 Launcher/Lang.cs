@@ -97,6 +97,7 @@ namespace Zelda_3_Launcher
             ["Extracting assets..."] = "Estrazione risorse...",
             ["Modifying installation bat..."] = "Modifica del file bat...",
             ["Building zelda3.exe..."] = "Compilazione di zelda3.exe...",
+            ["Downloading zelda3.exe..."] = "Download di zelda3.exe...",
             ["Backing up zelda3.ini..."] = "Copia di sicurezza di zelda3.ini...",
             ["Modifying zelda3.ini..."] = "Modifica di zelda3.ini...",
             ["Done"] = "Fatto",
