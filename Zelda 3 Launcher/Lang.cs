@@ -370,17 +370,19 @@ namespace Zelda_3_Launcher
             ["Dynamic lighting"] = "Illuminazione dinamica",
             ["Glow around torches, fire and lava; dark rooms are lit only by burning flames."] =
                 "Aloni attorno a torce, fuoco e lava; le stanze buie sono illuminate solo dalle fiamme accese.",
-            ["Embers from flames"] = "Braci dalle fiamme",
-            ["Sparks rising from torches, braziers, fire and lava."] = "Scintille che salgono da torce, bracieri, fuoco e lava.",
+            ["Heat and flames effect"] = "Effetto calore e fiamme",
+            ["The heat makes the air shimmer and sparks rise from torches, braziers, fire and lava."] =
+                "Il calore fa tremolare l'aria e scintille salgono da torce, bracieri, fuoco e lava.",
             ["Light rays from windows"] = "Raggi dalle finestre",
             ["Light shafts with floating dust in rooms with windows."] = "Fasci di luce con pulviscolo nelle stanze con le finestre.",
             ["Glow on received items"] = "Bagliore degli oggetti ricevuti",
             ["Light rays behind Link when he holds up a newly found item."] = "Raggi luminosi dietro Link quando solleva un oggetto appena trovato.",
-            ["Heat haze over lava"] = "Calore sopra la lava",
-            ["The air shimmers slightly above lava."] = "L'aria tremola leggermente sopra la lava.",
             ["Improved rain and lightning"] = "Pioggia e lampi migliorati",
             ["Denser rain with splashes; a single soft flash instead of the quick flickers."] =
                 "Pioggia più fitta con spruzzi; un solo lampo morbido al posto dei lampeggi rapidi.",
+            ["Realistic water and waterfalls"] = "Acqua e cascate realistiche",
+            ["Water as in Four Swords Adventures: depth, foam along the shores and around rocks, moving surface; flowing waterfalls with mist."] =
+                "Acqua come in Four Swords Adventures: profondità, schiuma lungo le rive e attorno ai sassi, superficie che si muove; cascate che scorrono con nebbia.",
             ["Blur behind menus"] = "Sfocatura dietro menu",
             ["The game is blurred and darkened behind the inventory and menus."] =
                 "Il gioco si sfoca e si scurisce dietro l'inventario e i menu.",
@@ -408,6 +410,13 @@ namespace Zelda_3_Launcher
             ["X, L, R items in the HUD"] = "Oggetti X, L, R nell'HUD",
             ["Shows the items assigned to X, L and R in the HUD (requires Advanced Item Selection)."] =
                 "Mostra nell'HUD gli oggetti assegnati a X, L e R (richiede la selezione oggetti avanzata).",
+            ["Extended inventory"] = "Inventario esteso",
+            ["The inventory now has 6 columns like on GBA."] = "Ora l'inventario è su 6 colonne come su GBA.",
+            ["Improved map"] = "Mappa migliorata",
+            ["Place up to 24 stamps on the map so you don't forget anything. Press B to scroll faster and Y to go back to Link."] =
+                "Inserisci fino a 24 timbri sulla mappa per non dimenticare niente. Premi B per scorrere più veloce e Y per tornare su Link.",
+            ["Improved dungeon map"] = "Mappa dungeon migliorata",
+            ["Move around the map faster."] = "Spostati più velocemente sulla mappa.",
             ["Dungeon names"] = "Nomi dei dungeon",
             ["When Link enters a dungeon from outside, its name appears in the middle of the screen like on GBA and disappears as soon as he moves."] =
                 "Quando Link entra in un dungeon dall'esterno, il nome compare al centro dello schermo come su GBA e sparisce appena si muove.",
@@ -425,7 +434,7 @@ namespace Zelda_3_Launcher
             ["Convenience"] = "Comodità",
             ["Sword and items world interaction"] = "Spada e oggetti interazione ambiente",
             ["Burn and freeze interaction"] = "Interazione bruciatura e congelamento",
-            ["The world physically reacts to fire and ice."] = "Il mondo reagisce fisicamente a fuoco e ghiaccio.",
+            ["The world physically reacts to fire and ice, and arrows stuck in walls stay there."] = "Il mondo reagisce fisicamente a fuoco e ghiaccio, e le frecce piantate nei muri restano.",
             ["Softens the intensity of the flashes, not how many there are (like the Virtual Console releases): the screen turns only slightly white during lightning, magic and boss flashes, the intro sword flash is dimmer and the Ether Medallion flickers more slowly."] =
                 "Attenua l'intensità dei lampi, non il loro numero (come nelle versioni Virtual Console): lo schermo diventa solo un po' bianco durante fulmini, magie e lampi dei boss, il lampo della spada nell'introduzione è più tenue e il Medaglione Etere lampeggia più lentamente.",
             ["Swords and items behave like on GBA and interact with the world"] =
@@ -474,6 +483,7 @@ namespace Zelda_3_Launcher
             ["World and transitions"] = "Mondo e transizioni",
             ["Dialogue"] = "Dialoghi",
             ["Interface"] = "Interfaccia",
+            ["Maps"] = "Mappe",
             ["Saves and convenience"] = "Salvataggi e comodità",
             ["Item selection"] = "Selezione degli oggetti",
             ["Movement and travel"] = "Movimento e viaggi",

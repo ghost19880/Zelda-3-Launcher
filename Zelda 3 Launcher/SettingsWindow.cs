@@ -47,6 +47,15 @@ namespace Zelda_3_Launcher
             DungeonNames = new("Features", "DungeonNames", "Dungeon names",
                 "When Link enters a dungeon from outside, its name appears in the middle of the screen like on GBA and disappears as soon as he moves.",
                 "Dungeon name in the middle of the screen when entering from outside, like on GBA"),
+            ExtendedInventory = new("Features", "ExtendedInventory", "Extended inventory",
+                "The inventory now has 6 columns like on GBA.",
+                "Extended inventory with 6 columns like on GBA: four separate bottles, shovel and flute separate"),
+            ImprovedWorldMap = new("Features", "ImprovedWorldMap", "Improved map",
+                "Place up to 24 stamps on the map so you don't forget anything. Press B to scroll faster and Y to go back to Link.",
+                "Improved world map: up to 24 markers with A, Y centers on Link, hold B to scroll faster"),
+            ImprovedDungeonMap = new("Features", "ImprovedDungeonMap", "Improved dungeon map",
+                "Move around the map faster.",
+                "Improved dungeon map: faster floor change"),
             AreaAutosave = new("General", "AutosaveOnAreaChange", "Automatic save at area changes",
                 "Silently saves at every area change and when entering or leaving dungeons and houses. Load it from the in-game menu.",
                 "Automatic save at every area change (saves/auto0.sav, auto1.sav, ...)"),
@@ -65,8 +74,8 @@ namespace Zelda_3_Launcher
                 "Swords and items behave like on GBA and interact with the world",
                 "Swords and items behave like on GBA and interact with the world", false),
             BurnFreeze = new("Features", "BurnAndFreezeInteraction", "Burn and freeze interaction",
-                "The world physically reacts to fire and ice.",
-                "The world physically reacts to fire and ice: lamp, rods and medallions burn or freeze bushes and grass", false),
+                "The world physically reacts to fire and ice, and arrows stuck in walls stay there.",
+                "The world physically reacts to fire and ice: lamp, rods and medallions burn or freeze bushes and grass; stuck arrows stay", false),
             MoreBombs = new("Features", "MoreActiveBombs", "More Active Bombs",
                 "Can have 10 active bombs instead of 2", "10 active bombs instead of 2", false),
             LargerWallet = new("Features", "CarryMoreRupees", "Larger Wallet",
@@ -91,21 +100,21 @@ namespace Zelda_3_Launcher
 
         private static readonly BoolOption[] kEffects =
         {
-            new("Graphics", "FxEmbers", "Embers from flames",
-                "Sparks rising from torches, braziers, fire and lava.",
-                "Embers rising from torches, braziers and lava"),
+            new("Graphics", "FxHeatAndFlames", "Heat and flames effect",
+                "The heat makes the air shimmer and sparks rise from torches, braziers, fire and lava.",
+                "Heat and flames: embers from torches, braziers, fire and lava, air shimmering above lava"),
             new("Graphics", "FxWindowRays", "Light rays from windows",
                 "Light shafts with floating dust in rooms with windows.",
                 "Light rays and dust from windows"),
             new("Graphics", "FxItemGlow", "Glow on received items",
                 "Light rays behind Link when he holds up a newly found item.",
                 "Ray glow when Link holds up an item"),
-            new("Graphics", "FxHeatHaze", "Heat haze over lava",
-                "The air shimmers slightly above lava.",
-                "Air shimmering above lava"),
             new("Graphics", "FxRain", "Improved rain and lightning",
                 "Denser rain with splashes; a single soft flash instead of the quick flickers.",
                 "Denser rain, splashes and soft lightning"),
+            new("Graphics", "FxWater", "Realistic water and waterfalls",
+                "Water as in Four Swords Adventures: depth, foam along the shores and around rocks, moving surface; flowing waterfalls with mist.",
+                "Water with depth, foam and moving surface; flowing waterfalls with mist"),
             new("Graphics", "FxMenuBlur", "Blur behind menus",
                 "The game is blurred and darkened behind the inventory and menus.",
                 "Blurred, darker game behind the inventory and menus"),
@@ -581,6 +590,10 @@ namespace Zelda_3_Launcher
                 "Language of the dialogue. Other languages need a ROM of that version; the launcher is in Italian when the dialogue is.");
             comboLanguage.SelectedIndexChanged += comboLanguage_Select;
 
+            var maps = AddCard(p, 0, "Maps");
+            Toggle(maps, ImprovedWorldMap);
+            Toggle(maps, ImprovedDungeonMap);
+
             var hud = AddCard(p, 1, "Interface");
             Toggle(hud, ModernHud);
             Toggle(hud, XlrInHud);
@@ -604,6 +617,7 @@ namespace Zelda_3_Launcher
             var selection = AddCard(p, 0, "Item selection");
             var quick = Toggle(selection, ItemSwitch);
             var limit = Toggle(selection, ItemSwitchLimit);
+            Toggle(selection, ExtendedInventory);
             quick.CheckedChanged += (s, e) => ApplyItemSwitchRule();
             comboAspect.SelectedIndexChanged += (s, e) => ApplyAspectRule();
 
@@ -1103,6 +1117,12 @@ namespace Zelda_3_Launcher
                 Set(ini, "Sound", "AudioFreq", v >= 2 ? "48000" : "44100");
             }
             else Set(ini, "Sound", "EnableMSU", "false");
+
+            // braci e calore sopra la lava ora sono una sola opzione (FxHeatAndFlames)
+            if (ini.Sections.ContainsSection("Graphics"))
+                foreach (var old in new[] { "FxEmbers", "FxHeatHaze" })
+                    if (ini["Graphics"].ContainsKey(old))
+                        ini["Graphics"].RemoveKey(old);
 
             // opzione tolta dal gioco (la fa meglio il mondo continuo)
             if (ini.Sections.ContainsSection("Features") && ini["Features"].ContainsKey("ContinuousTransitions"))
