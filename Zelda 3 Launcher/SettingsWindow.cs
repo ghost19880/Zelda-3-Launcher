@@ -30,8 +30,8 @@ namespace Zelda_3_Launcher
                 "Soft edge on the circle transition when entering and leaving places.",
                 "Soft edge on the circle transition (entering and leaving places)"),
             ButtonHints = new("Graphics", "FxButtonHints", "Button hints",
-                "On-screen hints for the buttons in the inventory and on the maps.",
-                "On-screen hints for the buttons in the inventory and on the maps"),
+                "On-screen hints for the buttons in the inventory and on the maps. Only in 16:9 and 16:10: they sit in the side bands, in 4:3 there is no room.",
+                "On-screen hints for the buttons in the inventory and on the maps (16:9 and 16:10 only)"),
             FastTransitions = new("Features", "FastTransitions", "Fast transitions",
                 "Moving between areas and rooms is quick and smooth: no loading pauses, Link keeps walking and the camera starts and stops gently.",
                 "Quick and smooth transitions between areas and rooms: Link keeps walking"),
@@ -605,6 +605,7 @@ namespace Zelda_3_Launcher
             var quick = Toggle(selection, ItemSwitch);
             var limit = Toggle(selection, ItemSwitchLimit);
             quick.CheckedChanged += (s, e) => ApplyItemSwitchRule();
+            comboAspect.SelectedIndexChanged += (s, e) => ApplyAspectRule();
 
             var travel = AddCard(p, 0, "Movement and travel");
             Toggle(travel, TurnWhileDashing);
@@ -779,6 +780,16 @@ namespace Zelda_3_Launcher
             }
         }
 
+        // I suggerimenti dei tasti stanno nelle fasce laterali dello schermo largo:
+        // in 4:3 si spengono e non si possono accendere
+        private void ApplyAspectRule()
+        {
+            bool wide = comboAspect.SelectedIndex != 0;
+            options[ButtonHints].Enabled = wide;
+            if (!wide)
+                options[ButtonHints].Checked = false;
+        }
+
         // Senza la selezione oggetti avanzata non ci sono oggetti su X, L e R:
         // le opzioni che ne dipendono si spengono e non si possono accendere
         private void ApplyItemSwitchRule()
@@ -794,6 +805,7 @@ namespace Zelda_3_Launcher
             foreach (var (o, t) in options)
                 if (o.Hd) t.Checked = on;
             ApplyItemSwitchRule();
+            ApplyAspectRule();
             fourSwords.Checked = on;
             if (on)
             {
@@ -922,6 +934,9 @@ namespace Zelda_3_Launcher
                     case "4:3": comboAspect.SelectedIndex = 0; break;
                 }
             }
+            // azzerare il rapporto d'aspetto qui sopra spegne i suggerimenti: si rileggono
+            options[ButtonHints].Checked = GetInt(ini, ButtonHints.Section, ButtonHints.Key, 0) != 0;
+            ApplyAspectRule();
 
             // La scelta caricata dall'ini non deve rigenerare i file della lingua
             loadedLanguage = Get(ini, "General", "Language").ToLowerInvariant();

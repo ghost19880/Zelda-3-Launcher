@@ -390,8 +390,8 @@ namespace Zelda_3_Launcher
             ["Soft edge on the circle transition when entering and leaving places."] =
                 "Bordo sfumato nel cerchio di transizione quando si entra e si esce dai luoghi.",
             ["Button hints"] = "Suggerimenti dei tasti",
-            ["On-screen hints for the buttons in the inventory and on the maps."] =
-                "Suggerimenti a schermo dei tasti nell'inventario e sulle mappe.",
+            ["On-screen hints for the buttons in the inventory and on the maps. Only in 16:9 and 16:10: they sit in the side bands, in 4:3 there is no room."] =
+                "Suggerimenti a schermo dei tasti nell'inventario e sulle mappe. Solo in 16:9 e 16:10: stanno nelle fasce laterali, in 4:3 non c'è spazio.",
             ["Dialogue speed"] = "Velocità dei dialoghi",
             ["Original"] = "Originale",
             ["Fast holding A or B"] = "Veloce tenendo A o B",
