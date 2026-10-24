@@ -398,7 +398,7 @@ namespace Zelda_3_Launcher
             ["Instant"] = "Istantanea",
             ["How fast the dialogue text appears."] = "Quanto velocemente compare il testo dei dialoghi.",
             ["Fast transitions"] = "Transizioni veloci",
-            ["Moving between areas and rooms happens at double speed."] = "Il passaggio tra aree e stanze avviene a velocità doppia.",
+            ["Moving between areas and rooms is quick and smooth: no loading pauses, Link keeps walking and the camera starts and stops gently."] = "Il passaggio tra aree e stanze è rapido e fluido: niente pause di caricamento, Link non si ferma e la telecamera parte e frena dolcemente.",
             ["Continuous world"] = "Mondo continuo",
             ["Outdoors you see the neighbouring areas beyond the edge, the camera follows Link across it and the world remembers what you changed while you stay outdoors."] =
                 "All'aperto si vedono le aree vicine oltre il bordo, la telecamera segue Link oltre il bordo e il mondo ricorda quello che hai cambiato finché resti all'aperto.",
