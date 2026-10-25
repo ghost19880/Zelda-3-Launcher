@@ -383,9 +383,11 @@ namespace Zelda_3_Launcher
             ["Realistic water and waterfalls"] = "Acqua e cascate realistiche",
             ["Water as in Four Swords Adventures: depth, foam along the shores and around rocks, moving surface; flowing waterfalls with mist."] =
                 "Acqua come in Four Swords Adventures: profondità, schiuma lungo le rive e attorno ai sassi, superficie che si muove; cascate che scorrono con nebbia.",
-            ["Blur behind menus"] = "Sfocatura dietro menu",
-            ["The game is blurred and darkened behind the inventory and menus."] =
-                "Il gioco si sfoca e si scurisce dietro l'inventario e i menu.",
+            ["Tell whirlpools from Zoras"] = "Distingui vortici da Zora",
+            ["Teleport whirlpools give off magic sparkles."] = "I vortici di teletrasporto emettono bagliori magici",
+            ["Blur behind menus and dialogues"] = "Sfocatura dietro menu e dialoghi",
+            ["The game is blurred and darkened behind the inventory and menus, and blurred inside dialogue boxes."] =
+                "Il gioco si sfoca e si scurisce dietro l'inventario e i menu, e si sfoca dentro i riquadri dei dialoghi.",
             ["Shadows of characters and enemies"] = "Ombre di personaggi e nemici",
             ["Soft shadows under Link and enemies walking on the ground."] = "Ombre morbide sotto Link e i nemici che camminano a terra.",
             ["Soft transition circle"] = "Cerchio di transizione morbido",
@@ -413,10 +415,12 @@ namespace Zelda_3_Launcher
             ["Extended inventory"] = "Inventario esteso",
             ["The inventory now has 6 columns like on GBA."] = "Ora l'inventario è su 6 colonne come su GBA.",
             ["Improved map"] = "Mappa migliorata",
-            ["Place up to 24 stamps on the map so you don't forget anything. Press B to scroll faster and Y to go back to Link."] =
-                "Inserisci fino a 24 timbri sulla mappa per non dimenticare niente. Premi B per scorrere più veloce e Y per tornare su Link.",
+            ["Place up to 24 stamps on the map so you don't forget anything. Press B to scroll faster and Y to go back to Link. The dungeon map shows the dungeon's name."] =
+                "Inserisci fino a 24 timbri sulla mappa per non dimenticare niente. Premi B per scorrere più veloce e Y per tornare su Link. La mappa del dungeon mostra il nome del dungeon.",
             ["Improved dungeon map"] = "Mappa dungeon migliorata",
             ["Move around the map faster."] = "Spostati più velocemente sulla mappa.",
+            ["Progressive map"] = "Mappa progressiva",
+            ["The map starts hidden and is uncovered by the player."] = "La mappa inizialmente nascosta viene scoperta dal giocatore.",
             ["Dungeon names"] = "Nomi dei dungeon",
             ["When Link enters a dungeon from outside, its name appears in the middle of the screen like on GBA and disappears as soon as he moves."] =
                 "Quando Link entra in un dungeon dall'esterno, il nome compare al centro dello schermo come su GBA e sparisce appena si muove.",

@@ -51,11 +51,14 @@ namespace Zelda_3_Launcher
                 "The inventory now has 6 columns like on GBA.",
                 "Extended inventory with 6 columns like on GBA: four separate bottles, shovel and flute separate"),
             ImprovedWorldMap = new("Features", "ImprovedWorldMap", "Improved map",
-                "Place up to 24 stamps on the map so you don't forget anything. Press B to scroll faster and Y to go back to Link.",
-                "Improved world map: up to 24 markers with A, Y centers on Link, hold B to scroll faster"),
+                "Place up to 24 stamps on the map so you don't forget anything. Press B to scroll faster and Y to go back to Link. The dungeon map shows the dungeon's name.",
+                "Improved world map: up to 24 markers with A, Y centers on Link, hold B to scroll faster; dungeon name on the dungeon map"),
             ImprovedDungeonMap = new("Features", "ImprovedDungeonMap", "Improved dungeon map",
                 "Move around the map faster.",
                 "Improved dungeon map: faster floor change"),
+            ProgressiveMap = new("Features", "ProgressiveMap", "Progressive map",
+                "The map starts hidden and is uncovered by the player.",
+                "Progressive map: the map starts hidden and is uncovered by the player, one area at a time, where Link walks"),
             AreaAutosave = new("General", "AutosaveOnAreaChange", "Automatic save at area changes",
                 "Silently saves at every area change and when entering or leaving dungeons and houses. Load it from the in-game menu.",
                 "Automatic save at every area change (saves/auto0.sav, auto1.sav, ...)"),
@@ -115,9 +118,12 @@ namespace Zelda_3_Launcher
             new("Graphics", "FxWater", "Realistic water and waterfalls",
                 "Water as in Four Swords Adventures: depth, foam along the shores and around rocks, moving surface; flowing waterfalls with mist.",
                 "Water with depth, foam and moving surface; flowing waterfalls with mist"),
-            new("Graphics", "FxMenuBlur", "Blur behind menus",
-                "The game is blurred and darkened behind the inventory and menus.",
-                "Blurred, darker game behind the inventory and menus"),
+            new("Graphics", "FxWhirlpoolGlow", "Tell whirlpools from Zoras",
+                "Teleport whirlpools give off magic sparkles.",
+                "Teleport whirlpools give off magic sparkles (so they don't look like Zoras)"),
+            new("Graphics", "FxMenuBlur", "Blur behind menus and dialogues",
+                "The game is blurred and darkened behind the inventory and menus, and blurred inside dialogue boxes.",
+                "Blurred, darker game behind the inventory and menus; blurred inside dialogue boxes"),
             new("Graphics", "FxSpriteShadows", "Shadows of characters and enemies",
                 "Soft shadows under Link and enemies walking on the ground.",
                 "Soft shadows under Link and walking enemies"),
@@ -593,6 +599,7 @@ namespace Zelda_3_Launcher
             var maps = AddCard(p, 0, "Maps");
             Toggle(maps, ImprovedWorldMap);
             Toggle(maps, ImprovedDungeonMap);
+            Toggle(maps, ProgressiveMap);
 
             var hud = AddCard(p, 1, "Interface");
             Toggle(hud, ModernHud);
