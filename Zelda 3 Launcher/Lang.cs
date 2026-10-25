@@ -139,6 +139,7 @@ namespace Zelda_3_Launcher
             ["Collect Items w/ Sword"] = "Raccogli oggetti con la spada",
             ["Break Pots w/ Sword"] = "Rompi vasi con la spada",
             ["Disable Low Heart Beep"] = "Niente bip con pochi cuori",
+            ["Save hearts and magic state"] = "Salva stato cuori e magia",
             ["Skip Intro w/ Keypress"] = "Salta intro con un tasto",
             ["Indicate Max Resources"] = "Evidenzia risorse al massimo",
             ["More Active Bombs"] = "Più bombe attive",
@@ -200,6 +201,7 @@ namespace Zelda_3_Launcher
             ["You can collect items with your sword from a distance"] = "Puoi raccogliere oggetti a distanza con la spada",
             ["You can break pots if you have a L2 or higher sword"] = "Puoi rompere i vasi se hai una spada di livello 2 o superiore",
             ["Disables the beeping when you are low health"] = "Disattiva il bip quando hai pochi cuori",
+            ["Now when you save, the state of hearts and magic is remembered too"] = "Ora quando si salva vengono ricordati anche lo stato di cuori e magia",
             ["Allows you to skip the intro by pressing a key"] = "Puoi saltare l'introduzione premendo un tasto",
             ["Values will appear as yellow/orange when you have max resources (rupees, arrows, bombs)"] =
                 "I valori diventano gialli/arancioni quando rupie, frecce o bombe sono al massimo",

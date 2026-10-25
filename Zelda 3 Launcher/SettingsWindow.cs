@@ -90,6 +90,9 @@ namespace Zelda_3_Launcher
                 "Ninth bird travel point on the eastern summit of Death Mountain", false),
             NoLowHealthBeep = new("Features", "DisableLowHealthBeep", "Disable Low Heart Beep",
                 "Disables the beeping when you are low health", "No beep at low health", false),
+            SaveHearts = new("Features", "SaveHeartsAndMagic", "Save hearts and magic state",
+                "Now when you save, the state of hearts and magic is remembered too",
+                "Save and quit remembers the current hearts and magic; unsaved hearts are black on the file select"),
             SkipIntro = new("Features", "SkipIntroOnKeypress", "Skip Intro w/ Keypress",
                 "Allows you to skip the intro by pressing a key", "Skip the intro with a key", false),
             MaxInYellow = new("Features", "ShowMaxItemsInYellow", "Indicate Max Resources",
@@ -613,6 +616,7 @@ namespace Zelda_3_Launcher
             options[AreaAutosave].CheckedChanged += (s, e) => stepSlots.Enabled = options[AreaAutosave].Checked;
             resume = Toggle(saves, "Resume where you left off", "Saves the game state when you quit and reloads it at the next start.");
             Toggle(saves, SkipIntro);
+            Toggle(saves, SaveHearts);
             Toggle(saves, NoLowHealthBeep);
             Toggle(saves, MaxInYellow);
         }
