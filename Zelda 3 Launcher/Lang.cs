@@ -134,7 +134,7 @@ namespace Zelda_3_Launcher
             ["Cancel"] = "Annulla",
             ["Advanced Item Selection"] = "Selezione oggetti avanzata",
             ["Limit L/R Switch to First 4 Items"] = "L/R solo sui primi 4 oggetti",
-            ["Allow Turning While Dashing"] = "Svolta durante la corsa",
+            ["Allow Turning While Dashing"] = "Sterzata durante la corsa",
             ["Mirror Teleports to Dark World"] = "Specchio verso il Mondo delle Tenebre",
             ["Collect Items w/ Sword"] = "Raccogli oggetti con la spada",
             ["Break Pots w/ Sword"] = "Rompi vasi con la spada",

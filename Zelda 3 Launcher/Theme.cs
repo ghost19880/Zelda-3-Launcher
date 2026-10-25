@@ -20,11 +20,11 @@ namespace Zelda_3_Launcher
         public static readonly Color Text = Color.FromArgb(0xe8, 0xed, 0xf5);
         public static readonly Color Muted = Color.FromArgb(0x9a, 0xa6, 0xba);
         public static readonly Color Faint = Color.FromArgb(0x66, 0x72, 0x8a);
-        public static readonly Color Accent = Color.FromArgb(0x2f, 0xbf, 0x6c);
-        public static readonly Color AccentLight = Color.FromArgb(0x3c, 0xcf, 0x7a);
-        public static readonly Color AccentText = Color.FromArgb(0x06, 0x21, 0x0f);
+        public static readonly Color Accent = Color.FromArgb(0xf2, 0xbf, 0x1c);
+        public static readonly Color AccentLight = Color.FromArgb(0xff, 0xd4, 0x4a);
+        public static readonly Color AccentText = Color.FromArgb(0x2b, 0x1e, 0x00);
         public static readonly Color Off = Color.FromArgb(0x33, 0x40, 0x5a);
-        public static readonly Color Warn = Color.FromArgb(0xf0, 0xb5, 0x4a);
+        public static readonly Color Warn = Color.FromArgb(0xf0, 0x8c, 0x3c);
         public static readonly Color Danger = Color.FromArgb(0xe5, 0x6b, 0x5d);
         public static readonly Color Gold = Color.FromArgb(0xf0, 0xc0, 0x40);
 
@@ -274,8 +274,8 @@ namespace Zelda_3_Launcher
             }
             else if (Style == Kind.Primary)
             {
-                var top = hover ? Color.FromArgb(0x4a, 0xdb, 0x88) : Theme.AccentLight;
-                var bottom = down ? Color.FromArgb(0x1d, 0x8f, 0x4e) : Color.FromArgb(0x23, 0xa8, 0x5c);
+                var top = hover ? Color.FromArgb(0xff, 0xe0, 0x78) : Theme.AccentLight;
+                var bottom = down ? Color.FromArgb(0xc4, 0x92, 0x0c) : Color.FromArgb(0xdc, 0xa6, 0x14);
                 using var path = Theme.Round(r, Radius);
                 using var b = new LinearGradientBrush(new RectangleF(0, 0, Width, Height), top, bottom, 90f);
                 g.FillPath(b, path);
