@@ -148,7 +148,8 @@ namespace Zelda_3_Launcher
             ["Game Changing Bug Fixes"] = "Correzioni maggiori",
             ["Cancel Bird"] = "Annulla viaggio uccello",
             ["Bird travel point 9"] = "Punto di volo 9",
-            ["Adds bird travel point 9 like the GBA version."] = "Aggiunge il punto di volo 9 come nella versione GBA",
+            ["Adds the ninth bird travel point of the GBA version, on the eastern summit of Death Mountain. It appears once Turtle Rock is open."] =
+                "Aggiunge il nono punto di volo della versione GBA, in cima al Monte della Morte a est. Compare quando la Rocca della Tartaruga è aperta.",
             ["Adds a ninth point to the bird travel map: the eastern summit of Death Mountain, on the plateau with the pegs above Turtle Rock."] =
                 "Aggiunge un nono punto alla mappa del volo con l'uccello: la cima a est del Monte della Morte, sulla piattaforma dei pioli sopra la Roccia della Tartaruga.",
             ["Autosave"] = "Autosalva",
@@ -201,7 +202,8 @@ namespace Zelda_3_Launcher
             ["You can collect items with your sword from a distance"] = "Puoi raccogliere oggetti a distanza con la spada",
             ["You can break pots if you have a L2 or higher sword"] = "Puoi rompere i vasi se hai una spada di livello 2 o superiore",
             ["Disables the beeping when you are low health"] = "Disattiva il bip quando hai pochi cuori",
-            ["Now when you save, the state of hearts and magic is remembered too"] = "Ora quando si salva vengono ricordati anche lo stato di cuori e magia",
+            ["Save and quit remembers the hearts and magic you have instead of giving back the starting ones; on the file select, hearts not saved yet are black."] =
+                "Salva ed esci ricorda i cuori e la magia che hai invece di ridare quelli di partenza; nella scelta del salvataggio i cuori non ancora salvati sono neri.",
             ["Allows you to skip the intro by pressing a key"] = "Puoi saltare l'introduzione premendo un tasto",
             ["Values will appear as yellow/orange when you have max resources (rupees, arrows, bombs)"] =
                 "I valori diventano gialli/arancioni quando rupie, frecce o bombe sono al massimo",
@@ -392,6 +394,9 @@ namespace Zelda_3_Launcher
                 "Il gioco si sfoca e si scurisce dietro l'inventario e i menu, e si sfoca dentro i riquadri dei dialoghi.",
             ["Shadows of characters and enemies"] = "Ombre di personaggi e nemici",
             ["Soft shadows under Link and enemies walking on the ground."] = "Ombre morbide sotto Link e i nemici che camminano a terra.",
+            ["Official artwork look"] = "Aspetto dei disegni ufficiali",
+            ["Colors closer to the official artwork: Agahnim in red with blue skin, King of Hyrule in red in the ending; the palaces' floor medallion shows the six-pointed star of the Japanese version."] =
+                "Colori più vicini ai disegni ufficiali: Agahnim in rosso con la pelle blu, re di Hyrule vestito di rosso nel finale; il medaglione sul pavimento dei palazzi mostra la stella a sei punte della versione giapponese.",
             ["Soft transition circle"] = "Cerchio di transizione morbido",
             ["Soft edge on the circle transition when entering and leaving places."] =
                 "Bordo sfumato nel cerchio di transizione quando si entra e si esce dai luoghi.",
@@ -415,14 +420,16 @@ namespace Zelda_3_Launcher
             ["Shows the items assigned to X, L and R in the HUD (requires Advanced Item Selection)."] =
                 "Mostra nell'HUD gli oggetti assegnati a X, L e R (richiede la selezione oggetti avanzata).",
             ["Extended inventory"] = "Inventario esteso",
-            ["The inventory now has 6 columns like on GBA."] = "Ora l'inventario è su 6 colonne come su GBA.",
+            ["The inventory has 6 columns like on GBA: four separate bottles, shovel and flute in separate slots."] =
+                "L'inventario è su 6 colonne come su GBA: quattro bottiglie separate, pala e ocarina in posti separati.",
             ["Improved map"] = "Mappa migliorata",
             ["Place up to 24 stamps on the map so you don't forget anything. Press B to scroll faster and Y to go back to Link. The dungeon map shows the dungeon's name."] =
                 "Inserisci fino a 24 timbri sulla mappa per non dimenticare niente. Premi B per scorrere più veloce e Y per tornare su Link. La mappa del dungeon mostra il nome del dungeon.",
             ["Improved dungeon map"] = "Mappa dungeon migliorata",
-            ["Move around the map faster."] = "Spostati più velocemente sulla mappa.",
+            ["Changing floor on the dungeon map is faster."] = "Sulla mappa del dungeon il cambio di piano è più rapido.",
             ["Progressive map"] = "Mappa progressiva",
-            ["The map starts hidden and is uncovered by the player."] = "La mappa inizialmente nascosta viene scoperta dal giocatore.",
+            ["The map starts covered by clouds and is uncovered area by area as Link visits it."] =
+                "La mappa all'inizio è coperta dalle nuvole e si scopre un'area alla volta, man mano che Link la visita.",
             ["Dungeon names"] = "Nomi dei dungeon",
             ["When Link enters a dungeon from outside, its name appears in the middle of the screen like on GBA and disappears as soon as he moves."] =
                 "Quando Link entra in un dungeon dall'esterno, il nome compare al centro dello schermo come su GBA e sparisce appena si muove.",
@@ -439,12 +446,34 @@ namespace Zelda_3_Launcher
             ["Only the HD improvements: graphics, effects and gameplay."] = "Solo le migliorie HD: grafica, effetti e gioco.",
             ["Convenience"] = "Comodità",
             ["Sword and items world interaction"] = "Spada e oggetti interazione ambiente",
+            ["Items refill resources"] = "Oggetti riempiono le risorse",
+            ["Palace 6 as on GBA"] = "Palazzo 6 come GBA",
+            ["Changes the Palace 6 puzzle to match the GBA version"] = "Modifica l'enigma del Palazzo 6 perché rispecchi la versione GBA",
+            ["Getting a magic item refills the magic meter, the Master Sword also the hearts; the Bow comes with 10 arrows"] =
+                "Ottenere un oggetto magico riempie la barra della magia, la Spada Suprema anche i cuori; l'Arco arriva con 10 frecce",
             ["Burn and freeze interaction"] = "Interazione bruciatura e congelamento",
-            ["The world physically reacts to fire and ice, and arrows stuck in walls stay there."] = "Il mondo reagisce fisicamente a fuoco e ghiaccio, e le frecce piantate nei muri restano.",
+            ["The world physically reacts to fire and ice: the lamp, the rods and the medallions burn or freeze bushes and grass."] =
+                "Il mondo reagisce fisicamente a fuoco e ghiaccio: Lanterna, bacchette e medaglioni bruciano o congelano cespugli ed erba.",
             ["Softens the intensity of the flashes, not how many there are (like the Virtual Console releases): the screen turns only slightly white during lightning, magic and boss flashes, the intro sword flash is dimmer and the Ether Medallion flickers more slowly."] =
                 "Attenua l'intensità dei lampi, non il loro numero (come nelle versioni Virtual Console): lo schermo diventa solo un po' bianco durante fulmini, magie e lampi dei boss, il lampo della spada nell'introduzione è più tenue e il Medaglione Etere lampeggia più lentamente.",
-            ["Swords and items behave like on GBA and interact with the world"] =
-                "Spade e oggetti si comportano come su GBA e interagiscono con l'ambiente",
+            ["Swords and items behave like on GBA: every sword collects hearts, rupees and other items, the Master Sword breaks signs, the Gold Sword breaks pots; arrows break pots, the hammer breaks bushes and small rocks, the lamp and the fire rod cut grass and bushes and the lamp flame hurts enemies."] =
+                "Spade e oggetti si comportano come su GBA: ogni spada raccoglie cuori, rupie e altri oggetti, la Spada Suprema rompe i cartelli, la Spada d'Oro i vasi; le frecce rompono i vasi, il martello cespugli e rocce piccole, Lanterna e Bacchetta del Fuoco tagliano erba e cespugli e la fiamma della Lanterna ferisce i nemici.",
+            ["Enemy damage as on GBA"] = "Danni dei nemici come su GBA",
+            ["Enemies take the damage of the GBA version: some change with Ether, Bombos, Quake, the hookshot and the magic powder. Takes effect when the game starts."] =
+                "I nemici subiscono i danni della versione GBA: alcuni cambiano con i Medaglioni dell'Etere, della Fiamma e Sisma, il Rampino e la Polvere Magica. Vale dall'avvio del gioco.",
+            ["Dive with the flippers"] = "Immersione con le pinne",
+            ["While swimming, B makes Link dive underwater for a moment, as on GBA."] =
+                "Mentre nuota, con B Link si immerge per un momento, come su GBA.",
+            ["Arrows stuck in walls"] = "Frecce piantate nei muri",
+            ["The arrows of Link and of the enemies stay stuck in walls instead of vanishing."] =
+                "Le frecce di Link e dei nemici restano piantate nei muri invece di sparire.",
+            ["Blond Link"] = "Link biondo",
+            ["Link with blond hair, as in the official artwork. A custom Link sprite is not changed."] =
+                "Link con i capelli biondi, come nei disegni ufficiali. Un Link personalizzato non viene cambiato.",
+            ["World interaction"] = "Interazione con l'ambiente",
+            ["Items and combat"] = "Oggetti e combattimento",
+            ["Dungeons"] = "Dungeon",
+            ["Saves and start"] = "Salvataggi e avvio",
             ["Items and controls"] = "Oggetti e comandi",
             ["Bug fixes"] = "Correzioni",
             ["Allows you to switch items with L/R but also allows you to assign items to X, Y, L, and R.\n\nIf X is assigned an item, select will now open the map. To save and quit, you will need to hit Select while in the item menu.\n\nIf L and/or R are assigned an item, quick item switching will be disabled."] =

@@ -14,7 +14,9 @@ namespace Zelda_3_Launcher
         // Opzione si/no: sezione, chiave, testo, spiegazione, commento nell'ini.
         // Hd: migliorie HD (0/1, toccate da "Attiva/Disattiva tutto"); le altre
         // sono opzioni del gioco originale e si riscrivono solo se cambiano.
-        private record BoolOption(string Section, string Key, string Text, string Tip, string Comment, bool Hd = true);
+        // From: chiave (nella stessa sezione) dell'opzione da cui questa e' stata
+        // divisa; se nell'ini manca, la voce parte con quel valore
+        private record BoolOption(string Section, string Key, string Text, string Tip, string Comment, bool Hd = true, string? From = null);
 
         private static readonly BoolOption
             HdText = new("Graphics", "HdText", "Sharp dialogue text",
@@ -48,16 +50,16 @@ namespace Zelda_3_Launcher
                 "When Link enters a dungeon from outside, its name appears in the middle of the screen like on GBA and disappears as soon as he moves.",
                 "Dungeon name in the middle of the screen when entering from outside, like on GBA"),
             ExtendedInventory = new("Features", "ExtendedInventory", "Extended inventory",
-                "The inventory now has 6 columns like on GBA.",
+                "The inventory has 6 columns like on GBA: four separate bottles, shovel and flute in separate slots.",
                 "Extended inventory with 6 columns like on GBA: four separate bottles, shovel and flute separate"),
             ImprovedWorldMap = new("Features", "ImprovedWorldMap", "Improved map",
                 "Place up to 24 stamps on the map so you don't forget anything. Press B to scroll faster and Y to go back to Link. The dungeon map shows the dungeon's name.",
                 "Improved world map: up to 24 markers with A, Y centers on Link, hold B to scroll faster; dungeon name on the dungeon map"),
             ImprovedDungeonMap = new("Features", "ImprovedDungeonMap", "Improved dungeon map",
-                "Move around the map faster.",
+                "Changing floor on the dungeon map is faster.",
                 "Improved dungeon map: faster floor change"),
             ProgressiveMap = new("Features", "ProgressiveMap", "Progressive map",
-                "The map starts hidden and is uncovered by the player.",
+                "The map starts covered by clouds and is uncovered area by area as Link visits it.",
                 "Progressive map: the map starts hidden and is uncovered by the player, one area at a time, where Link walks"),
             AreaAutosave = new("General", "AutosaveOnAreaChange", "Automatic save at area changes",
                 "Silently saves at every area change and when entering or leaving dungeons and houses. Load it from the in-game menu.",
@@ -74,11 +76,26 @@ namespace Zelda_3_Launcher
             MirrorToDarkworld = new("Features", "MirrorToDarkworld", "Mirror Teleports to Dark World",
                 "Magic Mirror works in both directions", "Magic Mirror works in both directions", false),
             SwordInteraction = new("Features", "SwordAndItemsInteraction", "Sword and items world interaction",
-                "Swords and items behave like on GBA and interact with the world",
+                "Swords and items behave like on GBA: every sword collects hearts, rupees and other items, the Master Sword breaks signs, the Gold Sword breaks pots; arrows break pots, the hammer breaks bushes and small rocks, the lamp and the fire rod cut grass and bushes and the lamp flame hurts enemies.",
                 "Swords and items behave like on GBA and interact with the world", false),
+            GbaDamage = new("Features", "GbaEnemyDamage", "Enemy damage as on GBA",
+                "Enemies take the damage of the GBA version: some change with Ether, Bombos, Quake, the hookshot and the magic powder. Takes effect when the game starts.",
+                "Enemy damage as on GBA (Ether, Bombos, Quake, hookshot, powder); applied when the game starts", From: "SwordAndItemsInteraction"),
+            FlipperDive = new("Features", "FlipperDive", "Dive with the flippers",
+                "While swimming, B makes Link dive underwater for a moment, as on GBA.",
+                "Dive with the flippers: while swimming, B makes Link dive for a moment (as on GBA)", From: "SwordAndItemsInteraction"),
+            ItemsRefill = new("Features", "ItemsRefillResources", "Items refill resources",
+                "Getting a magic item refills the magic meter, the Master Sword also the hearts; the Bow comes with 10 arrows",
+                "Getting a magic item refills the magic meter, the Master Sword also the hearts; the Bow comes with 10 arrows (as on GBA)", false),
+            IcePalaceGba = new("Features", "IcePalaceGba", "Palace 6 as on GBA",
+                "Changes the Palace 6 puzzle to match the GBA version",
+                "Palace 6 as on GBA: the block puzzle of the Ice Palace (rooms 0x9E and 0xBE) matches the GBA version", false),
             BurnFreeze = new("Features", "BurnAndFreezeInteraction", "Burn and freeze interaction",
-                "The world physically reacts to fire and ice, and arrows stuck in walls stay there.",
-                "The world physically reacts to fire and ice: lamp, rods and medallions burn or freeze bushes and grass; stuck arrows stay", false),
+                "The world physically reacts to fire and ice: the lamp, the rods and the medallions burn or freeze bushes and grass.",
+                "The world physically reacts to fire and ice: lamp, rods and medallions burn or freeze bushes and grass", false),
+            StuckArrows = new("Features", "StuckArrows", "Arrows stuck in walls",
+                "The arrows of Link and of the enemies stay stuck in walls instead of vanishing.",
+                "Arrows of Link and of the enemies stuck in walls stay there instead of vanishing", From: "BurnAndFreezeInteraction"),
             MoreBombs = new("Features", "MoreActiveBombs", "More Active Bombs",
                 "Can have 10 active bombs instead of 2", "10 active bombs instead of 2", false),
             LargerWallet = new("Features", "CarryMoreRupees", "Larger Wallet",
@@ -86,12 +103,12 @@ namespace Zelda_3_Launcher
             CancelBird = new("Features", "CancelBirdTravel", "Cancel Bird",
                 "Allows you to cancel bird travel by hitting the X button", "Cancel bird travel with X", false),
             BirdPoint9 = new("Features", "BirdTravelPoint9", "Bird travel point 9",
-                "Adds bird travel point 9 like the GBA version.",
+                "Adds the ninth bird travel point of the GBA version, on the eastern summit of Death Mountain. It appears once Turtle Rock is open.",
                 "Ninth bird travel point on the eastern summit of Death Mountain", false),
             NoLowHealthBeep = new("Features", "DisableLowHealthBeep", "Disable Low Heart Beep",
                 "Disables the beeping when you are low health", "No beep at low health", false),
             SaveHearts = new("Features", "SaveHeartsAndMagic", "Save hearts and magic state",
-                "Now when you save, the state of hearts and magic is remembered too",
+                "Save and quit remembers the hearts and magic you have instead of giving back the starting ones; on the file select, hearts not saved yet are black.",
                 "Save and quit remembers the current hearts and magic; unsaved hearts are black on the file select"),
             SkipIntro = new("Features", "SkipIntroOnKeypress", "Skip Intro w/ Keypress",
                 "Allows you to skip the intro by pressing a key", "Skip the intro with a key", false),
@@ -130,6 +147,12 @@ namespace Zelda_3_Launcher
             new("Graphics", "FxSpriteShadows", "Shadows of characters and enemies",
                 "Soft shadows under Link and enemies walking on the ground.",
                 "Soft shadows under Link and walking enemies"),
+            new("Graphics", "OfficialArtwork", "Official artwork look",
+                "Colors closer to the official artwork: Agahnim in red with blue skin, King of Hyrule in red in the ending; the palaces' floor medallion shows the six-pointed star of the Japanese version.",
+                "Red Agahnim, King of Hyrule in red, Japanese star on the palaces' floor medallion"),
+            new("Graphics", "BlondLink", "Blond Link",
+                "Link with blond hair, as in the official artwork. A custom Link sprite is not changed.",
+                "Blond Link as in the official artwork (not applied to a custom Link)", From: "OfficialArtwork"),
         };
 
         // Lingue disponibili: testo nell'elenco, sigla per zelda3.ini, nome della ROM
@@ -609,16 +632,15 @@ namespace Zelda_3_Launcher
             Toggle(hud, XlrInHud);
             Toggle(hud, DungeonNames);
             Toggle(hud, ButtonHints);
+            Toggle(hud, MaxInYellow);
 
-            var saves = AddCard(p, 1, "Saves and convenience");
+            var saves = AddCard(p, 1, "Saves and start");
             Toggle(saves, AreaAutosave);
             stepSlots = Step(saves, "Rotating automatic saves", 1, 9, 1, "How many automatic saves to keep (auto0.sav, auto1.sav, ...).");
             options[AreaAutosave].CheckedChanged += (s, e) => stepSlots.Enabled = options[AreaAutosave].Checked;
             resume = Toggle(saves, "Resume where you left off", "Saves the game state when you quit and reloads it at the next start.");
             Toggle(saves, SkipIntro);
             Toggle(saves, SaveHearts);
-            Toggle(saves, NoLowHealthBeep);
-            Toggle(saves, MaxInYellow);
         }
 
         private void BuildItems()
@@ -634,15 +656,24 @@ namespace Zelda_3_Launcher
 
             var travel = AddCard(p, 0, "Movement and travel");
             Toggle(travel, TurnWhileDashing);
+            Toggle(travel, FlipperDive);
+            Toggle(travel, MirrorToDarkworld);
             Toggle(travel, CancelBird);
             Toggle(travel, BirdPoint9);
 
-            var world = AddCard(p, 1, "World and items");
-            Toggle(world, MirrorToDarkworld);
+            var dungeons = AddCard(p, 0, "Dungeons");
+            Toggle(dungeons, IcePalaceGba);
+
+            var world = AddCard(p, 1, "World interaction");
             Toggle(world, SwordInteraction);
             Toggle(world, BurnFreeze);
-            Toggle(world, MoreBombs);
-            Toggle(world, LargerWallet);
+            Toggle(world, StuckArrows);
+
+            var items = AddCard(p, 1, "Items and combat");
+            Toggle(items, ItemsRefill);
+            Toggle(items, GbaDamage);
+            Toggle(items, MoreBombs);
+            Toggle(items, LargerWallet);
 
             var fixes = AddCard(p, 1, "Bug fixes");
             Toggle(fixes, MiscFixes);
@@ -664,6 +695,7 @@ namespace Zelda_3_Launcher
                 "Mono: uniform audio output across all speakers. Stereo: outputs audio to the left or right speakers based where the sound is generated on screen.");
             foreach (Control c in output.Controls) if (c != enableAudio) audioRows.Add(c);
             enableAudio.CheckedChanged += (s, e) => UpdateAudioState();
+            Toggle(output, NoLowHealthBeep);
 
             var msu = AddCard(p, 1, "MSU music");
             enableMsu = Toggle(msu, "Enable MSU", "Enable MSU support for audio.\n\nSupports MSU or MSU Deluxe in PCM or OPUZ format.");
@@ -933,7 +965,12 @@ namespace Zelda_3_Launcher
             var ini = IniFile.Load(iniFile);
 
             foreach (var (o, t) in options)
-                t.Checked = o.Hd ? GetInt(ini, o.Section, o.Key, 0) != 0 : GetBool(ini, o.Section, o.Key);
+            {
+                if (o.From != null && Get(ini, o.Section, o.Key) == "")
+                    t.Checked = GetBool(ini, o.Section, o.From);
+                else
+                    t.Checked = o.Hd ? GetInt(ini, o.Section, o.Key, 0) != 0 : GetBool(ini, o.Section, o.Key);
+            }
             ApplyItemSwitchRule();
             comboCamera.SelectedIndex = Math.Clamp(GetInt(ini, "Graphics", "SmoothCamera", 0), 0, 3);
             comboTextSpeed.SelectedIndex = Math.Clamp(GetInt(ini, "Features", "TextSpeed", 0), 0, 2);
