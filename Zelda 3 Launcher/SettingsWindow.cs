@@ -119,7 +119,10 @@ namespace Zelda_3_Launcher
                 "Miscellaneous bug fixes", "Miscellaneous minor bug fixes", false),
             GameFixes = new("Features", "GameChangingBugFixes", "Game Changing Bug Fixes",
                 "Some bug fixes that are significant enough to impact game behavior",
-                "Bug fixes that change game behavior", false);
+                "Bug fixes that change game behavior", false),
+            BlondLink = new("Graphics", "BlondLink", "Blond Link",
+                "Link with blond hair, as in the official artwork. Custom Link sprites can't be used while it is on.",
+                "Blond Link as in the official artwork (custom Link sprites are turned off)", From: "OfficialArtwork");
 
         private static readonly BoolOption[] kEffects =
         {
@@ -150,9 +153,7 @@ namespace Zelda_3_Launcher
             new("Graphics", "OfficialArtwork", "Official artwork look",
                 "Colors closer to the official artwork: Agahnim in red with blue skin, King of Hyrule in red in the ending; the palaces' floor medallion shows the six-pointed star of the Japanese version.",
                 "Red Agahnim, King of Hyrule in red, Japanese star on the palaces' floor medallion"),
-            new("Graphics", "BlondLink", "Blond Link",
-                "Link with blond hair, as in the official artwork. A custom Link sprite is not changed.",
-                "Blond Link as in the official artwork (not applied to a custom Link)", From: "OfficialArtwork"),
+            BlondLink,
         };
 
         // Lingue disponibili: testo nell'elenco, sigla per zelda3.ini, nome della ROM
@@ -594,7 +595,7 @@ namespace Zelda_3_Launcher
                 "Follows Link with a slight delay instead of staying locked to him.");
             Toggle(hd, HighRefresh);
             Toggle(hd, Lighting);
-            fourSwords = Toggle(hd, "Four Swords shader", "Painted look in the style of Four Swords Adventures (uses OpenGL). The HUD, text and characters stay sharp.");
+            fourSwords = Toggle(hd, "Four Swords Adventures shader", "Painted look in the style of Four Swords Adventures (uses OpenGL). The HUD, text and characters stay sharp.");
             fourSwords.CheckedChanged += (s, e) =>
             {
                 if (fourSwords.Checked) customShader.Checked = false;
@@ -783,14 +784,15 @@ namespace Zelda_3_Launcher
                 "Downloads the latest version, puts back the game files changed by hand (it asks first) and rebuilds zelda3.exe. Settings and saves are kept.");
 
             var files = AddCard(p, 1, "Custom files");
-            customLink = Toggle(files, "Custom Link Sprites", "Enables custom ZSPR Link sprites");
+            customLink = Toggle(files, "Custom Link Sprites", "Enables custom ZSPR Link sprites. Not available with Blond Link (Graphics).");
             rowLink = PathField(files, "", out textLink, "The path where your .zspr file is located", BrowseSprite);
             Link(files, "", "Click here for some custom sprites you can download",
                 ("Custom Sprite Downloads", "https://snesrev.github.io/sprites-gfx/snes/zelda3/link/"));
             customShader = Toggle(files, "Use GLSL Shader", "This will enable the use of GLSL shaders.\r\n\r\nThis is only supported by the OpenGL renderer.");
             rowShader = PathField(files, "", out textShader, "The path where your .glsl or .slslp file is located", BrowseShader);
             Link(files, "", "Shaders you can download", ("Suggested Shaders", "https://github.com/snesrev/glsl-shaders"));
-            customLink.CheckedChanged += (s, e) => rowLink.Enabled = customLink.Checked;
+            customLink.CheckedChanged += (s, e) => ApplyBlondLinkRule();
+            options[BlondLink].CheckedChanged += (s, e) => ApplyBlondLinkRule();
             customShader.CheckedChanged += (s, e) =>
             {
                 if (customShader.Checked) fourSwords.Checked = false;
@@ -853,6 +855,16 @@ namespace Zelda_3_Launcher
             options[ItemSwitchLimit].Enabled = options[XlrInHud].Enabled = on;
             if (!on)
                 options[XlrInHud].Checked = false;
+        }
+
+        // Link biondo ridisegna Link sopra quello originale: acceso lui, il Link
+        // personalizzato si spegne e non si puo' scegliere
+        private void ApplyBlondLinkRule()
+        {
+            bool blond = options[BlondLink].Checked;
+            if (blond) customLink.Checked = false;
+            customLink.Enabled = !blond;
+            rowLink.Enabled = customLink.Checked;
         }
 
         private void SetAllHd(bool on)
@@ -1031,7 +1043,7 @@ namespace Zelda_3_Launcher
             var link = ini.Sections.ContainsSection("Graphics") ? ini["Graphics"]["LinkGraphics"] : null;
             customLink.Checked = link != null;
             textLink.Text = link ?? "";
-            rowLink.Enabled = customLink.Checked;
+            ApplyBlondLinkRule();
 
             var shader = Get(ini, "Graphics", "Shader");
             fourSwords.Checked = IsFourSwordsShader(shader);

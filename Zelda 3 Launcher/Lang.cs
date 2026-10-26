@@ -244,7 +244,8 @@ namespace Zelda_3_Launcher
             ["The path where your .glsl or .slslp file is located"] = "Il percorso del file .glsl o .glslp",
             ["Opens a dialog for selecting your ZSPR custom sprite file."] = "Apre una finestra per scegliere il file ZSPR dello sprite.",
             ["The path where your .zspr file is located"] = "Il percorso del file .zspr",
-            ["Enables custom ZSPR Link sprites"] = "Attiva gli sprite ZSPR personalizzati di Link",
+            ["Enables custom ZSPR Link sprites. Not available with Blond Link (Graphics)."] =
+                "Attiva gli sprite ZSPR personalizzati di Link. Non disponibile con Link biondo (Grafica).",
             ["Click here for some custom sprites you can download"] = "Clicca qui per scaricare sprite personalizzati",
             ["Rendering software used. SDL-software rendering may give better performance on Raspberry Pi"] =
                 "Il sistema di rendering usato. SDL-Software può andare meglio su Raspberry Pi",
@@ -435,7 +436,7 @@ namespace Zelda_3_Launcher
                 "Quando Link entra in un dungeon dall'esterno, il nome compare al centro dello schermo come su GBA e sparisce appena si muove.",
             ["Automatic save"] = "Salvataggio automatico",
             ["Enable all"] = "Attiva tutto",
-            ["Four Swords shader"] = "Shader Four Swords",
+            ["Four Swords Adventures shader"] = "Shader Four Swords Adventures",
             ["Painted look in the style of Four Swords Adventures (uses OpenGL). The HUD, text and characters stay sharp."] =
                 "Aspetto dipinto in stile Four Swords Adventures (usa OpenGL). HUD, testi e personaggi restano nitidi.",
             ["Disable all"] = "Disattiva tutto",
@@ -467,8 +468,8 @@ namespace Zelda_3_Launcher
             ["The arrows of Link and of the enemies stay stuck in walls instead of vanishing."] =
                 "Le frecce di Link e dei nemici restano piantate nei muri invece di sparire.",
             ["Blond Link"] = "Link biondo",
-            ["Link with blond hair, as in the official artwork. A custom Link sprite is not changed."] =
-                "Link con i capelli biondi, come nei disegni ufficiali. Un Link personalizzato non viene cambiato.",
+            ["Link with blond hair, as in the official artwork. Custom Link sprites can't be used while it is on."] =
+                "Link con i capelli biondi, come nei disegni ufficiali. Finché è acceso non si possono usare Link personalizzati.",
             ["World interaction"] = "Interazione con l'ambiente",
             ["Items and combat"] = "Oggetti e combattimento",
             ["Dungeons"] = "Dungeon",
