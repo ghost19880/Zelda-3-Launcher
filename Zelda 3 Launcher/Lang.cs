@@ -434,10 +434,6 @@ namespace Zelda_3_Launcher
             ["When Link enters a dungeon from outside, its name appears in the middle of the screen like on GBA and disappears as soon as he moves."] =
                 "Quando Link entra in un dungeon dall'esterno, il nome compare al centro dello schermo come su GBA e sparisce appena si muove.",
             ["Automatic save"] = "Salvataggio automatico",
-            ["Silently saves at every area change and when entering or leaving dungeons and houses. Load it from the in-game menu."] =
-                "Salva in silenzio a ogni cambio di area e a ogni ingresso o uscita da labirinti e case. Si carica dal menu del gioco.",
-            ["Rotating automatic saves"] = "Salvataggi automatici a rotazione",
-            ["How many automatic saves to keep (auto0.sav, auto1.sav, ...)."] = "Quanti salvataggi automatici tenere (auto0.sav, auto1.sav, ...).",
             ["Enable all"] = "Attiva tutto",
             ["Four Swords shader"] = "Shader Four Swords",
             ["Painted look in the style of Four Swords Adventures (uses OpenGL). The HUD, text and characters stay sharp."] =
@@ -461,6 +457,9 @@ namespace Zelda_3_Launcher
             ["Enemy damage as on GBA"] = "Danni dei nemici come su GBA",
             ["Enemies take the damage of the GBA version: some change with Ether, Bombos, Quake, the hookshot and the magic powder. Takes effect when the game starts."] =
                 "I nemici subiscono i danni della versione GBA: alcuni cambiano con i Medaglioni dell'Etere, della Fiamma e Sisma, il Rampino e la Polvere Magica. Vale dall'avvio del gioco.",
+            ["Hurricane Spin"] = "Giravolta Tornado",
+            ["As on GBA, once you have the Bug-Catching Net: hold the sword charge longer and the spin attack becomes a Hurricane Spin. Press B while spinning to spin again and move with the D-pad; each spin costs magic."] =
+                "Come su GBA, una volta ottenuto il Retino per Farfalle: tenendo la carica della spada più a lungo, il colpo rotante diventa la Giravolta Tornado. Premi B mentre giri per fare un altro giro e muoverti con la croce; ogni giro costa magia.",
             ["Dive with the flippers"] = "Immersione con le pinne",
             ["While swimming, B makes Link dive underwater for a moment, as on GBA."] =
                 "Mentre nuota, con B Link si immerge per un momento, come su GBA.",
@@ -539,7 +538,6 @@ namespace Zelda_3_Launcher
             ["Resume where you left off"] = "Riprendi da dove avevi lasciato",
             ["Saves the game state when you quit and reloads it at the next start."] =
                 "Salva lo stato del gioco quando esci e lo ricarica al prossimo avvio.",
-            ["Automatic save at area changes"] = "Salvataggio automatico ai cambi di area",
             ["Frequency"] = "Frequenza",
             ["Buffer"] = "Buffer",
             ["Channels"] = "Canali",

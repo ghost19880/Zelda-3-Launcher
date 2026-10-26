@@ -61,9 +61,6 @@ namespace Zelda_3_Launcher
             ProgressiveMap = new("Features", "ProgressiveMap", "Progressive map",
                 "The map starts covered by clouds and is uncovered area by area as Link visits it.",
                 "Progressive map: the map starts hidden and is uncovered by the player, one area at a time, where Link walks"),
-            AreaAutosave = new("General", "AutosaveOnAreaChange", "Automatic save at area changes",
-                "Silently saves at every area change and when entering or leaving dungeons and houses. Load it from the in-game menu.",
-                "Automatic save at every area change (saves/auto0.sav, auto1.sav, ...)"),
 
             ItemSwitch = new("Features", "ItemSwitchLR", "Advanced Item Selection",
                 "Allows you to switch items with L/R but also allows you to assign items to X, Y, L, and R.\n\nIf X is assigned an item, select will now open the map. To save and quit, you will need to hit Select while in the item menu.\n\nIf L and/or R are assigned an item, quick item switching will be disabled.",
@@ -84,6 +81,9 @@ namespace Zelda_3_Launcher
             FlipperDive = new("Features", "FlipperDive", "Dive with the flippers",
                 "While swimming, B makes Link dive underwater for a moment, as on GBA.",
                 "Dive with the flippers: while swimming, B makes Link dive for a moment (as on GBA)", From: "SwordAndItemsInteraction"),
+            HurricaneSpin = new("Features", "HurricaneSpin", "Hurricane Spin",
+                "As on GBA, once you have the Bug-Catching Net: hold the sword charge longer and the spin attack becomes a Hurricane Spin. Press B while spinning to spin again and move with the D-pad; each spin costs magic.",
+                "Hurricane Spin as on GBA, once you have the Bug-Catching Net: hold the charge longer, press B while spinning to spin again (costs magic)", From: "SwordAndItemsInteraction"),
             ItemsRefill = new("Features", "ItemsRefillResources", "Items refill resources",
                 "Getting a magic item refills the magic meter, the Master Sword also the hearts; the Bow comes with 10 arrows",
                 "Getting a magic item refills the magic meter, the Master Sword also the hearts; the Bow comes with 10 arrows (as on GBA)", false),
@@ -225,7 +225,7 @@ namespace Zelda_3_Launcher
         private DarkComboBox comboCamera = null!, comboTextSpeed = null!, comboLanguage = null!, comboDisplay = null!,
             comboWindowSize = null!, comboRender = null!, comboAspect = null!, comboFrequency = null!,
             comboSamples = null!, comboChannels = null!, comboMsu = null!;
-        private Stepper stepSlots = null!, stepScale = null!, stepMsuVolume = null!;
+        private Stepper stepScale = null!, stepMsuVolume = null!;
         private TextBox textWidth = null!, textHeight = null!, textLink = null!, textShader = null!, textMsu = null!;
         private FieldRow rowCustomSize = null!, rowLink = null!, rowShader = null!, rowMsuFolder = null!;
         private readonly List<Control> audioRows = new(), msuRows = new();
@@ -635,9 +635,6 @@ namespace Zelda_3_Launcher
             Toggle(hud, MaxInYellow);
 
             var saves = AddCard(p, 1, "Saves and start");
-            Toggle(saves, AreaAutosave);
-            stepSlots = Step(saves, "Rotating automatic saves", 1, 9, 1, "How many automatic saves to keep (auto0.sav, auto1.sav, ...).");
-            options[AreaAutosave].CheckedChanged += (s, e) => stepSlots.Enabled = options[AreaAutosave].Checked;
             resume = Toggle(saves, "Resume where you left off", "Saves the game state when you quit and reloads it at the next start.");
             Toggle(saves, SkipIntro);
             Toggle(saves, SaveHearts);
@@ -672,6 +669,7 @@ namespace Zelda_3_Launcher
             var items = AddCard(p, 1, "Items and combat");
             Toggle(items, ItemsRefill);
             Toggle(items, GbaDamage);
+            Toggle(items, HurricaneSpin);
             Toggle(items, MoreBombs);
             Toggle(items, LargerWallet);
 
@@ -974,8 +972,6 @@ namespace Zelda_3_Launcher
             ApplyItemSwitchRule();
             comboCamera.SelectedIndex = Math.Clamp(GetInt(ini, "Graphics", "SmoothCamera", 0), 0, 3);
             comboTextSpeed.SelectedIndex = Math.Clamp(GetInt(ini, "Features", "TextSpeed", 0), 0, 2);
-            stepSlots.Value = Math.Clamp(GetInt(ini, "General", "AutosaveSlots", 3), 1, 9);
-            stepSlots.Enabled = options[AreaAutosave].Checked;
 
             // Generale
             resume.Checked = GetBool(ini, "General", "Autosave");
@@ -1082,8 +1078,6 @@ namespace Zelda_3_Launcher
                 "Smooth camera: 0 = off, 1 = light, 2 = medium, 3 = strong");
             Set(ini, "Features", "TextSpeed", comboTextSpeed.SelectedIndex.ToString(),
                 "Dialogue speed: 0 = original, 1 = fast holding A or B, 2 = instant");
-            Set(ini, "General", "AutosaveSlots", stepSlots.Value.ToString(),
-                "How many automatic saves to keep in rotation (1-9)");
 
             // Generale
             Set(ini, "General", "Autosave", Bit(resume.Checked));
