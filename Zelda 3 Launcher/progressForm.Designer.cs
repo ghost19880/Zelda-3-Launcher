@@ -143,7 +143,8 @@ namespace Zelda_3_Launcher
                             IniFile.WriteAtomic(iniFile, File.ReadAllText(iniBackup, IniFile.kBytes));
                             if (defaultsText.Length > 0)
                             {
-                                try { IniMerge.AddMissingKeys(iniFile, defaultsText); } catch { }
+                                // le voci nuove arrivano spente, come nell'ini creato dal launcher
+                                try { IniMerge.AddMissingKeys(iniFile, IniFile.LauncherDefaults(defaultsText)); } catch { }
                             }
                         }
                     }
@@ -157,6 +158,10 @@ namespace Zelda_3_Launcher
                             {
                                 OnCheckoutProgress = (clonePath, completed, total) => CheckoutProgress(clonePath, completed, total)
                             });
+                        // prima installazione: tutte le opzioni spente, sceglie l'utente
+                        var ini = Path.Combine(repoDir, "zelda3.ini");
+                        if (File.Exists(ini))
+                            IniFile.WriteAtomic(ini, IniFile.LauncherDefaults(File.ReadAllText(ini, IniFile.kBytes)));
                     });
                 }
             }

@@ -253,6 +253,69 @@ namespace Zelda_3_Launcher
             return string.Join("\n", result);
         }
 
+        // Nell'ini che crea il launcher (prima installazione, ripristino, voci
+        // nuove dopo un aggiornamento) tutte le opzioni partono spente: e'
+        // l'utente a scegliere cosa usare. Restano solo queste, con il loro
+        // valore (null = quello dell'ini del gioco). La lingua la mette Prepare.
+        private static readonly Dictionary<string, string?> kLauncherKeep = new(StringComparer.OrdinalIgnoreCase)
+        {
+            ["Graphics/Fullscreen"] = "0",          // finestra
+            ["Graphics/WindowSize"] = "Auto",
+            ["Graphics/WindowScale"] = "3",
+            ["Graphics/OutputMethod"] = "OpenGL",
+            ["Graphics/NewRenderer"] = "1",      // PPU ottimizzata: senza, niente effetti HD
+            ["General/ExtendedAspectRatio"] = "4:3, unchanged_sprites",  // sprite invariati
+            ["Graphics/EnhancedMode7"] = "1",
+            ["Features/SkipIntroOnKeypress"] = "1",
+            ["Features/CancelBirdTravel"] = "1",
+            ["Graphics/SmoothCamera"] = "0",
+            ["Graphics/Shader"] = "",
+            ["Sound/EnableAudio"] = "1",
+            ["Sound/AudioFreq"] = null,
+            ["Sound/AudioChannels"] = null,
+            ["Sound/AudioSamples"] = null,
+            ["Sound/MSUPath"] = null,
+            ["Sound/MSUVolume"] = null,
+            ["General/Language"] = null,
+        };
+
+        // Spegne le opzioni di [General], [Graphics], [Sound] e [Features]
+        // (numeri a 0, true/false a false); tasti e commenti restano come sono.
+        // "Scurisci in pausa" e' nei tasti (PauseDimmed) e resta acceso.
+        public static string LauncherDefaults(string text)
+        {
+            var lines = text.Split('\n');
+            string section = "";
+            for (int i = 0; i < lines.Length; i++)
+            {
+                var line = lines[i].TrimEnd('\r');
+                var cr = lines[i].Length != line.Length ? "\r" : "";
+                var c = Clean(line).Trim();
+                if (IsSection(c)) { section = c.Substring(1, c.Length - 2).Trim(); continue; }
+                if (c.Length == 0) continue;
+                if (section != "General" && section != "Graphics" && section != "Sound" && section != "Features") continue;
+                int eq = c.IndexOf('=');
+                var key = c.Substring(0, eq).Trim();
+                var value = c.Substring(eq + 1).Trim();
+                string? v;
+                if (kLauncherKeep.TryGetValue(section + "/" + key, out var keep))
+                    v = keep;
+                else if (int.TryParse(value, out _))
+                    v = "0";
+                else if (value.Equals("true", StringComparison.OrdinalIgnoreCase) || value.Equals("false", StringComparison.OrdinalIgnoreCase) ||
+                         value.Contains("deluxe", StringComparison.OrdinalIgnoreCase) || value.Contains("opuz", StringComparison.OrdinalIgnoreCase))
+                    v = "false";  // EnableMSU
+                else
+                    v = null;
+                if (v != null && v != value)
+                {
+                    var indent = line.Substring(0, line.Length - line.TrimStart().Length);
+                    lines[i] = indent + key + " = " + v + cr;
+                }
+            }
+            return string.Join("\n", lines);
+        }
+
         // Sistema l'ini dell'utente sul posto, senza spostarlo
         public static void PrepareInPlace(string path)
         {
@@ -298,7 +361,7 @@ namespace Zelda_3_Launcher
                     "No Connection", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
-            WriteAtomic(path, Prepare(defaults));
+            WriteAtomic(path, Prepare(LauncherDefaults(defaults)));
             return true;
         }
 

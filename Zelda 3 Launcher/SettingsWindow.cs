@@ -141,6 +141,9 @@ namespace Zelda_3_Launcher
             new("Graphics", "FxRain", "Improved rain and lightning",
                 "Denser rain with splashes; a single soft flash instead of the quick flickers.",
                 "Denser rain, splashes and soft lightning"),
+            new("Graphics", "FxForestFog", "Improved fog",
+                "The Lost Woods fog, before the Master Sword, becomes soft drifting veils with depth: thicker in some places, thinner around Link.",
+                "Lost Woods fog before the Master Sword: layered, drifting fog with parallax, thicker in some places, thinner around Link"),
             new("Graphics", "FxWater", "Realistic water and waterfalls",
                 "Water as in Four Swords Adventures: depth, foam along the shores and around rocks, moving surface; flowing waterfalls with mist.",
                 "Water with depth, foam and moving surface; flowing waterfalls with mist"),
@@ -829,16 +832,32 @@ namespace Zelda_3_Launcher
 
         // Senza la PPU ottimizzata il vecchio renderer disegna solo 256 pixel (lo
         // schermo largo resterebbe nero ai lati) e la mappa del mondo a bassa
-        // risoluzione: Mode 7 migliorato e rapporto d'aspetto largo si spengono
+        // risoluzione: Mode 7 migliorato e rapporto d'aspetto largo si spengono.
+        // Anche gli effetti HD, la telecamera fluida, la fluidita' oltre i 60 Hz,
+        // il mondo continuo e le transizioni rapide si spengono e non si possono
+        // accendere: lavorano sull'immagine sapendo da quale strato viene ogni
+        // pixel (HUD, sprite, acqua) e spostano la vista, cose che il vecchio
+        // renderer non fa (lo stesso fa il gioco, ApplyConfigRules)
+        private bool NeedsOptimizedPpu(BoolOption o) =>
+            o.Key.StartsWith("Fx") || o == HighRefresh || o == Lighting || o == ContinuousWorld || o == FastTransitions;
+
         private void ApplyRendererRule()
         {
             bool on = ppu.Checked;
-            mode7.Enabled = comboAspect.Enabled = on;
+            mode7.Enabled = comboAspect.Enabled = comboCamera.Enabled = on;
             if (!on)
             {
                 mode7.Checked = false;
                 comboAspect.SelectedIndex = 0;
+                comboCamera.SelectedIndex = 0;
             }
+            foreach (var (o, t) in options)
+            {
+                if (!NeedsOptimizedPpu(o)) continue;
+                t.Enabled = on;
+                if (!on) t.Checked = false;
+            }
+            ApplyAspectRule();
         }
 
         // I suggerimenti dei tasti stanno nelle fasce laterali dello schermo largo:
@@ -873,6 +892,8 @@ namespace Zelda_3_Launcher
 
         private void SetAllHd(bool on)
         {
+            // gli effetti HD hanno bisogno della PPU ottimizzata
+            if (on) ppu.Checked = true;
             foreach (var (o, t) in options)
                 if (o.Hd) t.Checked = on;
             ApplyItemSwitchRule();

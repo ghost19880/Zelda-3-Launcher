@@ -394,6 +394,9 @@ namespace Zelda_3_Launcher
             ["Improved rain and lightning"] = "Pioggia e lampi migliorati",
             ["Denser rain with splashes; a single soft flash instead of the quick flickers."] =
                 "Pioggia più fitta con spruzzi; un solo lampo morbido al posto dei lampeggi rapidi.",
+            ["Improved fog"] = "Nebbia migliorata",
+            ["The Lost Woods fog, before the Master Sword, becomes soft drifting veils with depth: thicker in some places, thinner around Link."] =
+                "La nebbia del Bosco Perduto, prima della Spada Suprema, diventa fatta di veli morbidi che scorrono con profondità: più fitta in certi punti, più rada attorno a Link.",
             ["Realistic water and waterfalls"] = "Acqua e cascate realistiche",
             ["Water as in Four Swords Adventures: depth, foam along the shores and around rocks, moving surface; flowing waterfalls with mist."] =
                 "Acqua come in Four Swords Adventures: profondità, schiuma lungo le rive e attorno ai sassi, superficie che si muove; cascate che scorrono con nebbia.",
@@ -434,15 +437,15 @@ namespace Zelda_3_Launcher
                 "L'inventario è su 6 colonne come su GBA: quattro bottiglie separate, pala e ocarina in posti separati.",
             ["Improved map"] = "Mappa migliorata",
             ["Place up to 24 stamps on the map so you don't forget anything. Press B to scroll faster and Y to go back to Link. The dungeon map shows the dungeon's name."] =
-                "Inserisci fino a 24 timbri sulla mappa per non dimenticare niente. Premi B per scorrere più veloce e Y per tornare su Link. La mappa del dungeon mostra il nome del dungeon.",
-            ["Improved dungeon map"] = "Mappa dungeon migliorata",
-            ["Changing floor on the dungeon map is faster."] = "Sulla mappa del dungeon il cambio di piano è più rapido.",
+                "Inserisci fino a 24 timbri sulla mappa per non dimenticare niente. Premi B per scorrere più veloce e Y per tornare su Link. La mappa del labirinto mostra il nome del labirinto.",
+            ["Improved dungeon map"] = "Mappa dei labirinti migliorata",
+            ["Changing floor on the dungeon map is faster."] = "Sulla mappa del labirinto il cambio di piano è più rapido.",
             ["Progressive map"] = "Mappa progressiva",
             ["The map starts covered by clouds and is uncovered area by area as Link visits it."] =
                 "La mappa all'inizio è coperta dalle nuvole e si scopre un'area alla volta, man mano che Link la visita.",
-            ["Dungeon names"] = "Nomi dei dungeon",
+            ["Dungeon names"] = "Nomi dei labirinti",
             ["When Link enters a dungeon from outside, its name appears in the middle of the screen like on GBA and disappears as soon as he moves."] =
-                "Quando Link entra in un dungeon dall'esterno, il nome compare al centro dello schermo come su GBA e sparisce appena si muove.",
+                "Quando Link entra in un labirinto dall'esterno, il nome compare al centro dello schermo come su GBA e sparisce appena si muove.",
             ["Automatic save"] = "Salvataggio automatico",
             ["Enable all"] = "Attiva tutto",
             ["Four Swords Adventures shader"] = "Shader Four Swords Adventures",
@@ -484,7 +487,7 @@ namespace Zelda_3_Launcher
                 "Link con i capelli biondi, come nei disegni ufficiali. Finché è acceso non si possono usare Link personalizzati.",
             ["World interaction"] = "Interazione con l'ambiente",
             ["Items and combat"] = "Oggetti e combattimento",
-            ["Dungeons"] = "Dungeon",
+            ["Dungeons"] = "Labirinti",
             ["Saves and start"] = "Salvataggi e avvio",
             ["Items and controls"] = "Oggetti e comandi",
             ["Bug fixes"] = "Correzioni",
