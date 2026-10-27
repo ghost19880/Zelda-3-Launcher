@@ -229,8 +229,9 @@ namespace Zelda_3_Launcher
             "#Controls = Up, Down, Left, Right, Right Shift, Return, x, w, s, q, c, v",
         };
 
-        // "# Language = de" diventa "Language = us" solo se nel file non c'e' gia'
-        // una lingua: altrimenti nascerebbero due righe Language
+        // "# Language = de" diventa "Language = us" ("it" con Windows in italiano)
+        // solo se nel file non c'e' gia' una lingua: altrimenti nascerebbero due
+        // righe Language
         public static string Prepare(string text)
         {
             // si divide solo su '\n': ogni riga tiene il suo '\r' (fine riga misti)
@@ -243,7 +244,7 @@ namespace Zelda_3_Launcher
                 var cr = raw.Length != line.Length ? "\r" : "";
                 if (line == "# Language = de")
                 {
-                    if (!hasLanguage) result.Add("Language = us" + cr);
+                    if (!hasLanguage) result.Add("Language = " + (Lang.WindowsItalian ? "it" : "us") + cr);
                     hasLanguage = true;
                     continue;
                 }

@@ -11,6 +11,11 @@ namespace Zelda_3_Launcher
     {
         public static bool Italian;
 
+        // Windows in italiano: senza impostazioni (primo avvio, ini nuovo) launcher
+        // e dialoghi partono in italiano; per tutti gli altri in inglese
+        public static bool WindowsItalian =>
+            System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "it";
+
         // Legge la lingua da zelda3.ini
         public static void Load()
         {
@@ -18,7 +23,11 @@ namespace Zelda_3_Launcher
             try
             {
                 var iniFile = IniFile.UserIni;
-                if (!File.Exists(iniFile)) return;
+                if (!File.Exists(iniFile))
+                {
+                    Italian = WindowsItalian;
+                    return;
+                }
                 var ini = IniFile.Load(iniFile);
                 Italian = string.Equals(ini["General"]["Language"]?.Trim(), "it", StringComparison.OrdinalIgnoreCase);
             }
@@ -444,6 +453,9 @@ namespace Zelda_3_Launcher
             ["Convenience"] = "Comodità",
             ["Sword and items world interaction"] = "Spada e oggetti interazione ambiente",
             ["Items refill resources"] = "Oggetti riempiono le risorse",
+            ["Gold Medicine"] = "Pozione d'oro",
+            ["From BS Zelda: a fourth cauldron in the witch's shop, 50 rupees, one per day (computer clock, back at midnight). Like the blue medicine it refills life and magic, and for 10 minutes the Spin Attack charges twice as fast."] =
+                "Da BS Zelda: un quarto calderone nella bottega della strega, 50 rupie, una al giorno (orologio del computer, torna a mezzanotte). Come la pozione blu ridà energia e Magia, e per 10 minuti l'attacco rotante si carica al doppio della velocità.",
             ["Palace 6 as on GBA"] = "Palazzo 6 come GBA",
             ["Changes the Palace 6 puzzle to match the GBA version"] = "Modifica l'enigma del Palazzo 6 perché rispecchi la versione GBA",
             ["Getting a magic item refills the magic meter, the Master Sword also the hearts; the Bow comes with 10 arrows"] =

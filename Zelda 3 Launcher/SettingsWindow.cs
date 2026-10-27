@@ -87,6 +87,9 @@ namespace Zelda_3_Launcher
             ItemsRefill = new("Features", "ItemsRefillResources", "Items refill resources",
                 "Getting a magic item refills the magic meter, the Master Sword also the hearts; the Bow comes with 10 arrows",
                 "Getting a magic item refills the magic meter, the Master Sword also the hearts; the Bow comes with 10 arrows (as on GBA)", false),
+            GoldPotion = new("Features", "GoldPotion", "Gold Medicine",
+                "From BS Zelda: a fourth cauldron in the witch's shop, 50 rupees, one per day (computer clock, back at midnight). Like the blue medicine it refills life and magic, and for 10 minutes the Spin Attack charges twice as fast.",
+                "Gold Medicine from BS Zelda: a fourth cauldron in the witch's shop (50 rupees, one per day); refills life and magic, the Spin Attack charges twice as fast for 10 minutes", false),
             IcePalaceGba = new("Features", "IcePalaceGba", "Palace 6 as on GBA",
                 "Changes the Palace 6 puzzle to match the GBA version",
                 "Palace 6 as on GBA: the block puzzle of the Ice Palace (rooms 0x9E and 0xBE) matches the GBA version", false),
@@ -669,6 +672,7 @@ namespace Zelda_3_Launcher
 
             var items = AddCard(p, 1, "Items and combat");
             Toggle(items, ItemsRefill);
+            Toggle(items, GoldPotion);
             Toggle(items, GbaDamage);
             Toggle(items, HurricaneSpin);
             Toggle(items, MoreBombs);
