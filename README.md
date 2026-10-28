@@ -5,14 +5,14 @@ A fork of [RadzPrower/Zelda-3-Launcher](https://github.com/RadzPrower/Zelda-3-La
 > 🇮🇹 *Versione italiana più sotto.*
 
 ## What changes in this fork
-- Downloads and builds [ghost19880/zelda3](https://github.com/ghost19880/zelda3) (snesrev/zelda3 + HD improvements, Four Swords style shader included and enabled).
+- Downloads and builds [ghost19880/zelda3](https://github.com/ghost19880/zelda3) (snesrev/zelda3 + HD improvements, Four Swords style shader included).
 - Fast game: instead of building with TCC (which does not optimize, and the HD improvements stutter with it), the launcher downloads the `zelda3.exe` built with MSVC for the downloaded commit from the [exe release](https://github.com/ghost19880/zelda3/releases/tag/exe). It contains only the game code; the game data still comes from your own ROM. If it is missing, it builds with TCC as before.
 - New dark look: Triforce logo, a big **Play** button, **Update** enabled only when there is something new (the repository is checked in the background) and a status box.
 - One **Settings** window with tabs, toggle switches and a description of every option (*Enable all* / *Disable all* for the HD improvements):
   - **General**: window, rendering and performance.
-  - **Graphics**: image options, sharp dialogue text, smoothness above 60 Hz, dynamic lighting, effects (heat and flames, window rays, item glow, rain, realistic water and waterfalls, blur behind menus, shadows of characters and enemies, soft transition circle, button hints), smooth camera (4 levels), Four Swords Adventures shader.
-  - **Gameplay**: fast transitions, continuous world (the whole world active, every enemy in its own screen), modern HUD, X/L/R items in the HUD, improved world and dungeon maps, progressive map, dungeon names, dialogue (language and speed), automatic saves and the original convenience options.
-  - **Items**: the original item options (advanced item selection, turning while dashing, Mirror to the Dark World, larger wallet, cancel bird) plus the extended inventory (6 columns like on GBA), sword and items world interaction, burn and freeze interaction, up to 10 active bombs, bird travel point 9, items refill resources, enemy damage as on GBA, Hurricane Spin, diving with the flippers, the Gold Medicine from BS Zelda (one per day) and the bug fixes.
+  - **Graphics**: image options, sharp dialogue text, smoothness above 60 Hz, dynamic lighting, effects (heat and flames, window rays, item glow, improved rain and lightning, improved Lost Woods fog, realistic water and waterfalls, blur behind menus, shadows of characters and enemies, soft transition circle, button hints), smooth camera (4 levels), Four Swords Adventures shader.
+  - **Gameplay**: fast transitions, continuous world (the whole world active, every enemy in its own screen), modern HUD (with redrawn SNES buttons and the L/R shoulders when they take items), improved world and dungeon maps, progressive map, dungeon names, dialogue (language and speed), automatic saves and the original convenience options.
+  - **Items**: the item buttons (X button for items, L and R buttons for items, or switching items with L and R; an item can be on one button only), the original item options (turning while dashing, Mirror to the Dark World, larger wallet, cancel bird) plus the extended inventory (6 columns like on GBA), sword and items world interaction, burn and freeze interaction, up to 10 active bombs, bird travel point 9, items refill resources, enemy damage as on GBA, Hurricane Spin, diving with the flippers, the Gold Medicine from BS Zelda (one per day) and the bug fixes.
   - **Audio**: sound and MSU.
   - **Controls**: keyboard and controller on a drawn SNES controller, keys read directly in the window (also with Ctrl/Shift/Alt), *Assign all* and *Default keys*, plus game functions, performance, cheats and replay keys.
   - **Advanced**: compatibility options, custom sprites and shaders, *Reset settings* and *Rebuild*.
@@ -20,7 +20,9 @@ A fork of [RadzPrower/Zelda-3-Launcher](https://github.com/RadzPrower/Zelda-3-La
 - `Update` really updates: new commits are fetched and applied, settings and saves are kept (and restored even if the update fails). A warning appears before `Restore`/`Update` if the game sources were edited by hand.
 - `zelda3.ini` is never broken: the launcher reads it like the game and writes back only the values you changed, keeping comments, order and unknown keys. `zelda3.user.ini` is used when present, like the game does.
 - Dialogues keep their language after an update, and the Italian translation is downloaded again to get fixes (the old one is kept if the download fails). The launcher language follows the one chosen in the game menu.
-- When updating, options added in the new version are appended to your `zelda3.ini` with their default value (your existing settings stay as they are).
+- You choose what to use: the first `zelda3.ini` (and *Reset settings*) has every option off except windowed mode, automatic window size, scale 3, OpenGL, optimized PPU, enhanced Mode 7, 4:3 with unchanged sprites, skip intro with a key, cancel bird travel, audio (frequency, buffer and channels as they are), language and keys (with *Dim when paused*).
+- When updating, options added in the new version are appended to your `zelda3.ini` turned off (your existing settings stay as they are).
+- The HD effects, smooth camera, smoothness above 60 Hz, dynamic lighting, continuous world and fast transitions need the optimized PPU: without it they are turned off and can't be enabled (*Enable all* turns the PPU on). Shaders need OpenGL.
 - At startup the launcher checks GitHub for a newer launcher release and offers to open the download page.
 
 ## How to use
@@ -29,13 +31,13 @@ A fork of [RadzPrower/Zelda-3-Launcher](https://github.com/RadzPrower/Zelda-3-La
 3. Wait for the build, then click **Play**. **Settings** can be changed at any time; inside the game the options menu opens with **Esc** or the right stick click.
 
 ## Versione italiana
-Fork del launcher di RadzPrower che installa **Zelda3 HD** con tutte le migliorie già configurate.
+Fork del launcher di RadzPrower che installa **Zelda3 HD** con tutte le migliorie pronte: le scegli tu dalle **Impostazioni**. Il primo `zelda3.ini` ha tutto spento tranne finestra, dimensione automatica, scala 3, OpenGL, PPU ottimizzata, Mode 7 migliorato, 4:3 con sprite invariati, salta intro con un tasto, annulla viaggio dell'uccello, audio, lingua e tasti (con *Scurisci in pausa*). Effetti HD, telecamera fluida, fluidità oltre i 60 Hz, illuminazione, mondo continuo e transizioni rapide richiedono la PPU ottimizzata; gli shader richiedono OpenGL.
 1. Scarica l'[ultima release](https://github.com/ghost19880/Zelda-3-Launcher/releases/latest) e scompattala (serve il [.NET 10 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/10.0)).
 2. Avvia `Zelda 3 Launcher.exe`, premi **Download** e indica la ROM americana.
-3. In **Impostazioni** scegli **Italian**: il launcher scarica la traduzione, prepara il font e passa anche lui all'italiano. La finestra ha le schede Generale, Grafica, Gioco, Oggetti, Audio, Controlli e Avanzate, con interruttori e la descrizione di ogni opzione (*Attiva tutto* / *Disattiva tutto* per le migliorie HD): grafica ed effetti (calore e fiamme, acqua e cascate realistiche…), telecamera fluida e shader Four Swords Adventures; transizioni veloci, mondo continuo (tutto il mondo attivo, ogni nemico nella sua schermata), HUD moderno, oggetti X/L/R, mappa e mappa dei dungeon migliorate, mappa progressiva, nomi dei dungeon, salvataggi automatici e velocità del testo; le opzioni degli oggetti con inventario esteso (6 colonne come su GBA), spada e oggetti che interagiscono con l'ambiente, bruciatura e congelamento, fino a 10 bombe, il punto di volo 9, oggetti che riempiono le risorse, danni dei nemici come su GBA, Giravolta Tornado, immersione con le pinne e la pozione d'oro di BS Zelda (una al giorno). Nella scheda Controlli assegni i tasti di tastiera e controller direttamente sul disegno del controller.
+3. In **Impostazioni** scegli **Italian**: il launcher scarica la traduzione, prepara il font e passa anche lui all'italiano. La finestra ha le schede Generale, Grafica, Gioco, Oggetti, Audio, Controlli e Avanzate, con interruttori e la descrizione di ogni opzione (*Attiva tutto* / *Disattiva tutto* per le migliorie HD): grafica ed effetti (calore e fiamme, pioggia e lampi migliorati, nebbia migliorata del Bosco Perduto, acqua e cascate realistiche…), telecamera fluida e shader Four Swords Adventures; transizioni veloci, mondo continuo (tutto il mondo attivo, ogni nemico nella sua schermata), HUD moderno (con i tasti X, L e R quando hanno oggetti), mappa e mappa dei labirinti migliorate, mappa progressiva, nomi dei labirinti, salvataggi e velocità del testo; le opzioni degli oggetti con tasto X e tasti L e R per gli oggetti o cambio oggetti con L e R, inventario esteso (6 colonne come su GBA), spada e oggetti che interagiscono con l'ambiente, bruciatura e congelamento, fino a 10 bombe, il punto di volo 9, oggetti che riempiono le risorse, danni dei nemici come su GBA, Giravolta Tornado, immersione con le pinne e la pozione d'oro di BS Zelda (una al giorno). Nella scheda Controlli assegni i tasti di tastiera e controller direttamente sul disegno del controller.
 4. Premi **Gioca**.
 
-`Aggiorna` scarica le novità tenendo impostazioni e salvataggi, aggiunge a `zelda3.ini` le opzioni nuove senza toccare le tue, e i dialoghi restano in italiano. All'avvio il launcher ti avvisa se c'è una versione nuova.
+`Aggiorna` scarica le novità tenendo impostazioni e salvataggi, aggiunge a `zelda3.ini` le opzioni nuove (spente) senza toccare le tue, e i dialoghi restano in italiano. All'avvio il launcher ti avvisa se c'è una versione nuova.
 
 ---
 
@@ -71,7 +73,9 @@ NOTE: There have been no updates since this functionality was programmed, so the
 There are a number of settings available for you to change here. I will briefly explain them here.
 
 ### Gameplay Settings
-- Advanced Items Selection: Allows for extended item selection options including quick switching items with L/R or assigning items to the X, L, or R buttons in addition to Y. As long as no items are assigned to L or R, quick switching will remain enabled. If X is assigned an item, SELECT will become the map buttona nd the `Save and Quit` function will be moved to SELECT while the item menu is open.
+- X button for items: hold X in the item menu to assign an item to X. If X has an item, SELECT becomes the map button and `Save and Quit` moves to SELECT while the item menu is open.
+- Switch items with L and R: L and R cycle through the items of the Y button without opening the menu.
+- L and R buttons for items: hold L or R in the item menu to assign an item to that button (not together with switching items with L and R). An item can be on one button only among Y, X, L and R, and the HUD shows the buttons that take items.
 - Limit L/R Switch to First 4 Items: This can only be enabled when the above option is turned on. It limits the quick swaping of items to just the first four items.
 - Allow Turning While Dashing
 - Mirror Teleports to Dark World: This allows you to use the Magic Mirror regardless of which world you are in to swap back and forth between them.

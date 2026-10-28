@@ -43,9 +43,6 @@ namespace Zelda_3_Launcher
             ModernHud = new("Features", "ModernHud", "Modern HUD",
                 "Hearts and magic top left, Y/A/B buttons top right with the item, the sword and what the A button does (Talk, Read, Open...), rupees and keys bottom left.",
                 "Modern HUD: hearts and magic top left, Y/A/B buttons top right, rupees and keys bottom left"),
-            XlrInHud = new("Features", "ShowXLRItemsInHud", "X, L, R items in the HUD",
-                "Shows the items assigned to X, L and R in the HUD (requires Advanced Item Selection).",
-                "Show the items assigned to X, L and R in the HUD (requires ItemSwitchLR)"),
             DungeonNames = new("Features", "DungeonNames", "Dungeon names",
                 "When Link enters a dungeon from outside, its name appears in the middle of the screen like on GBA and disappears as soon as he moves.",
                 "Dungeon name in the middle of the screen when entering from outside, like on GBA"),
@@ -62,9 +59,15 @@ namespace Zelda_3_Launcher
                 "The map starts covered by clouds and is uncovered area by area as Link visits it.",
                 "Progressive map: the map starts hidden and is uncovered by the player, one area at a time, where Link walks"),
 
-            ItemSwitch = new("Features", "ItemSwitchLR", "Advanced Item Selection",
-                "Allows you to switch items with L/R but also allows you to assign items to X, Y, L, and R.\n\nIf X is assigned an item, select will now open the map. To save and quit, you will need to hit Select while in the item menu.\n\nIf L and/or R are assigned an item, quick item switching will be disabled.",
-                "Item switch on L/R and items on X, L, R", false),
+            ItemOnX = new("Features", "ItemOnX", "X button for items",
+                "In the item menu, hold X and pick an item: X will use it in the game.\n\nWith an item on X, Select opens the map; to save and quit, press Select in the item menu. An item can be on one button only among Y, X, L and R.",
+                "X button for items: hold X in the item menu to give it an item", false, From: "ItemSwitchLR"),
+            ItemSwitch = new("Features", "ItemSwitchLR", "Switch items with L and R",
+                "L and R change the item of the Y button without opening the menu.\n\nNot together with \"L and R buttons for items\": turning one on turns the other off.",
+                "L and R switch the item of the Y button without opening the menu", false),
+            ItemOnLR = new("Features", "ItemOnLR", "L and R buttons for items",
+                "In the item menu, hold L or R and pick an item: that button will use it in the game. An item can be on one button only among Y, X, L and R.\n\nNot together with \"Switch items with L and R\": turning one on turns the other off.",
+                "L and R buttons for items: hold L or R in the item menu to give it an item", false, From: "ItemSwitchLR"),
             ItemSwitchLimit = new("Features", "ItemSwitchLRLimit", "Limit L/R Switch to First 4 Items",
                 "Limit the items you will cycle through to just the first four items",
                 "L/R only cycle through the first four items", false),
@@ -226,7 +229,7 @@ namespace Zelda_3_Launcher
 
         // Controlli delle opzioni con una logica propria
         private ToggleSwitch fourSwords = null!, resume = null!, performance = null!, frameDelay = null!, ppu = null!,
-            extendY = null!, stretch = null!, linear = null!, mode7 = null!, dimFlashes = null!,
+            extendY = null!, stretch = null!, linear = null!, mode7 = null!, dimFlashes = null!, dimFlashesGba = null!,
             spriteLimit = null!, unchangedSprites = null!, noVisualFixes = null!,
             customLink = null!, customShader = null!, enableAudio = null!, enableMsu = null!, resumeMsu = null!;
         private DarkComboBox comboCamera = null!, comboTextSpeed = null!, comboLanguage = null!, comboDisplay = null!,
@@ -594,7 +597,11 @@ namespace Zelda_3_Launcher
             stretch = Toggle(image, "Stretch", "Stretches the graphics to take up the entire window/screen regardless of aspect ratio.");
             linear = Toggle(image, "Linear Filtering", "Use linear filter. Softens image and results in less crisp pixels.");
             mode7 = Toggle(image, "Enhanced Mode7", "Display the world map with higher resolution");
-            dimFlashes = Toggle(image, "Dim Flashing", "Softens the intensity of the flashes, not how many there are (like the Virtual Console releases): the screen turns only slightly white during lightning, magic and boss flashes, the intro sword flash is dimmer and the Ether Medallion flickers more slowly.");
+            dimFlashes = Toggle(image, "Fewer flashes (VC)", "Fewer flashes during gameplay, like on Virtual Console");
+            dimFlashesGba = Toggle(image, "Fewer flashes (GBA)", "Fewer flashes during gameplay, like on GBA");
+            // VC o GBA, non tutti e due
+            dimFlashes.CheckedChanged += (s, e) => { if (dimFlashes.Checked) dimFlashesGba.Checked = false; };
+            dimFlashesGba.CheckedChanged += (s, e) => { if (dimFlashesGba.Checked) dimFlashes.Checked = false; };
 
             var hd = AddCard(p, 0, "HD look");
             comboCamera = Combo(hd, "Smooth camera", new[] { "Off", "Light", "Medium", "Strong" },
@@ -636,7 +643,6 @@ namespace Zelda_3_Launcher
 
             var hud = AddCard(p, 1, "Interface");
             Toggle(hud, ModernHud);
-            Toggle(hud, XlrInHud);
             Toggle(hud, DungeonNames);
             Toggle(hud, ButtonHints);
             Toggle(hud, MaxInYellow);
@@ -652,10 +658,16 @@ namespace Zelda_3_Launcher
             var p = AddPage("Items", "Items, controls and fixes of the original game");
 
             var selection = AddCard(p, 0, "Item selection");
+            var onX = Toggle(selection, ItemOnX);
             var quick = Toggle(selection, ItemSwitch);
+            var onLR = Toggle(selection, ItemOnLR);
             var limit = Toggle(selection, ItemSwitchLimit);
             Toggle(selection, ExtendedInventory);
-            quick.CheckedChanged += (s, e) => ApplyItemSwitchRule();
+            onX.CheckedChanged += (s, e) => ApplyItemSwitchRule();
+            // cambio oggetti con L e R oppure tasti L e R per gli oggetti: accesa
+            // una, l'altra si spegne
+            quick.CheckedChanged += (s, e) => { if (quick.Checked) onLR.Checked = false; ApplyItemSwitchRule(); };
+            onLR.CheckedChanged += (s, e) => { if (onLR.Checked) quick.Checked = false; ApplyItemSwitchRule(); };
             comboAspect.SelectedIndexChanged += (s, e) => ApplyAspectRule();
 
             var travel = AddCard(p, 0, "Movement and travel");
@@ -870,14 +882,14 @@ namespace Zelda_3_Launcher
                 options[ButtonHints].Checked = false;
         }
 
-        // Senza la selezione oggetti avanzata non ci sono oggetti su X, L e R:
-        // le opzioni che ne dipendono si spengono e non si possono accendere
+        // L/R solo sui primi 4 oggetti senza il cambio oggetti con L e R si
+        // spegne e non si puo' accendere
         private void ApplyItemSwitchRule()
         {
-            bool on = options[ItemSwitch].Checked;
-            options[ItemSwitchLimit].Enabled = options[XlrInHud].Enabled = on;
-            if (!on)
-                options[XlrInHud].Checked = false;
+            bool quick = options[ItemSwitch].Checked;
+            options[ItemSwitchLimit].Enabled = quick;
+            if (!quick)
+                options[ItemSwitchLimit].Checked = false;
         }
 
         // Link biondo ridisegna Link sopra quello originale: acceso lui, il Link
@@ -1062,7 +1074,8 @@ namespace Zelda_3_Launcher
             stretch.Checked = GetBool(ini, "Graphics", "IgnoreAspectRatio");
             spriteLimit.Checked = GetBool(ini, "Graphics", "NoSpriteLimits");
             linear.Checked = GetBool(ini, "Graphics", "LinearFiltering");
-            dimFlashes.Checked = GetBool(ini, "Graphics", "DimFlashes");
+            dimFlashesGba.Checked = GetBool(ini, "Graphics", "DimFlashesGba");
+            dimFlashes.Checked = !dimFlashesGba.Checked && GetBool(ini, "Graphics", "DimFlashes");
             comboRender.SelectedIndex = Get(ini, "Graphics", "OutputMethod") switch { "SDL-Software" => 1, "OpenGL" => 2, _ => 0 };
 
             var link = ini.Sections.ContainsSection("Graphics") ? ini["Graphics"]["LinkGraphics"] : null;
@@ -1143,6 +1156,7 @@ namespace Zelda_3_Launcher
             Set(ini, "Graphics", "IgnoreAspectRatio", Bit(stretch.Checked));
             Set(ini, "Graphics", "WindowScale", stepScale.Value.ToString());
             Set(ini, "Graphics", "DimFlashes", Bit(dimFlashes.Checked));
+            Set(ini, "Graphics", "DimFlashesGba", Bit(dimFlashesGba.Checked));
             Set(ini, "Graphics", "OutputMethod", comboRender.SelectedIndex switch { 1 => "SDL-Software", 2 => "OpenGL", _ => "SDL" },
                 "Output method: SDL, SDL-Software or OpenGL");
 

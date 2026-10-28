@@ -141,7 +141,9 @@ namespace Zelda_3_Launcher
             ["Save"] = "Salva",
             ["Saving..."] = "Salvataggio...",
             ["Cancel"] = "Annulla",
-            ["Advanced Item Selection"] = "Selezione oggetti avanzata",
+            ["X button for items"] = "Tasto X per gli oggetti",
+            ["Switch items with L and R"] = "Cambio oggetti con L e R",
+            ["L and R buttons for items"] = "Tasti L e R per gli oggetti",
             ["Limit L/R Switch to First 4 Items"] = "L/R solo sui primi 4 oggetti",
             ["Allow Turning While Dashing"] = "Sterzata durante la corsa",
             ["Mirror Teleports to Dark World"] = "Specchio verso il Mondo delle Tenebre",
@@ -183,7 +185,8 @@ namespace Zelda_3_Launcher
             ["Linear Filtering"] = "Filtro lineare",
             ["Enhanced Mode7"] = "Mode7 migliorato",
             ["Stretch"] = "Allarga",
-            ["Dim Flashing"] = "Meno lampi",
+            ["Fewer flashes (VC)"] = "Meno flash VC",
+            ["Fewer flashes (GBA)"] = "Meno flash GBA",
             ["Render Method:"] = "Rendering:",
             ["Window Scaling:"] = "Scala finestra:",
             ["Custom Link Sprites"] = "Sprite di Link personalizzati",
@@ -429,9 +432,6 @@ namespace Zelda_3_Launcher
             ["Modern HUD"] = "HUD moderno",
             ["Hearts and magic top left, Y/A/B buttons top right with the item, the sword and what the A button does (Talk, Read, Open...), rupees and keys bottom left."] =
                 "Cuori e magia in alto a sinistra, tasti Y/A/B in alto a destra con oggetto, spada e azione del tasto A (Parla, Leggi, Apri...), rupie e chiavi in basso a sinistra.",
-            ["X, L, R items in the HUD"] = "Oggetti X, L, R nell'HUD",
-            ["Shows the items assigned to X, L and R in the HUD (requires Advanced Item Selection)."] =
-                "Mostra nell'HUD gli oggetti assegnati a X, L e R (richiede la selezione oggetti avanzata).",
             ["Extended inventory"] = "Inventario esteso",
             ["The inventory has 6 columns like on GBA: four separate bottles, shovel and flute in separate slots."] =
                 "L'inventario è su 6 colonne come su GBA: quattro bottiglie separate, pala e ocarina in posti separati.",
@@ -466,8 +466,10 @@ namespace Zelda_3_Launcher
             ["Burn and freeze interaction"] = "Interazione bruciatura e congelamento",
             ["The world physically reacts to fire and ice: the lamp, the rods and the medallions burn or freeze bushes and grass."] =
                 "Il mondo reagisce fisicamente a fuoco e ghiaccio: Lanterna, bacchette e medaglioni bruciano o congelano cespugli ed erba.",
-            ["Softens the intensity of the flashes, not how many there are (like the Virtual Console releases): the screen turns only slightly white during lightning, magic and boss flashes, the intro sword flash is dimmer and the Ether Medallion flickers more slowly."] =
-                "Attenua l'intensità dei lampi, non il loro numero (come nelle versioni Virtual Console): lo schermo diventa solo un po' bianco durante fulmini, magie e lampi dei boss, il lampo della spada nell'introduzione è più tenue e il Medaglione Etere lampeggia più lentamente.",
+            ["Fewer flashes during gameplay, like on Virtual Console"] =
+                "Meno lampeggiamenti durante il gioco come su Virtual Console",
+            ["Fewer flashes during gameplay, like on GBA"] =
+                "Meno lampeggiamenti durante il gioco come su GBA",
             ["Swords and items behave like on GBA: every sword collects hearts, rupees and other items, the Master Sword breaks signs, the Gold Sword breaks pots; arrows break pots, the hammer breaks bushes and small rocks, the lamp and the fire rod cut grass and bushes and the lamp flame hurts enemies."] =
                 "Spade e oggetti si comportano come su GBA: ogni spada raccoglie cuori, rupie e altri oggetti, la Spada Suprema rompe i cartelli, la Spada d'Oro i vasi; le frecce rompono i vasi, il martello cespugli e rocce piccole, Lanterna e Bacchetta del Fuoco tagliano erba e cespugli e la fiamma della Lanterna ferisce i nemici.",
             ["Enemy damage as on GBA"] = "Danni dei nemici come su GBA",
@@ -491,8 +493,12 @@ namespace Zelda_3_Launcher
             ["Saves and start"] = "Salvataggi e avvio",
             ["Items and controls"] = "Oggetti e comandi",
             ["Bug fixes"] = "Correzioni",
-            ["Allows you to switch items with L/R but also allows you to assign items to X, Y, L, and R.\n\nIf X is assigned an item, select will now open the map. To save and quit, you will need to hit Select while in the item menu.\n\nIf L and/or R are assigned an item, quick item switching will be disabled."] =
-                "Puoi cambiare oggetto con L/R e assegnare oggetti a X, Y, L e R.\n\nSe a X è assegnato un oggetto, Select apre la mappa. Per salvare e uscire premi Select nel menu degli oggetti.\n\nSe a L e/o R è assegnato un oggetto, il cambio rapido con L/R si disattiva.",
+            ["In the item menu, hold X and pick an item: X will use it in the game.\n\nWith an item on X, Select opens the map; to save and quit, press Select in the item menu. An item can be on one button only among Y, X, L and R."] =
+                "Nel menu degli oggetti tieni premuto X e scegli un oggetto: X lo userà in gioco.\n\nCon un oggetto su X la mappa si apre con Select; per salvare e uscire premi Select nel menu degli oggetti. Un oggetto può stare su un solo tasto fra Y, X, L e R.",
+            ["L and R change the item of the Y button without opening the menu.\n\nNot together with \"L and R buttons for items\": turning one on turns the other off."] =
+                "L e R cambiano l'oggetto del tasto Y senza aprire il menu.\n\nNon si può usare insieme a \"Tasti L e R per gli oggetti\": accendendone una, l'altra si spegne.",
+            ["In the item menu, hold L or R and pick an item: that button will use it in the game. An item can be on one button only among Y, X, L and R.\n\nNot together with \"Switch items with L and R\": turning one on turns the other off."] =
+                "Nel menu degli oggetti tieni premuto L o R e scegli un oggetto: quel tasto lo userà in gioco. Un oggetto può stare su un solo tasto fra Y, X, L e R.\n\nNon si può usare insieme a \"Cambio oggetti con L e R\": accendendone una, l'altra si spegne.",
             ["Unable to save zelda3.ini:\n\n"] = "Impossibile salvare zelda3.ini:\n\n",
             ["Error"] = "Errore",
 
