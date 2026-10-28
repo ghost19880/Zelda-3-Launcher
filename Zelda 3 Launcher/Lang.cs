@@ -436,10 +436,10 @@ namespace Zelda_3_Launcher
             ["The inventory has 6 columns like on GBA: four separate bottles, shovel and flute in separate slots."] =
                 "L'inventario è su 6 colonne come su GBA: quattro bottiglie separate, pala e ocarina in posti separati.",
             ["Improved map"] = "Mappa migliorata",
-            ["Place up to 24 stamps on the map so you don't forget anything. Press B to scroll faster and Y to go back to Link. The dungeon map shows the dungeon's name."] =
-                "Inserisci fino a 24 timbri sulla mappa per non dimenticare niente. Premi B per scorrere più veloce e Y per tornare su Link. La mappa del labirinto mostra il nome del labirinto.",
+            ["Place up to 24 stamps on the map so you don't forget anything. Press B to scroll faster and Y to go back to Link."] =
+                "Inserisci fino a 24 timbri sulla mappa per non dimenticare niente. Premi B per scorrere più veloce e Y per tornare su Link.",
             ["Improved dungeon map"] = "Mappa dei labirinti migliorata",
-            ["Changing floor on the dungeon map is faster."] = "Sulla mappa del labirinto il cambio di piano è più rapido.",
+            ["Changing floor on the dungeon map is faster, and the dungeon's name is shown at the top."] = "Sulla mappa del labirinto il cambio di piano è più rapido e in alto compare il nome del labirinto.",
             ["Progressive map"] = "Mappa progressiva",
             ["The map starts covered by clouds and is uncovered area by area as Link visits it."] =
                 "La mappa all'inizio è coperta dalle nuvole e si scopre un'area alla volta, man mano che Link la visita.",
