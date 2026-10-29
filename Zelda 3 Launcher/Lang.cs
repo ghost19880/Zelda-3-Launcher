@@ -398,8 +398,8 @@ namespace Zelda_3_Launcher
             ["Denser rain with splashes; a single soft flash instead of the quick flickers."] =
                 "Pioggia più fitta con spruzzi; un solo lampo morbido al posto dei lampeggi rapidi.",
             ["Improved fog"] = "Nebbia migliorata",
-            ["The Lost Woods fog, before the Master Sword, becomes soft drifting veils with depth: thicker in some places, thinner around Link."] =
-                "La nebbia del Bosco Perduto, prima della Spada Suprema, diventa fatta di veli morbidi che scorrono con profondità: più fitta in certi punti, più rada attorno a Link.",
+            ["The fog of the Lost Woods (before the Master Sword) and of the Skull Woods becomes soft drifting veils with depth, in the original shades: thicker in some places, thinner around Link."] =
+                "La nebbia del Bosco Perduto (prima della Spada Suprema) e del Bosco d'Ossa diventa fatta di veli morbidi che scorrono con profondità, con le tonalità dell'originale: più fitta in certi punti, più rada attorno a Link.",
             ["Realistic water and waterfalls"] = "Acqua e cascate realistiche",
             ["Water as in Four Swords Adventures: depth, foam along the shores and around rocks, moving surface; flowing waterfalls with mist."] =
                 "Acqua come in Four Swords Adventures: profondità, schiuma lungo le rive e attorno ai sassi, superficie che si muove; cascate che scorrono con nebbia.",
