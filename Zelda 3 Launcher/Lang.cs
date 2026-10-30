@@ -382,6 +382,9 @@ namespace Zelda_3_Launcher
             ["Strong"] = "Forte",
             ["Follows Link with a slight delay instead of staying locked to him."] = "Segue Link con un leggero ritardo invece di restare agganciata.",
             ["Sharp dialogue text"] = "Testo nitido nei dialoghi",
+            ["Modern dialogue text"] = "Testo moderno nei dialoghi",
+            ["Dialogues with light upright letters on a translucent dark band instead of the original box. It replaces the sharp text."] =
+                "Dialoghi con lettere chiare e dritte su una fascia scura trasparente al posto del riquadro originale. Sostituisce il testo nitido.",
             ["Redraws the dialogue box on top of the shader so the letters stay sharp."] = "Ridisegna il riquadro dei dialoghi sopra lo shader, così le lettere restano nitide.",
             ["Smoothness above 60 Hz"] = "Fluidità oltre i 60 Hz",
             ["On displays above 60 Hz, scrolling is interpolated in the extra frames. Nothing changes at 60 Hz."] =

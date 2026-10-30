@@ -22,6 +22,9 @@ namespace Zelda_3_Launcher
             HdText = new("Graphics", "HdText", "Sharp dialogue text",
                 "Redraws the dialogue box on top of the shader so the letters stay sharp.",
                 "Redraw the dialogue box sharp on top of the shader (1 = on)"),
+            ModernText = new("Graphics", "ModernText", "Modern dialogue text",
+                "Dialogues with light upright letters on a translucent dark band instead of the original box. It replaces the sharp text.",
+                "Dialogues with modern text: light upright characters on a translucent dark band instead of the original box (1 = on)"),
             HighRefresh = new("Graphics", "HighRefreshInterpolation", "Smoothness above 60 Hz",
                 "On displays above 60 Hz, scrolling is interpolated in the extra frames. Nothing changes at 60 Hz.",
                 "Displays above 60 Hz: scrolling is interpolated in the extra frames"),
@@ -632,6 +635,10 @@ namespace Zelda_3_Launcher
             comboTextSpeed = Combo(dialogue, "Speed", new[] { "Original", "Fast holding A or B", "Instant" },
                 "How fast the dialogue text appears.");
             Toggle(dialogue, HdText);
+            Toggle(dialogue, ModernText);
+            // nitido o moderno, non tutti e due (nel gioco vince il moderno)
+            options[HdText].CheckedChanged += (s, e) => { if (options[HdText].Checked) options[ModernText].Checked = false; };
+            options[ModernText].CheckedChanged += (s, e) => { if (options[ModernText].Checked) options[HdText].Checked = false; };
             comboLanguage = Combo(dialogue, "Language", kLanguages.Select(l => l.text).ToArray(),
                 "Language of the dialogue. Other languages need a ROM of that version; the launcher is in Italian when the dialogue is.");
             comboLanguage.SelectedIndexChanged += comboLanguage_Select;
