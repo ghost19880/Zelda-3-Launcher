@@ -232,7 +232,7 @@ namespace Zelda_3_Launcher
             extendY = null!, stretch = null!, linear = null!, mode7 = null!, dimFlashes = null!, dimFlashesGba = null!,
             spriteLimit = null!, unchangedSprites = null!, noVisualFixes = null!,
             customLink = null!, customShader = null!, enableAudio = null!, enableMsu = null!, resumeMsu = null!;
-        private DarkComboBox comboCamera = null!, comboTextSpeed = null!, comboLanguage = null!, comboDisplay = null!,
+        private DarkComboBox comboCamera = null!, comboTextSpeed = null!, comboRumble = null!, comboLanguage = null!, comboDisplay = null!,
             comboWindowSize = null!, comboRender = null!, comboAspect = null!, comboFrequency = null!,
             comboSamples = null!, comboChannels = null!, comboMsu = null!;
         private Stepper stepScale = null!, stepMsuVolume = null!;
@@ -747,6 +747,8 @@ namespace Zelda_3_Launcher
             KeyField(game, "Reset Game", keys.Reset, "Reset the game");
             KeyField(game, "Pause", keys.Pause, "Pause the game without opening the menu");
             keys.Dim = Toggle(game, "Dim When Paused", "If enabled, the game will dim when paused via the special pause key");
+            comboRumble = Combo(game, "Controller rumble", new[] { "Off", "Light", "Medium", "Strong" },
+                "Vibrates the controller for explosions, damage, crashes with the Pegasus Boots, the screen shaking and other strong moments.");
             KeyField(game, "Increase Window Size", keys.WindowBigger, "Increase window scale by a factor of 1");
             KeyField(game, "Decrease Window Size", keys.WindowSmaller, "Decrease window scale by a factor of 1");
             KeyField(game, "Volume Up", keys.VolumeUp, "Increases the volume output of the game");
@@ -915,11 +917,13 @@ namespace Zelda_3_Launcher
             {
                 if (comboCamera.SelectedIndex == 0) comboCamera.SelectedIndex = 2;
                 if (comboTextSpeed.SelectedIndex == 0) comboTextSpeed.SelectedIndex = 1;
+                if (comboRumble.SelectedIndex == 0) comboRumble.SelectedIndex = 2;
             }
             else
             {
                 comboCamera.SelectedIndex = 0;
                 comboTextSpeed.SelectedIndex = 0;
+                comboRumble.SelectedIndex = 0;
             }
         }
 
@@ -1021,6 +1025,7 @@ namespace Zelda_3_Launcher
             ApplyItemSwitchRule();
             comboCamera.SelectedIndex = Math.Clamp(GetInt(ini, "Graphics", "SmoothCamera", 0), 0, 3);
             comboTextSpeed.SelectedIndex = Math.Clamp(GetInt(ini, "Features", "TextSpeed", 0), 0, 2);
+            comboRumble.SelectedIndex = Math.Clamp(GetInt(ini, "Features", "Rumble", 0), 0, 3);
 
             // Generale
             resume.Checked = GetBool(ini, "General", "Autosave");
@@ -1128,6 +1133,8 @@ namespace Zelda_3_Launcher
                 "Smooth camera: 0 = off, 1 = light, 2 = medium, 3 = strong");
             Set(ini, "Features", "TextSpeed", comboTextSpeed.SelectedIndex.ToString(),
                 "Dialogue speed: 0 = original, 1 = fast holding A or B, 2 = instant");
+            Set(ini, "Features", "Rumble", comboRumble.SelectedIndex.ToString(),
+                "Controller rumble: 0 = off, 1 = light, 2 = medium, 3 = strong");
 
             // Generale
             Set(ini, "General", "Autosave", Bit(resume.Checked));

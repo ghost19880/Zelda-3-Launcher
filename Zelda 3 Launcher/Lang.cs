@@ -302,6 +302,8 @@ namespace Zelda_3_Launcher
             ["Decrease Window Size:"] = "Riduci finestra:",
             ["Increase Window Size:"] = "Ingrandisci finestra:",
             ["Dim When Paused"] = "Scurisci in pausa",
+            ["Controller rumble"] = "Vibrazione del controller",
+            ["Vibrates the controller for explosions, damage, crashes with the Pegasus Boots, the screen shaking and other strong moments."] = "Fa vibrare il controller per esplosioni, danni, schianti con gli Stivali di Pegaso, lo schermo che trema e altri momenti forti.",
             ["Pause:"] = "Pausa:",
             ["Reset:"] = "Reset:",
             ["Replays"] = "Replay",

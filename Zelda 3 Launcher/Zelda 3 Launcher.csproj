@@ -9,9 +9,9 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<PackageIcon>ЯP Flat Blue Small.png</PackageIcon>
 		<ApplicationIcon>Triforza.ico</ApplicationIcon>
-		<FileVersion>1.6.6.0</FileVersion>
-		<AssemblyVersion>1.6.6.0</AssemblyVersion>
-		<Version>1.6.6.0</Version>
+		<FileVersion>1.6.7.0</FileVersion>
+		<AssemblyVersion>1.6.7.0</AssemblyVersion>
+		<Version>1.6.7.0</Version>
 		<Platforms>AnyCPU;x86;x64</Platforms>
 		<!-- i controlli del tema si creano nel codice, non nel designer -->
 		<NoWarn>$(NoWarn);WFO1000</NoWarn>
