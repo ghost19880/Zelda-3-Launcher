@@ -129,6 +129,9 @@ namespace Zelda_3_Launcher
             GameFixes = new("Features", "GameChangingBugFixes", "Game Changing Bug Fixes",
                 "Some bug fixes that are significant enough to impact game behavior",
                 "Bug fixes that change game behavior", false),
+            GbaFixes = new("Features", "GbaMinorFixes", "GBA minor fixes",
+                "Small differences of the GBA version: Mothula takes damage from the Golden Sword, the Tempered Sword spin attack and spikes, Kholdstare's shell fades completely, the super bomb swells, Ganon's Tower stairs, sounds for pits and the save menu, the Great Fairy's harp only the first time, the item floats at the fairy fountain, the maidens' messages page by page, Eyegores in the Turtle Rock cave, faster shovel, the spin attack also cuts the grass under Link.",
+                "GBA minor fixes: small differences of the GBA version (sounds, graphics, fixed bugs)", false),
             BlondLink = new("Graphics", "BlondLink", "Blond Link",
                 "Link with blond hair, as in the official artwork. Custom Link sprites can't be used while it is on.",
                 "Blond Link as in the official artwork (custom Link sprites are turned off)", From: "OfficialArtwork");
@@ -603,8 +606,8 @@ namespace Zelda_3_Launcher
             dimFlashes = Toggle(image, "Fewer flashes (VC)", "Fewer flashes during gameplay, like on Virtual Console");
             dimFlashesGba = Toggle(image, "Fewer flashes (GBA)", "Fewer flashes during gameplay, like on GBA");
             // VC o GBA, non tutti e due
-            dimFlashes.CheckedChanged += (s, e) => { if (dimFlashes.Checked) dimFlashesGba.Checked = false; };
-            dimFlashesGba.CheckedChanged += (s, e) => { if (dimFlashesGba.Checked) dimFlashes.Checked = false; };
+            dimFlashes.CheckedChanged += (s, e) => { if (dimFlashes.Checked) dimFlashesGba.Checked = false; ApplyFlashRainRule(); };
+            dimFlashesGba.CheckedChanged += (s, e) => { if (dimFlashesGba.Checked) dimFlashes.Checked = false; ApplyFlashRainRule(); };
 
             var hd = AddCard(p, 0, "HD look");
             comboCamera = Combo(hd, "Smooth camera", new[] { "Off", "Light", "Medium", "Strong" },
@@ -703,9 +706,9 @@ namespace Zelda_3_Launcher
             var fixes = AddCard(p, 1, "Bug fixes");
             Toggle(fixes, MiscFixes);
             Toggle(fixes, GameFixes);
-            Link(fixes, "List on the wiki:", "What the fixes change, on the zelda3 wiki.",
-                ("Minor", "https://github.com/snesrev/zelda3/wiki/Bug-Fixes-:-Misc."),
-                ("Game changing", "https://github.com/snesrev/zelda3/wiki/Bug-Fixes-:-Game-Changing"));
+            Toggle(fixes, GbaFixes);
+            Link(fixes, "", "What the fixes change, on the Zelda3 HD wiki.",
+                ("List on the wiki", "https://github.com/ghost19880/zelda3/wiki/Bug-fixes"));
         }
 
         private void BuildAudio()
@@ -879,6 +882,19 @@ namespace Zelda_3_Launcher
                 if (!on) t.Checked = false;
             }
             ApplyAspectRule();
+            ApplyFlashRainRule();
+        }
+
+        // Con meno flash (VC o GBA) niente pioggia e lampi migliorati: si spegne
+        // e non si puo' accendere
+        private void ApplyFlashRainRule()
+        {
+            if (dimFlashes == null || dimFlashesGba == null) return;
+            var rainOpt = kEffects.First(o => o.Key == "FxRain");
+            if (!options.TryGetValue(rainOpt, out var rain)) return;
+            bool dim = dimFlashes.Checked || dimFlashesGba.Checked;
+            if (dim) rain.Checked = false;
+            rain.Enabled = !dim && (ppu.Checked || !NeedsOptimizedPpu(rainOpt));
         }
 
         // I suggerimenti dei tasti stanno nelle fasce laterali dello schermo largo:
@@ -919,6 +935,7 @@ namespace Zelda_3_Launcher
                 if (o.Hd) t.Checked = on;
             ApplyItemSwitchRule();
             ApplyAspectRule();
+            ApplyFlashRainRule();
             fourSwords.Checked = on;
             if (on)
             {
@@ -1088,6 +1105,7 @@ namespace Zelda_3_Launcher
             linear.Checked = GetBool(ini, "Graphics", "LinearFiltering");
             dimFlashesGba.Checked = GetBool(ini, "Graphics", "DimFlashesGba");
             dimFlashes.Checked = !dimFlashesGba.Checked && GetBool(ini, "Graphics", "DimFlashes");
+            ApplyFlashRainRule();
             comboRender.SelectedIndex = Get(ini, "Graphics", "OutputMethod") switch { "SDL-Software" => 1, "OpenGL" => 2, _ => 0 };
 
             var link = ini.Sections.ContainsSection("Graphics") ? ini["Graphics"]["LinkGraphics"] : null;
