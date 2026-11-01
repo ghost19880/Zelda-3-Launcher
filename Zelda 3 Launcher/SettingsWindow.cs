@@ -75,7 +75,7 @@ namespace Zelda_3_Launcher
                 "Limit the items you will cycle through to just the first four items",
                 "L/R only cycle through the first four items", false),
             TurnWhileDashing = new("Features", "TurnWhileDashing", "Allow Turning While Dashing",
-                "Allows you to turn when dashing", "Allow turning while dashing", false),
+                "Allows you to turn when dashing with the Pegasus Boots, as in BS Zelda", "Allow turning while dashing", false),
             MirrorToDarkworld = new("Features", "MirrorToDarkworld", "Mirror Teleports to Dark World",
                 "Magic Mirror works in both directions", "Magic Mirror works in both directions", false),
             SwordInteraction = new("Features", "SwordAndItemsInteraction", "Sword and items world interaction",
@@ -105,6 +105,12 @@ namespace Zelda_3_Launcher
             StuckArrows = new("Features", "StuckArrows", "Arrows stuck in walls",
                 "The arrows of Link and of the enemies stay stuck in walls instead of vanishing.",
                 "Arrows of Link and of the enemies stuck in walls stay there instead of vanishing", From: "BurnAndFreezeInteraction"),
+            EnchantedRocks = new("Features", "EnchantedRocks", "Enchanted rocks",
+                "As on GBA, when Link enters an area, sometimes one small rock sparkles. Hit it with the sword for a few seconds: it drops rupees and then bombs.",
+                "Enchanted rocks of the GBA version: a sparkling rock drops rupees and bombs when hit with the sword", false),
+            LakeClearing = new("Features", "LakeClearing", "Map like A Link Between Worlds",
+                "The map now has the shortcuts of Zelda: A Link Between Worlds.",
+                "Map like A Link Between Worlds: the map has the shortcuts of Zelda: A Link Between Worlds", false),
             MoreBombs = new("Features", "MoreActiveBombs", "More Active Bombs",
                 "Can have 10 active bombs instead of 2", "10 active bombs instead of 2", false),
             LargerWallet = new("Features", "CarryMoreRupees", "Larger Wallet",
@@ -119,6 +125,9 @@ namespace Zelda_3_Launcher
             SaveHearts = new("Features", "SaveHeartsAndMagic", "Save hearts and magic state",
                 "Save and quit remembers the hearts and magic you have instead of giving back the starting ones; on the file select, hearts not saved yet are black.",
                 "Save and quit remembers the current hearts and magic; unsaved hearts are black on the file select"),
+            TriforceTitle = new("Graphics", "TriforceTitle", "Title \"Triforce of the Gods\"",
+                "The title screen shows \"Triforce of the Gods\" instead of \"A Link to the Past\", like the Japanese title. With the dialogue in Italian it shows \"La Triforza degli Dei\".",
+                "Title subtitle \"Triforce of the Gods\" (\"La Triforza degli Dei\" in Italian) instead of \"A Link to the Past\""),
             SkipIntro = new("Features", "SkipIntroOnKeypress", "Skip Intro w/ Keypress",
                 "Allows you to skip the intro by pressing a key", "Skip the intro with a key", false),
             MaxInYellow = new("Features", "ShowMaxItemsInYellow", "Indicate Max Resources",
@@ -129,7 +138,7 @@ namespace Zelda_3_Launcher
             GameFixes = new("Features", "GameChangingBugFixes", "Game Changing Bug Fixes",
                 "Some bug fixes that are significant enough to impact game behavior",
                 "Bug fixes that change game behavior", false),
-            GbaFixes = new("Features", "GbaMinorFixes", "GBA minor fixes",
+            GbaFixes = new("Features", "GbaMinorFixes", "Various bug fixes from the GBA version",
                 "Small differences of the GBA version: Mothula takes damage from the Golden Sword, the Tempered Sword spin attack and spikes, Kholdstare's shell fades completely, the super bomb swells, Ganon's Tower stairs, sounds for pits and the save menu, the Great Fairy's harp only the first time, the item floats at the fairy fountain, the maidens' messages page by page, Eyegores in the Turtle Rock cave, faster shovel, the spin attack also cuts the grass under Link.",
                 "GBA minor fixes: small differences of the GBA version (sounds, graphics, fixed bugs)", false),
             BlondLink = new("Graphics", "BlondLink", "Blond Link",
@@ -660,6 +669,7 @@ namespace Zelda_3_Launcher
             var saves = AddCard(p, 1, "Saves and start");
             resume = Toggle(saves, "Resume where you left off", "Saves the game state when you quit and reloads it at the next start.");
             Toggle(saves, SkipIntro);
+            Toggle(saves, TriforceTitle);
             Toggle(saves, SaveHearts);
         }
 
@@ -694,6 +704,8 @@ namespace Zelda_3_Launcher
             Toggle(world, SwordInteraction);
             Toggle(world, BurnFreeze);
             Toggle(world, StuckArrows);
+            Toggle(world, EnchantedRocks);
+            Toggle(world, LakeClearing);
 
             var items = AddCard(p, 1, "Items and combat");
             Toggle(items, ItemsRefill);

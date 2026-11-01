@@ -157,7 +157,16 @@ namespace Zelda_3_Launcher
             ["Larger Wallet"] = "Borsa più grande",
             ["Miscellaneous Minor Fixes"] = "Correzioni minori varie",
             ["Game Changing Bug Fixes"] = "Correzioni maggiori",
-            ["GBA minor fixes"] = "Correzioni minori GBA",
+            ["Various bug fixes from the GBA version"] = "Correzioni errori varie derivate dalla versione GBA",
+            ["Enchanted rocks"] = "Rocce incantate",
+            ["As on GBA, when Link enters an area, sometimes one small rock sparkles. Hit it with the sword for a few seconds: it drops rupees and then bombs."] =
+                "Come su GBA, entrando in un'area a volte una roccia piccola brilla. Colpiscila con la spada per qualche secondo: lascia cadere rupie e poi bombe.",
+            ["Map like A Link Between Worlds"] = "Mappa come A Link Between Worlds",
+            ["The map now has the shortcuts of Zelda: A Link Between Worlds."] =
+                "La mappa ora ha le scorciatoie di Zelda: A Link Between Worlds.",
+            ["Title \"Triforce of the Gods\""] = "Titolo \"La Triforza degli Dei\"",
+            ["The title screen shows \"Triforce of the Gods\" instead of \"A Link to the Past\", like the Japanese title. With the dialogue in Italian it shows \"La Triforza degli Dei\"."] =
+                "Nella schermata del titolo compare \"La Triforza degli Dei\" al posto di \"A Link to the Past\", come nel titolo giapponese. Con i dialoghi in un'altra lingua compare \"Triforce of the Gods\".",
             ["Small differences of the GBA version: Mothula takes damage from the Golden Sword, the Tempered Sword spin attack and spikes, Kholdstare's shell fades completely, the super bomb swells, Ganon's Tower stairs, sounds for pits and the save menu, the Great Fairy's harp only the first time, the item floats at the fairy fountain, the maidens' messages page by page, Eyegores in the Turtle Rock cave, faster shovel, the spin attack also cuts the grass under Link."] = "Piccole differenze della versione GBA: Mothula prende danno dalla Spada d'Oro, dall'attacco rotante della Spada Temprata e dalle punte, il guscio di Kholdstare si dissolve fino in fondo, la super bomba si gonfia, scale della Torre di Ganon, suoni per le buche e il menu di salvataggio, arpa della Grande Fata solo la prima volta, l'oggetto galleggia nella fontana della fata, messaggi delle fanciulle una pagina alla volta, Eyegore nella grotta della Rocca della Tartaruga, pala più veloce, l'attacco rotante taglia anche l'erba sotto Link.",
             ["Cancel Bird"] = "Annulla viaggio uccello",
             ["Bird travel point 9"] = "Punto di volo 9",
@@ -211,7 +220,7 @@ namespace Zelda_3_Launcher
 
             // Suggerimenti delle impostazioni
             ["Limit the items you will cycle through to just the first four items"] = "Con L e R scorri solo i primi quattro oggetti",
-            ["Allows you to turn when dashing"] = "Puoi cambiare direzione mentre corri con i Calzari di Pegaso",
+            ["Allows you to turn when dashing with the Pegasus Boots, as in BS Zelda"] = "Puoi cambiare direzione mentre corri con i Calzari di Pegaso come su BS Zelda",
             ["Magic Mirror works in both directions"] = "Lo Specchio Magico funziona in entrambe le direzioni",
             ["You can collect items with your sword from a distance"] = "Puoi raccogliere oggetti a distanza con la spada",
             ["You can break pots if you have a L2 or higher sword"] = "Puoi rompere i vasi se hai una spada di livello 2 o superiore",
