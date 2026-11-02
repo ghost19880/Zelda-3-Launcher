@@ -659,6 +659,7 @@ namespace Zelda_3_Launcher
             Toggle(maps, ImprovedWorldMap);
             Toggle(maps, ImprovedDungeonMap);
             Toggle(maps, ProgressiveMap);
+            Toggle(maps, LakeClearing);
 
             var hud = AddCard(p, 1, "Interface");
             Toggle(hud, ModernHud);
@@ -705,7 +706,6 @@ namespace Zelda_3_Launcher
             Toggle(world, BurnFreeze);
             Toggle(world, StuckArrows);
             Toggle(world, EnchantedRocks);
-            Toggle(world, LakeClearing);
 
             var items = AddCard(p, 1, "Items and combat");
             Toggle(items, ItemsRefill);
