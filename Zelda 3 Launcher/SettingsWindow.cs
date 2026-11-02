@@ -35,8 +35,8 @@ namespace Zelda_3_Launcher
                 "Soft edge on the circle transition when entering and leaving places.",
                 "Soft edge on the circle transition (entering and leaving places)"),
             ButtonHints = new("Graphics", "FxButtonHints", "Button hints",
-                "On-screen hints for the buttons in the inventory and on the maps. Only in 16:9 and 16:10: they sit in the side bands, in 4:3 there is no room.",
-                "On-screen hints for the buttons in the inventory and on the maps (16:9 and 16:10 only)"),
+                "On-screen hints for the buttons in the inventory and on the maps. Only with a wide aspect ratio: they sit in the side bands, in 4:3 there is no room.",
+                "On-screen hints for the buttons in the inventory and on the maps (wide aspect ratios only)"),
             FastTransitions = new("Features", "FastTransitions", "Fast transitions",
                 "Moving between areas and rooms is quick and smooth: no loading pauses, Link keeps walking and the camera starts and stops gently.",
                 "Quick and smooth transitions between areas and rooms: Link keeps walking"),
@@ -138,8 +138,8 @@ namespace Zelda_3_Launcher
             GameFixes = new("Features", "GameChangingBugFixes", "Game Changing Bug Fixes",
                 "Some bug fixes that are significant enough to impact game behavior",
                 "Bug fixes that change game behavior", false),
-            GbaFixes = new("Features", "GbaMinorFixes", "Various bug fixes from the GBA version",
-                "Small differences of the GBA version: Mothula takes damage from the Golden Sword, the Tempered Sword spin attack and spikes, Kholdstare's shell fades completely, the super bomb swells, Ganon's Tower stairs, sounds for pits and the save menu, the Great Fairy's harp only the first time, the item floats at the fairy fountain, the maidens' messages page by page, Eyegores in the Turtle Rock cave, faster shovel, the spin attack also cuts the grass under Link.",
+            GbaFixes = new("Features", "GbaMinorFixes", "Various GBA fixes",
+                "Various bug fixes from the GBA version",
                 "GBA minor fixes: small differences of the GBA version (sounds, graphics, fixed bugs)", false),
             BlondLink = new("Graphics", "BlondLink", "Blond Link",
                 "Link with blond hair, as in the official artwork. Custom Link sprites can't be used while it is on.",
@@ -606,7 +606,7 @@ namespace Zelda_3_Launcher
             var p = AddPage("Graphics", "Image, HD look and effects");
 
             var image = AddCard(p, 0, "Image");
-            comboAspect = Combo(image, "Aspect ratio", new[] { "Normal (4:3)", "Widescreen (16:9)", "Steam Deck (16:10)" },
+            comboAspect = Combo(image, "Aspect ratio", new[] { "Normal (4:3)", "Widescreen (16:9)", "Steam Deck (16:10)", "Laptop / tablet (3:2)", "Ultrawide (18:9)" },
                 "This is the aspect ratio which the game will render. All aspect ratios other than Normal will result in black bars on the left and right in various scenarios.");
             extendY = Toggle(image, "Extend Y", "Displays 240 vertical lines rather than the default 224");
             stretch = Toggle(image, "Stretch", "Stretches the graphics to take up the entire window/screen regardless of aspect ratio.");
@@ -1079,6 +1079,8 @@ namespace Zelda_3_Launcher
                     case "extend_y": extendY.Checked = true; break;
                     case "16:9": comboAspect.SelectedIndex = 1; break;
                     case "16:10": comboAspect.SelectedIndex = 2; break;
+                    case "3:2": comboAspect.SelectedIndex = 3; break;
+                    case "18:9": comboAspect.SelectedIndex = 4; break;
                     case "4:3": comboAspect.SelectedIndex = 0; break;
                 }
             }
@@ -1178,7 +1180,7 @@ namespace Zelda_3_Launcher
             Set(ini, "General", "DisplayPerfInTitle", Bit(performance.Checked));
             Set(ini, "General", "DisableFrameDelay", Bit(frameDelay.Checked));
 
-            var ratio = comboAspect.SelectedIndex switch { 1 => "16:9", 2 => "16:10", _ => "4:3" };
+            var ratio = comboAspect.SelectedIndex switch { 1 => "16:9", 2 => "16:10", 3 => "3:2", 4 => "18:9", _ => "4:3" };
             if (unchangedSprites.Checked) ratio += ", unchanged_sprites";
             if (noVisualFixes.Checked) ratio += ", no_visual_fixes";
             if (extendY.Checked) ratio += ", extend_y";

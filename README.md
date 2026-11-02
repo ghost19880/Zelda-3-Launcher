@@ -100,6 +100,8 @@ There are a number of settings available for you to change here. I will briefly 
   * Normal (4:3): This is the original aspect ratio of the game as output by the SNES.
   * Widescreen (16:9): This is the standard widescreen format used by most modern monitors and televisions.
   * Steam Deck (16:10): While not exclusively used by the Steam Deck, it is a prominent modern device that uses such as aspect ratio.
+  * Laptop / tablet (3:2): For 3:2 screens (many laptops and tablets).
+  * Ultrawide (18:9): The widest the game can show (448 pixels). On 21:9 monitors only two thin black bands remain at the sides.
 
 ### Graphics
 - Window Size
