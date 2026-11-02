@@ -116,7 +116,7 @@ namespace Zelda_3_Launcher
             LargerWallet = new("Features", "CarryMoreRupees", "Larger Wallet",
                 "Can carry 9999 rupees", "Carry up to 9999 rupees", false),
             CancelBird = new("Features", "CancelBirdTravel", "Cancel Bird",
-                "Allows you to cancel bird travel by hitting the X button", "Cancel bird travel with X", false),
+                "Allows you to cancel bird travel with the sword button (B), like on GBA", "Cancel bird travel with the sword button (B), like on GBA", false),
             BirdPoint9 = new("Features", "BirdTravelPoint9", "Bird travel point 9",
                 "Adds the ninth bird travel point of the GBA version, on the eastern summit of Death Mountain. It appears once Turtle Rock is open.",
                 "Ninth bird travel point on the eastern summit of Death Mountain", false),

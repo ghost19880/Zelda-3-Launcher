@@ -236,7 +236,7 @@ namespace Zelda_3_Launcher
             ["Can carry 9999 rupees"] = "Puoi portare 9999 rupie",
             ["Miscellaneous bug fixes"] = "Correzioni di errori varie",
             ["Some bug fixes that are significant enough to impact game behavior"] = "Correzioni di errori abbastanza importanti da cambiare il comportamento del gioco",
-            ["Allows you to cancel bird travel by hitting the X button"] = "Puoi annullare il viaggio con l'uccello premendo X",
+            ["Allows you to cancel bird travel with the sword button (B), like on GBA"] = "Puoi annullare il viaggio con l'uccello col tasto della spada (B), come su GBA",
             ["Displays 240 vertical lines rather than the default 224"] = "Mostra 240 righe verticali invece delle 224 originali",
             ["Avoid fixing some graphics glitches. If enabled, memory compare will not work."] = "Non corregge alcuni difetti grafici. Se attivo, il confronto della memoria non funziona.",
             ["Avoid changing sprite spawn/die behavior. (Required for replay compatibility)"] = "Non cambia la comparsa e scomparsa degli sprite (serve per la compatibilità dei replay)",

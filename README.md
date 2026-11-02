@@ -87,7 +87,7 @@ There are a number of settings available for you to change here. I will briefly 
 - More Active Bombs: You are normally allowed only two bombs at once. This allows you to place up to four at once.
 - Large Wallet
 - Bug fixes: miscellaneous minor fixes, game changing fixes and GBA minor fixes ([list on the wiki](https://github.com/ghost19880/zelda3/wiki/Bug-fixes)).
-- Cancel Bird: This allows you to hit X to cancel traveling via bird/flute.
+- Cancel Bird: the sword button (B) cancels traveling via bird/flute, like on GBA.
 
 ### General
 - Autosave: Essentially a "sleep mode". Automatically creates savestates as you close the game and will restart you in the exact same place the next time you start your game.
