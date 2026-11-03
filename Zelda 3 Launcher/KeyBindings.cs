@@ -21,7 +21,7 @@ namespace Zelda_3_Launcher
 
         public readonly ControllerView View;
         public readonly KeyChip Reset = new(), Pause = new(), WindowBigger = new(), WindowSmaller = new(),
-            VolumeUp = new(), VolumeDown = new(), Life = new(), Keys = new(), NoClip = new(), Turbo = new(),
+            VolumeUp = new(), VolumeDown = new(), Life = new(), Keys = new(), NoClip = new(), KillLink = new(), Turbo = new(),
             Renderer = new(), Fps = new(), ReplayTurbo = new(), StopReplay = new();
         public ToggleSwitch Dim = null!;
 
@@ -44,7 +44,7 @@ namespace Zelda_3_Launcher
         }
 
         private IEnumerable<KeyChip> Commands => new[] { Reset, Pause, WindowBigger, WindowSmaller, VolumeUp, VolumeDown,
-            Life, Keys, NoClip, Turbo, ReplayTurbo, StopReplay, Renderer, Fps };
+            Life, Keys, NoClip, KillLink, Turbo, ReplayTurbo, StopReplay, Renderer, Fps };
 
         //
         // Lettura e scrittura
@@ -86,6 +86,8 @@ namespace Zelda_3_Launcher
             Life.Key = k["CheatLife"];
             Keys.Key = k["CheatKeys"];
             NoClip.Key = k["CheatWalkThroughWalls"];
+            // tasto nuovo: negli ini di prima manca, vale quello del gioco
+            KillLink.Key = k["CheatKillLink"] ?? "Ctrl+k";
             StopReplay.Key = k["StopReplay"];
             Reset.Key = k["Reset"];
             Turbo.Key = k["Turbo"];
@@ -138,6 +140,7 @@ namespace Zelda_3_Launcher
             k["CheatLife"] = Life.Key;
             k["CheatKeys"] = Keys.Key;
             k["CheatWalkThroughWalls"] = NoClip.Key;
+            k["CheatKillLink"] = KillLink.Key;
             k["StopReplay"] = StopReplay.Key;
             k["Reset"] = Reset.Key;
             k["Turbo"] = Turbo.Key;

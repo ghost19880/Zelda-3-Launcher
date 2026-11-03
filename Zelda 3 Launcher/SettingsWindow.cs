@@ -145,6 +145,40 @@ namespace Zelda_3_Launcher
                 "Link with blond hair, as in the official artwork. Custom Link sprites can't be used while it is on.",
                 "Blond Link as in the official artwork (custom Link sprites are turned off)", From: "OfficialArtwork");
 
+        // Trucchi (sezione [Cheats]): tutti spenti in partenza, non toccati da
+        // "Attiva/Disattiva tutto". Quelli con un tasto funzionano solo se accesi.
+        private static readonly BoolOption
+            CheatNoClip = new("Cheats", "NoClip", "Walk through walls (No Clip)",
+                "The key makes Link walk through walls; press it again to stop.",
+                "NoClip: walk through walls (key CheatWalkThroughWalls)", false),
+            CheatKill = new("Cheats", "KillLink", "Instant death (Kill Link)",
+                "The key kills Link at once, even with infinite life.",
+                "KillLink: kill Link at once (key CheatKillLink)", false),
+            CheatRefill = new("Cheats", "Refill", "Fill hearts and magic",
+                "The key fills hearts and magic to the maximum. Holding Shift with it also gives bombs, arrows and rupees.",
+                "Refill: fill hearts and magic (key CheatLife; CheatEquipment also bombs, arrows and rupees)", false),
+            CheatKey = new("Cheats", "GiveKey", "Give One Key",
+                "The key gives a small key if you have none.",
+                "GiveKey: one small key when you have none (key CheatKeys)", false),
+            CheatOneHit = new("Cheats", "OneHitKill", "Instant kill (any enemy in one hit)",
+                "Any hit that hurts an enemy kills it at once. Enemies that a weapon can't hurt stay unhurt.",
+                "OneHitKill: any hit that does damage kills the enemy", false),
+            CheatLife = new("Cheats", "InfiniteLife", "Infinite life",
+                "Hearts don't go down when Link is hit or falls into a pit.",
+                "InfiniteLife: hearts never go down", false),
+            CheatMagic = new("Cheats", "InfiniteMagic", "Infinite magic",
+                "Magic doesn't go down when used.",
+                "InfiniteMagic: magic never goes down", false),
+            CheatRupees = new("Cheats", "InfiniteRupees", "Infinite rupees",
+                "Rupees don't go down when spent.",
+                "InfiniteRupees: rupees never go down", false),
+            CheatBombs = new("Cheats", "InfiniteBombs", "Infinite bombs",
+                "Bombs don't go down when used.",
+                "InfiniteBombs: bombs never go down", false),
+            CheatArrows = new("Cheats", "InfiniteArrows", "Infinite arrows",
+                "Arrows don't go down when shot.",
+                "InfiniteArrows: arrows never go down", false);
+
         private static readonly BoolOption[] kEffects =
         {
             new("Graphics", "FxHeatAndFlames", "Heat and flames effect",
@@ -239,7 +273,9 @@ namespace Zelda_3_Launcher
         private readonly Dictionary<BoolOption, ToggleSwitch> options = new();
         private readonly List<(DarkComboBox combo, string[] items)> combos = new();
         private readonly KeyBindings keys = new();
-        private Panel keysPage = null!;
+        private Panel keysPage = null!, cheatsPage = null!, savePage = null!;
+        private FlatButton buttonRestoreSave = null!;
+        private Label saveInfo = null!, backupInfo = null!;
         private bool loading = true, dirty, saved, failed, refilling;
 
         // Controlli delle opzioni con una logica propria
@@ -277,6 +313,8 @@ namespace Zelda_3_Launcher
             BuildItems();
             BuildAudio();
             BuildControls();
+            BuildCheats();
+            BuildSave();
             BuildAdvanced();
 
             Lang.Apply(this, null);
@@ -398,7 +436,7 @@ namespace Zelda_3_Launcher
                 q.Panel.Visible = q == p;
             }
             keys.Cancel();
-            if (p.Panel == keysPage)
+            if (p.Panel == keysPage || p.Panel == cheatsPage)
             {
                 // legge il controller e zelda3.ini solo se si apre la scheda
                 bool was = loading;
@@ -406,6 +444,7 @@ namespace Zelda_3_Launcher
                 keys.EnsureLoaded();
                 loading = was;
             }
+            if (p.Panel == savePage) UpdateSaveInfo();
             title.Text = Lang.T(p.Title);
             subtitle.Text = Lang.T(p.Subtitle);
             desc.Show("", p.Panel == keysPage ? "Click a box and press the key or button to assign. Hover over an item for details."
@@ -780,12 +819,7 @@ namespace Zelda_3_Launcher
             KeyField(perf, "Toggle Renderer", keys.Renderer, "Switches between the renderers while playing.");
             KeyField(perf, "Toggle FPS", keys.Fps, "Shows or hides the frames per second while playing.");
 
-            var cheats = AddCard(p, 1, "Cheats");
-            KeyField(cheats, "Restore Health", keys.Life, "Restores all health. Holding \"Shift\" when pushing the button will refill your other resources.");
-            KeyField(cheats, "Give One Key", keys.Keys, "If you have no keys, give yourself a single key.");
-            KeyField(cheats, "No Clip", keys.NoClip, "Allows you to walk through walls");
-            KeyField(cheats, "Turbo", keys.Turbo, "The game plays at an extremely fast speed.");
-
+            // i tasti dei trucchi sono nella scheda Trucchi
             var replays = AddCard(p, 1, "Replays");
             KeyField(replays, "Toggle Replay Speed", keys.ReplayTurbo, "Toggle between Turbo and regular speed of the replays.");
             KeyField(replays, "Stop Replay", keys.StopReplay, "Stop the current replay in progress.");
@@ -806,6 +840,188 @@ namespace Zelda_3_Launcher
         {
             chip.Caption = text;
             Field(card, text, chip, tip);
+        }
+
+        private void BuildCheats()
+        {
+            var p = AddPage("Cheats", "All off at the start; the ones with a key only work when on");
+            cheatsPage = p.Panel;
+
+            var withKey = AddCard(p, 0, "Cheats with a key");
+            CheatWithKey(withKey, CheatNoClip, keys.NoClip);
+            CheatWithKey(withKey, CheatKill, keys.KillLink);
+            CheatWithKey(withKey, CheatRefill, keys.Life);
+            CheatWithKey(withKey, CheatKey, keys.Keys);
+            // il turbo e sempre attivo: solo il tasto
+            KeyField(withKey, "Turbo", keys.Turbo, "While the key is held the game plays at an extremely fast speed. Always active.");
+
+            var always = AddCard(p, 1, "Always active");
+            foreach (var o in new[] { CheatOneHit, CheatLife, CheatMagic, CheatRupees, CheatBombs, CheatArrows })
+                Toggle(always, o);
+        }
+
+        // Riga con l'interruttore del trucco e, a destra, il suo tasto (usabile solo
+        // con il trucco acceso)
+        private void CheatWithKey(Card card, BoolOption o, KeyChip chip)
+        {
+            chip.Caption = o.Text;
+            var row = new Panel { Height = 34, BackColor = Theme.CardBack };
+            var t = new ToggleSwitch { Text = o.Text, BackColor = Theme.CardBack };
+            t.CheckedChanged += Changed;
+            t.CheckedChanged += (s, e) => chip.Enabled = t.Checked;
+            options[o] = t;
+            chip.Enabled = false;
+            row.Controls.Add(t);
+            row.Controls.Add(chip);
+            row.Layout += (s, e) =>
+            {
+                chip.Location = new Point(row.Width - chip.Width - 2, (row.Height - chip.Height) / 2);
+                t.SetBounds(0, 1, Math.Max(0, chip.Left - 8), 32);
+            };
+            Hover(t, o.Text, o.Tip);
+            Hover(chip, o.Text, o.Tip);
+            card.Controls.Add(row);
+        }
+
+        private void BuildSave()
+        {
+            var p = AddPage("Save file", "Import a SNES save and edit the game files");
+            savePage = p.Panel;
+
+            var import = AddCard(p, 0, "Import save");
+            var buttonImport = new FlatButton { Text = "Import save", Width = 170, Height = 30 };
+            buttonImport.Click += (s, e) => ImportSave();
+            Field(import, "SNES save (.srm)", buttonImport,
+                "Choose the save of a SNES emulator (.srm, A Link to the Past in English or Italian): it becomes the game's save (saves\\sram.dat) with its three game files. The previous one is copied to saves\\backup_import.");
+
+            // altra funzione: riquadro a parte
+            var edit = AddCard(p, 0, "Edit save");
+            var buttonEdit = new FlatButton { Text = "Edit save", Width = 170, Height = 30, Style = FlatButton.Kind.Primary };
+            buttonEdit.Click += (s, e) => EditSave();
+            Field(edit, "Player name", buttonEdit,
+                "Makes a copy of the current save, then opens the editor. With \"Restore save\" you go back to that copy.");
+            buttonRestoreSave = new FlatButton { Text = "Restore save", Width = 170, Height = 30, Style = FlatButton.Kind.Danger };
+            buttonRestoreSave.Click += (s, e) => RestoreSave();
+            Field(edit, "Copy made by \"Edit save\"", buttonRestoreSave,
+                "Puts back the save as it was when you last pressed \"Edit save\" (game files and quick saves).");
+            backupInfo = new Label { AutoSize = false, Height = 26, Font = Theme.Small, ForeColor = Theme.Muted, BackColor = Theme.CardBack, Padding = new Padding(8, 4, 4, 0) };
+            edit.Controls.Add(backupInfo);
+
+            var files = AddCard(p, 1, "Saved games");
+            saveInfo = new Label { AutoSize = false, Height = 120, Font = Theme.Body, ForeColor = Theme.Text, BackColor = Theme.CardBack, Padding = new Padding(8, 4, 4, 0) };
+            Hover(saveInfo, "Saved games", "The three game files of the title screen, read from saves\\sram.dat.");
+            files.Controls.Add(saveInfo);
+            var note = new Label
+            {
+                AutoSize = false, Height = 96, Font = Theme.Small, ForeColor = Theme.Muted, BackColor = Theme.CardBack, Padding = new Padding(8, 6, 4, 0),
+                Text = "The quick saves (menu slots, F1 - F10) keep their own copy of the game files: importing and editing update them too, " +
+                    "so loading one doesn't bring back the old save. Close the game first.",
+            };
+            files.Controls.Add(note);
+        }
+
+        private void UpdateSaveInfo()
+        {
+            var sram = SaveFile.ReadSram();
+            if (sram == null)
+                saveInfo.Text = Lang.T("No save yet: start a game first, or import one.");
+            else
+            {
+                var lines = new List<string>();
+                for (int s = 0; s < 3; s++)
+                    lines.Add(SaveFile.SlotValid(sram, s)
+                        ? $"{s + 1}.  {SaveFile.NameText(SaveFile.ReadName(sram, s))}   ({string.Format(Lang.T("{0} hearts"), SaveFile.Hearts(sram, s))})"
+                        : $"{s + 1}.  " + Lang.T("(empty)"));
+                saveInfo.Text = string.Join("\n\n", lines);
+            }
+            buttonRestoreSave.Enabled = SaveFile.HasBackup;
+            backupInfo.Text = SaveFile.HasBackup
+                ? string.Format(Lang.T("Copy of {0}"), SaveFile.BackupTime.ToString("g"))
+                : Lang.T("No copy yet");
+        }
+
+        private bool CheckGameClosed()
+        {
+            if (!SaveFile.GameRunning()) return true;
+            Lang.Show("Close the game before changing the save.", "Save file", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return false;
+        }
+
+        private void ImportSave()
+        {
+            if (!CheckGameClosed()) return;
+            using var dialog = new OpenFileDialog
+            {
+                Title = Lang.T("Import save"),
+                Filter = Lang.T("SNES save") + " (*.srm)|*.srm|" + Lang.T("All files") + " (*.*)|*.*",
+            };
+            if (dialog.ShowDialog(this) != DialogResult.OK) return;
+            try
+            {
+                var srm = File.ReadAllBytes(dialog.FileName);
+                if (srm.Length < SaveFile.SramSize)
+                {
+                    Lang.Show("This file is not an A Link to the Past save: it is smaller than 8 KB.", "Import save", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                bool any = Enumerable.Range(0, 3).Any(s => SaveFile.SlotValid(srm, s));
+                if (!any && Lang.Show("No game file was found in this save (it may be empty or from another game).\n\nDo you want to import it anyway?",
+                        "Import save", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) != DialogResult.Yes)
+                    return;
+                if (File.Exists(SaveFile.SramPath) && Lang.Show("The current save will be replaced (a copy goes to saves\\backup_import).\n\nDo you want to continue?",
+                        "Import save", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+                    return;
+                Directory.CreateDirectory(SaveFile.SavesDir);
+                if (File.Exists(SaveFile.SramPath)) SaveFile.Backup(SaveFile.ImportBackupDir);
+                SaveFile.Import(srm);
+                UpdateSaveInfo();
+                Lang.Show("Save imported. Choose the game file on the title screen.", "Import save", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(Lang.T("Unable to import the save:") + "\n\n" + ex.Message, Lang.T("Error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void EditSave()
+        {
+            if (!CheckGameClosed()) return;
+            var sram = SaveFile.ReadSram();
+            if (sram == null || !Enumerable.Range(0, 3).Any(s => SaveFile.SlotValid(sram, s)))
+            {
+                Lang.Show("There is no game file to edit: start a game first, or import a save.", "Edit save", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            try
+            {
+                SaveFile.BackupForEditor();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(Lang.T("Unable to make a copy of the save:") + "\n\n" + ex.Message, Lang.T("Error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            UpdateSaveInfo();
+            using var editor = new SaveEditorForm(sram, options[GoldPotion].Checked, options[LargerWallet].Checked);
+            editor.ShowDialog(this);
+            UpdateSaveInfo();
+        }
+
+        private void RestoreSave()
+        {
+            if (!SaveFile.HasBackup || !CheckGameClosed()) return;
+            if (Lang.Show(string.Format(Lang.T("The save will go back to the copy of {0}.\n\nDo you want to continue?"), SaveFile.BackupTime.ToString("g")),
+                    "Restore save", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != DialogResult.Yes)
+                return;
+            try
+            {
+                SaveFile.RestoreBackup();
+                UpdateSaveInfo();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(Lang.T("Unable to restore the save:") + "\n\n" + ex.Message, Lang.T("Error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void BuildAdvanced()

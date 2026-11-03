@@ -14,7 +14,9 @@ A fork of [RadzPrower/Zelda-3-Launcher](https://github.com/RadzPrower/Zelda-3-La
   - **Gameplay**: fast transitions, continuous world (the whole world active, every enemy in its own screen), modern HUD (with redrawn SNES buttons and the L/R shoulders when they take items), improved world and dungeon maps, progressive map, dungeon names, dialogue (language, speed, sharp or modern text), automatic saves and the original convenience options.
   - **Items**: the item buttons (X button for items, L and R buttons for items, or switching items with L and R; an item can be on one button only), the original item options (turning while dashing, Mirror to the Dark World, larger wallet, cancel bird) plus the extended inventory (6 columns like on GBA), sword and items world interaction, burn and freeze interaction, up to 10 active bombs, bird travel point 9, items refill resources, enemy damage as on GBA, Hurricane Spin, diving with the flippers, enchanted rocks (GBA), the map like *A Link Between Worlds*, the Gold Medicine from BS Zelda (one per day) and the bug fixes: minor, game changing and GBA minor fixes, with a *List on the wiki* link to [what they change](https://github.com/ghost19880/zelda3/wiki/Bug-fixes).
   - **Audio**: sound and MSU.
-  - **Controls**: keyboard and controller on a drawn SNES controller, keys read directly in the window (also with Ctrl/Shift/Alt), *Assign all* and *Default keys*, controller rumble (off, light, medium, strong), plus game functions, performance, cheats and replay keys.
+  - **Controls**: keyboard and controller on a drawn SNES controller, keys read directly in the window (also with Ctrl/Shift/Alt), *Assign all* and *Default keys*, controller rumble (off, light, medium, strong), plus game functions, performance and replay keys.
+  - **Cheats**: all off at the start. Walk through walls (No Clip), instant death (kill Link), fill hearts and magic and give one key, each with its key (the key works only when the cheat is on), the turbo key (always active); instant kill (any enemy in one hit), infinite life, magic, rupees, bombs and arrows.
+  - **Save file**: *Import save* turns the `.srm` save of a SNES emulator into the game save (`saves\sram.dat`, the old one is copied to `saves\backup_import`). *Edit save* makes a copy of the save and opens an editor for the whole game file: name (letters, numbers, `- . , ! ? ( )` and the Link icon), progression, hearts, magic, rupees, items, equipment, bottles, pendants and crystals, maps, compasses, keys and bosses of every dungeon, pieces of heart (data positions from the MIT save editor of game-tools-collection); *Restore save* goes back to that copy. The quick saves are updated too, so loading one doesn't bring back the old save.
   - **Advanced**: compatibility options, custom sprites and shaders, *Reset settings* and *Rebuild*.
 - **Italian**: choosing it in the language list downloads the translation from [zelda3-italiano](https://github.com/ghost19880/zelda3-italiano), builds the font with accented letters and switches the launcher itself to Italian.
 - `Update` really updates: new commits are fetched and applied, settings and saves are kept (and restored even if the update fails). A warning appears before `Restore`/`Update` if the game sources were edited by hand.
@@ -150,10 +152,13 @@ You can hit the `Assign All Input` button to be sequentially moved from input to
 - Volume Down
 
 ### Cheats
-- Restore Health: Full heal Link and restore magic.
-- Give One Key: This hotkey will set your dungeon key count to 1 if you have no keys.
+All off at the start: the keys work only when the cheat is turned on in the Cheats tab.
 - No Clip: Allows you to freely walk through walls.
-- Turbo: Increases game speed while held.
+- Kill Link: Link dies at once.
+- Restore Health: Full heal Link and restore magic (with Shift also bombs, arrows and rupees).
+- Give One Key: This hotkey will set your dungeon key count to 1 if you have no keys.
+- Turbo: Increases game speed while held (always active, no switch).
+- Always active when on: instant kill, infinite life, magic, rupees, bombs and arrows.
 
 ### Replays
 - Toggle Replay Speed: Toggles replay speed between realtime and turbo.

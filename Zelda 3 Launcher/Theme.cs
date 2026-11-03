@@ -696,6 +696,8 @@ namespace Zelda_3_Launcher
             var r = new RectangleF(0.5f, 0.5f, Width - 2, Height - 2);
             Theme.FillRound(g, Theme.Deep, r, 10);
             Theme.FillRound(g, Theme.Accent, new RectangleF(0, 0, 4, Height - 1), 2);
+            // voce senza descrizione: riquadro vuoto, niente titolo da solo
+            if (string.IsNullOrWhiteSpace(body)) return;
             int x = 18;
             string t = Lang.T(title);
             if (t.Length > 0)
@@ -761,6 +763,8 @@ namespace Zelda_3_Launcher
         private readonly FlatButton minus = new() { Text = "−", Width = 30, Height = 28, Radius = 7 };
         private readonly FlatButton plus = new() { Text = "+", Width = 30, Height = 28, Radius = 7 };
         public event EventHandler? ValueChanged;
+        // testo mostrato al posto del numero (per esempio i cuori in ottavi)
+        public Func<int, string>? Format { get; set; }
 
         public int Minimum { get => min; set { min = value; Value = this.value; } }
         public int Maximum { get => max; set { max = value; Value = this.value; } }
@@ -801,7 +805,7 @@ namespace Zelda_3_Launcher
         protected override void OnPaint(PaintEventArgs e)
         {
             e.Graphics.Clear(Parent?.BackColor ?? Theme.CardBack);
-            TextRenderer.DrawText(e.Graphics, value.ToString(), Font, new Rectangle(30, 0, Width - 60, Height),
+            TextRenderer.DrawText(e.Graphics, Format?.Invoke(value) ?? value.ToString(), Font, new Rectangle(30, 0, Width - 60, Height),
                 Enabled ? Theme.Text : Theme.Faint, TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
         }
     }
