@@ -781,6 +781,7 @@ namespace Zelda_3_Launcher
             comboMsu = Combo(msu, "MSU Version", new[] { "MSU", "MSU Deluxe", "OPUZ", "OPUZ Deluxe" }, "Select the version of MSU you wish to use");
             rowMsuFolder = PathField(msu, "Folder", out textMsu, "Directory where MSU files are located", BrowseMsu);
             stepMsuVolume = Step(msu, "MSU volume", 0, 100, 5, "Volume of MSU output (0-100)");
+            stepMsuVolume.TypeStep = 1;  // a mano qualsiasi valore: il gioco legge un numero intero
             resumeMsu = Toggle(msu, "Resume MSU", "Resume MSU music from the same point in the track when returning to an area");
             foreach (Control c in msu.Controls) if (c != enableMsu) msuRows.Add(c);
             enableMsu.CheckedChanged += (s, e) => UpdateAudioState();

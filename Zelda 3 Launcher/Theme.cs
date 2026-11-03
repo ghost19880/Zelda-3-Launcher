@@ -756,19 +756,37 @@ namespace Zelda_3_Launcher
         protected override void OnTextChanged(EventArgs e) { Invalidate(); base.OnTextChanged(e); }
     }
 
-    // Numero con - e + (al posto del NumericUpDown, che non si scurisce)
+    // Numero con - e + (al posto del NumericUpDown, che non si scurisce).
+    // Tenendo premuto - o + il valore continua a scendere o salire; un clic
+    // sul numero lo rende modificabile e accetta solo i valori previsti
+    // (tra il minimo e il massimo, a passi di TypeStep dal minimo; TypeStep
+    // vale Step se non e' indicato).
     internal class Stepper : Control
     {
         private int value, min, max = 100, step = 1;
         private readonly FlatButton minus = new() { Text = "−", Width = 30, Height = 28, Radius = 7 };
         private readonly FlatButton plus = new() { Text = "+", Width = 30, Height = 28, Radius = 7 };
+        private readonly TextBox edit = new()
+        {
+            BorderStyle = BorderStyle.None, BackColor = Theme.Input, ForeColor = Theme.Text,
+            TextAlign = HorizontalAlignment.Center, Visible = false
+        };
+        private readonly System.Windows.Forms.Timer repeat = new();
+        private FlatButton? held;      // pulsante tenuto premuto col mouse
+        private int ticks;
+        private bool skipClick;        // il clic del mouse ha gia' contato alla pressione
+        private bool closing;
         public event EventHandler? ValueChanged;
         // testo mostrato al posto del numero (per esempio i cuori in ottavi)
         public Func<int, string>? Format { get; set; }
+        // lettura del testo scritto a mano, se diverso da un numero intero
+        public Func<string, int?>? Parse { get; set; }
 
         public int Minimum { get => min; set { min = value; Value = this.value; } }
         public int Maximum { get => max; set { max = value; Value = this.value; } }
         public int Step { get => step; set => step = Math.Max(1, value); }
+        // passo dei valori scritti a mano (0 = lo stesso dei pulsanti)
+        public int TypeStep { get; set; }
         public int Value
         {
             get => value;
@@ -787,10 +805,145 @@ namespace Zelda_3_Launcher
             SetStyle(ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer, true);
             Size = new Size(118, 28);
             Font = Theme.Bold;
-            minus.Click += (s, e) => Value = value - step;
-            plus.Click += (s, e) => Value = value + step;
+            edit.Font = Theme.Bold;
+            Hold(minus, -1);
+            Hold(plus, +1);
+            repeat.Tick += (s, e) => Repeat();
+            edit.KeyPress += EditKeyPress;
+            edit.KeyDown += EditKeyDown;
+            edit.TextChanged += (s, e) => edit.ForeColor = Read(edit.Text) != null ? Theme.Text : Theme.Danger;
+            edit.LostFocus += (s, e) => EndEdit(Read(edit.Text) is int v, Read(edit.Text) ?? value);
             Controls.Add(minus);
             Controls.Add(plus);
+            Controls.Add(edit);
+        }
+
+        // - e +: un passo alla pressione, poi ripetuti finche' resta premuto
+        private void Hold(FlatButton b, int dir)
+        {
+            b.Tag = dir;
+            b.MouseDown += (s, e) =>
+            {
+                if (e.Button != MouseButtons.Left) return;
+                skipClick = true;
+                Value = Next(dir);
+                held = b;
+                ticks = 0;
+                repeat.Interval = 400;
+                repeat.Start();
+            };
+            // il Click arriva prima del MouseUp: col mouse il passo e' gia' stato fatto
+            b.Click += (s, e) => { if (skipClick) skipClick = false; else Value = Next(dir); };
+            b.MouseUp += (s, e) => StopRepeat();
+            b.MouseCaptureChanged += (s, e) => { if (!b.Capture) StopRepeat(); };
+        }
+
+        private void StopRepeat()
+        {
+            repeat.Stop();
+            held = null;
+            skipClick = false;
+        }
+
+        private void Repeat()
+        {
+            if (held == null || !Enabled) { StopRepeat(); return; }
+            // come le barre di scorrimento: col puntatore fuori dal pulsante si ferma
+            if (!held.ClientRectangle.Contains(held.PointToClient(Cursor.Position))) return;
+            ticks++;
+            repeat.Interval = ticks < 10 ? 80 : ticks < 30 ? 50 : 25;
+            Value = Next((int)held.Tag!);
+        }
+
+        // passo successivo; un valore fuori dai passi (scritto a mano o letto
+        // dal file) va prima al passo piu' vicino in quella direzione
+        private int Next(int dir)
+        {
+            int off = ((value - min) % step + step) % step;
+            if (off != 0) return dir > 0 ? value + step - off : value - off;
+            return value + dir * step;
+        }
+
+        // Modifica a mano del numero
+        private Rectangle TextArea => new(minus.Width, 0, Math.Max(10, Width - minus.Width - plus.Width), Height);
+
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            Cursor = Enabled && TextArea.Contains(e.Location) ? Cursors.IBeam : Cursors.Default;
+            base.OnMouseMove(e);
+        }
+
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left && Enabled && !edit.Visible && TextArea.Contains(e.Location))
+                BeginEdit();
+            base.OnMouseDown(e);
+        }
+
+        private void BeginEdit()
+        {
+            edit.Text = Format?.Invoke(value) ?? value.ToString();
+            edit.ForeColor = Theme.Text;
+            edit.MaxLength = Parse != null ? 8 : Math.Max(Math.Abs(min).ToString().Length, Math.Abs(max).ToString().Length) + (min < 0 ? 1 : 0);
+            var a = TextArea;
+            edit.SetBounds(a.X + 6, (Height - edit.PreferredHeight) / 2, a.Width - 12, edit.PreferredHeight);
+            edit.Visible = true;
+            edit.Focus();
+            edit.SelectAll();
+            Invalidate();
+        }
+
+        private void EndEdit(bool apply, int v)
+        {
+            if (!edit.Visible || closing) return;
+            closing = true;
+            if (edit.Focused) Focus();
+            edit.Visible = false;
+            closing = false;
+            if (apply) Value = v;
+            Invalidate();
+        }
+
+        // valore scritto, oppure null se non e' tra quelli previsti
+        private int? Read(string text)
+        {
+            text = text.Trim();
+            int? v = Parse != null ? Parse(text) : int.TryParse(text, out int n) ? n : null;
+            if (v is not int x || x < min || x > max || (x - min) % (TypeStep > 0 ? TypeStep : step) != 0) return null;
+            return x;
+        }
+
+        private void EditKeyPress(object? sender, KeyPressEventArgs e)
+        {
+            char c = e.KeyChar;
+            bool ok = char.IsControl(c) || char.IsDigit(c) || (c == '-' && min < 0)
+                || (Parse != null && (c == ',' || c == '.' || c == '½'));
+            if (!ok || c == '\r' || c == (char)27) e.Handled = true;
+        }
+
+        private void EditKeyDown(object? sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true;
+                if (Read(edit.Text) is int v) EndEdit(true, v);
+                else System.Media.SystemSounds.Beep.Play();
+            }
+            else if (e.KeyCode == Keys.Escape)
+            {
+                e.SuppressKeyPress = true;
+                EndEdit(false, value);
+            }
+            else if (e.KeyCode == Keys.Up || e.KeyCode == Keys.Down)
+            {
+                // frecce: un passo partendo da quanto scritto
+                e.SuppressKeyPress = true;
+                int from = Read(edit.Text) ?? value;
+                int s = TypeStep > 0 ? TypeStep : step;
+                int v = Math.Clamp(from + (e.KeyCode == Keys.Up ? s : -s), min, max);
+                edit.Text = Format?.Invoke(v) ?? v.ToString();
+                edit.SelectAll();
+            }
         }
 
         protected override void OnLayout(LayoutEventArgs e)
@@ -800,12 +953,31 @@ namespace Zelda_3_Launcher
             base.OnLayout(e);
         }
 
-        protected override void OnEnabledChanged(EventArgs e) { Invalidate(); base.OnEnabledChanged(e); }
+        protected override void OnEnabledChanged(EventArgs e)
+        {
+            if (!Enabled) { StopRepeat(); EndEdit(false, value); }
+            Invalidate();
+            base.OnEnabledChanged(e);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) repeat.Dispose();
+            base.Dispose(disposing);
+        }
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            e.Graphics.Clear(Parent?.BackColor ?? Theme.CardBack);
-            TextRenderer.DrawText(e.Graphics, Format?.Invoke(value) ?? value.ToString(), Font, new Rectangle(30, 0, Width - 60, Height),
+            var g = e.Graphics;
+            g.Clear(Parent?.BackColor ?? Theme.CardBack);
+            var a = TextArea;
+            if (edit.Visible)
+            {
+                Theme.Smooth(g);
+                Theme.FillRound(g, Theme.Input, new RectangleF(a.X + 2, 0.5f, a.Width - 4, Height - 2), 7);
+                return;
+            }
+            TextRenderer.DrawText(g, Format?.Invoke(value) ?? value.ToString(), Font, a,
                 Enabled ? Theme.Text : Theme.Faint, TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
         }
     }

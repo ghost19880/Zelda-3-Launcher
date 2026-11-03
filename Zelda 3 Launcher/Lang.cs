@@ -636,7 +636,7 @@ namespace Zelda_3_Launcher
             ["Heart containers"] = "Contenitori di cuore",
             ["Maximum hearts (3 to 20)."] = "Cuori massimi (da 3 a 20).",
             ["Hearts"] = "Cuori",
-            ["Hearts when the game file starts, in half hearts."] = "Cuori alla ripresa della partita, a mezzi cuori.",
+            ["Hearts when the game file starts."] = "Cuori alla ripresa della partita.",
             ["Pieces of heart collected towards the next heart container (4 make a container)."] =
                 "Frammenti raccolti verso il prossimo contenitore (4 fanno un contenitore).",
             ["Magic"] = "Magia",

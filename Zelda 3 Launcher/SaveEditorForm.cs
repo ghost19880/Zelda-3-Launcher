@@ -404,16 +404,17 @@ namespace Zelda_3_Launcher
         }
 
         private Stepper Number(Card card, string text, int o, int min, int max, int step, string tip = "", bool word = false,
-            Func<int, string>? format = null, Action? after = null)
+            Func<int, string>? format = null, Action? after = null, Func<string, int?>? parse = null)
         {
-            var s = MakeNumber(o, min, max, step, word, format, after);
+            var s = MakeNumber(o, min, max, step, word, format, after, parse);
             Row(card, text, s, tip);
             return s;
         }
 
-        private Stepper MakeNumber(int o, int min, int max, int step, bool word = false, Func<int, string>? format = null, Action? after = null)
+        private Stepper MakeNumber(int o, int min, int max, int step, bool word = false, Func<int, string>? format = null, Action? after = null,
+            Func<string, int?>? parse = null)
         {
-            var s = new Stepper { Minimum = min, Maximum = max, Step = step, Format = format, BackColor = Theme.CardBack, Width = 150 };
+            var s = new Stepper { Minimum = min, Maximum = max, Step = step, Format = format, Parse = parse, BackColor = Theme.CardBack, Width = 150 };
             s.ValueChanged += (_, _) =>
             {
                 if (loading) return;
@@ -451,6 +452,17 @@ namespace Zelda_3_Launcher
         {
             int whole = eighths / 8, rest = eighths % 8;
             return rest == 0 ? whole.ToString() : rest == 4 ? $"{whole}½" : (eighths / 8.0).ToString("0.##");
+        }
+
+        // cuori scritti a mano ("3", "3½", "3,5", "3.5") in ottavi
+        private static int? ParseHearts(string text)
+        {
+            text = text.Replace("½", ",5").Replace(".", ",");
+            if (text.StartsWith(",")) text = "0" + text;
+            if (!decimal.TryParse(text, System.Globalization.NumberStyles.AllowDecimalPoint,
+                System.Globalization.CultureInfo.GetCultureInfo("it-IT"), out decimal h)) return null;
+            decimal e = h * 8;
+            return e == decimal.Truncate(e) && e <= 1000 ? (int)e : null;
         }
 
         //
@@ -499,14 +511,14 @@ namespace Zelda_3_Launcher
             Typed(player, "Total count", 0x405, 999, "Total of saves and deaths shown at the end of the game.");
 
             var life = AddCard(page, cols, 1, "Life and magic");
-            heartsMax = Number(life, "Heart containers", 0x36C, 8, 160, 8, "Maximum hearts (3 to 20).", format: v => Hearts(v), after: () =>
+            heartsMax = Number(life, "Heart containers", 0x36C, 24, 160, 8, "Maximum hearts (3 to 20).", format: v => Hearts(v), parse: ParseHearts, after: () =>
             {
                 heartsNow.Maximum = heartsMax.Value;
             });
-            heartsNow = Number(life, "Hearts", 0x36D, 4, 160, 4, "Hearts when the game file starts, in half hearts.", format: v => Hearts(v));
-            refresh.Add(() => heartsNow.Maximum = Math.Max(4, U8(0x36C)));
+            heartsNow = Number(life, "Hearts", 0x36D, 8, 160, 8, "Hearts when the game file starts.", format: v => Hearts(v), parse: ParseHearts);
+            refresh.Add(() => heartsNow.Maximum = Math.Max(24, U8(0x36C)));
             Number(life, "Pieces of heart", 0x36B, 0, 3, 1, "Pieces of heart collected towards the next heart container (4 make a container).");
-            Number(life, "Magic", 0x36E, 0, 128, 8, "Magic meter: 128 is full.");
+            Number(life, "Magic", 0x36E, 0, 128, 8, "Magic meter: 128 is full.").TypeStep = 1;  // a mano qualsiasi valore
             Choice(life, "Magic upgrade", 0x37B, new[] { (0, "Normal"), (1, "Half magic") },
                 "Magic consumption: normal, or halved by the fairy of the Pyramid's fountain.");
 
