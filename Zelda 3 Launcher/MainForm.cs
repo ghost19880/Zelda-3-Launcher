@@ -89,6 +89,13 @@ namespace Zelda_3_Launcher
                 build.Text = Lang.T("Update") + " · " + string.Format(Lang.T("{0} new"), repoState.Behind);
                 build.Enabled = !busy;
             }
+            else if (!GameBuilt)
+            {
+                // sorgenti presenti ma zelda3.exe mancante (cancellato o compilazione
+                // fallita): senza questo non ci sarebbe modo di ricompilare
+                build.Text = Lang.T("Repair");
+                build.Enabled = !busy;
+            }
             else
             {
                 build.Text = Lang.T("Update") + " · " + Lang.T(repoState.Online ? "no news" : "offline");
@@ -197,7 +204,7 @@ namespace Zelda_3_Launcher
 
         private void build_Click(object sender, EventArgs e)
         {
-            RunBuild(Lang.T(repoState.Exists ? "Update" : "Download"));
+            RunBuild(Lang.T(!repoState.Exists ? "Download" : GameBuilt ? "Update" : "Repair"));
         }
 
         private void RunBuild(string action)
@@ -247,7 +254,8 @@ namespace Zelda_3_Launcher
                 cloneRepo.ShowDialog(this);
             }
 
-            if (!Directory.Exists(Program.repoDir)) return;
+            // scaricamento non riuscito: senza i sorgenti non si va avanti
+            if (!progressForm.RepoUsable(Program.repoDir)) return;
 
             using (progressForm copyROM = new progressForm("Copying ROM File", "Copying ROM file to proper directory..."))
             {

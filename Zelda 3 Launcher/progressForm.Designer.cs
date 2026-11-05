@@ -105,7 +105,7 @@ namespace Zelda_3_Launcher
             Task? cloneTask = null;
             try
             {
-                if (Repository.IsValid(repoDir))
+                if (RepoUsable(repoDir))
                 {
                     using var repo = new Repository(repoDir);
                     var iniFile = Path.Combine(repoDir, "zelda3.ini");
@@ -149,6 +149,13 @@ namespace Zelda_3_Launcher
                         }
                     }
                 }
+                else if (Directory.Exists(repoDir) && Directory.EnumerateFileSystemEntries(repoDir).Any())
+                {
+                    // Cartella zelda3 senza un repository valido ma con dei file (di solito
+                    // saves e zelda3.ini tenuti per reinstallare): il clone la rifiuta,
+                    // quindi il repository si crea sul posto e i file dell'utente restano
+                    cloneTask = Task.Run(() => DownloadInPlace(repoDir));
+                }
                 else
                 {
                     cloneTask = Task.Run(() =>
@@ -185,6 +192,88 @@ namespace Zelda_3_Launcher
                 Lang.Show("Unable to download the game:\n\n" + cloneTask.Exception!.GetBaseException().Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             this.Close();
+        }
+
+        // Repository pronto da aggiornare: valido, con un commit e il ramo di GitHub collegato
+        // (uno scaricamento interrotto lascia un .git a meta')
+        public static bool RepoUsable(string dir)
+        {
+            try
+            {
+                if (!Repository.IsValid(dir)) return false;
+                using var repo = new Repository(dir);
+                return repo.Head.Tip != null && repo.Head.TrackedBranch != null;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        // Scarica il gioco dentro una cartella zelda3 che ha gia' dei file:
+        // repository nuovo sul posto, origin, fetch e checkout forzato del ramo
+        // principale. I file che non sono nel repository (saves...) restano;
+        // zelda3.ini dell'utente si rimette come dopo un aggiornamento.
+        private void DownloadInPlace(string repoDir)
+        {
+            var gitDir = Path.Combine(repoDir, ".git");
+            var iniFile = Path.Combine(repoDir, "zelda3.ini");
+            var iniBackup = Path.Combine(repoDir, "saves", "zelda3.ini");
+            bool hadIni = File.Exists(iniFile);
+            if (hadIni)
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(iniBackup)!);
+                File.Copy(iniFile, iniBackup, true);
+            }
+
+            DeleteGitDir(gitDir);
+            try
+            {
+                Repository.Init(repoDir);
+                using var repo = new Repository(repoDir);
+                var remote = repo.Network.Remotes.Add("origin", Program.GameRepository);
+                Commands.Fetch(repo, remote.Name, remote.FetchRefSpecs.Select(x => x.Specification),
+                    new FetchOptions
+                    {
+                        OnTransferProgress = p => { max = p.TotalObjects; progress = p.ReceivedObjects; return true; }
+                    }, null);
+                var remoteBranch = repo.Branches["origin/master"] ?? repo.Branches["origin/main"]
+                    ?? throw new Exception("origin/master not found");
+                var local = repo.CreateBranch(remoteBranch.FriendlyName.Substring("origin/".Length), remoteBranch.Tip);
+                repo.Branches.Update(local, b => b.TrackedBranch = remoteBranch.CanonicalName);
+                Commands.Checkout(repo, local, new CheckoutOptions
+                {
+                    CheckoutModifiers = CheckoutModifiers.Force,
+                    OnCheckoutProgress = (clonePath, completed, total) => CheckoutProgress(clonePath, completed, total)
+                });
+            }
+            catch
+            {
+                // niente repository a meta': al prossimo tentativo si riparte da capo
+                DeleteGitDir(gitDir);
+                throw;
+            }
+
+            if (hadIni)
+            {
+                var defaultsText = File.Exists(iniFile) ? File.ReadAllText(iniFile, IniFile.kBytes) : "";
+                IniFile.WriteAtomic(iniFile, File.ReadAllText(iniBackup, IniFile.kBytes));
+                if (defaultsText.Length > 0)
+                {
+                    try { IniMerge.AddMissingKeys(iniFile, IniFile.LauncherDefaults(defaultsText)); } catch { }
+                }
+            }
+            else if (File.Exists(iniFile))
+                IniFile.WriteAtomic(iniFile, IniFile.LauncherDefaults(File.ReadAllText(iniFile, IniFile.kBytes)));
+        }
+
+        // I file degli oggetti di git sono in sola lettura: si tolgono gli attributi prima
+        private static void DeleteGitDir(string gitDir)
+        {
+            if (!Directory.Exists(gitDir)) return;
+            foreach (var f in Directory.EnumerateFiles(gitDir, "*", SearchOption.AllDirectories))
+                File.SetAttributes(f, FileAttributes.Normal);
+            Directory.Delete(gitDir, true);
         }
 
         public void CheckoutProgress(string path, int completed, int total)

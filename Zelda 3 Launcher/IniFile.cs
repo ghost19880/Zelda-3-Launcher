@@ -268,7 +268,6 @@ namespace Zelda_3_Launcher
             ["Graphics/EnhancedMode7"] = "1",
             ["Features/SkipIntroOnKeypress"] = "1",
             ["Features/CancelBirdTravel"] = "1",
-            ["Graphics/SmoothCamera"] = "0",
             ["Graphics/Shader"] = "",
             ["Sound/EnableAudio"] = "1",
             ["Sound/AudioFreq"] = null,

@@ -22,7 +22,7 @@ namespace Zelda_3_Launcher
             HdText = new("Graphics", "HdText", "Sharp dialogue text",
                 "Redraws the dialogue box on top of the shader so the letters stay sharp.",
                 "Redraw the dialogue box sharp on top of the shader (1 = on)"),
-            ModernText = new("Graphics", "ModernText", "Modern dialogue text",
+            ModernText = new("Graphics", "ModernText", "Modern text",
                 "Dialogues with light upright letters on a translucent dark band instead of the original box. It replaces the sharp text.",
                 "Dialogues with modern text: light upright characters on a translucent dark band instead of the original box (1 = on)"),
             HighRefresh = new("Graphics", "HighRefreshInterpolation", "Smoothness above 60 Hz",
@@ -61,6 +61,10 @@ namespace Zelda_3_Launcher
             ProgressiveMap = new("Features", "ProgressiveMap", "Progressive map",
                 "The map starts covered by clouds and is uncovered area by area as Link visits it.",
                 "Progressive map: the map starts hidden and is uncovered by the player, one area at a time, where Link walks"),
+            // nella scheda Mappe (scelta dell'utente); chiave Fx: spenta senza la PPU ottimizzata
+            PitDepth = new("Graphics", "FxPitDepth", "Room below in pits",
+                "Dungeon pits show the room you fall into, darker and with depth, instead of the plain pattern.",
+                "Dungeon pits show the room below, darker and with depth"),
 
             ItemOnX = new("Features", "ItemOnX", "X button for items",
                 "In the item menu, hold X and pick an item: X will use it in the game.\n\nWith an item on X, Select opens the map; to save and quit, press Select in the item menu. An item can be on one button only among Y, X, L and R.",
@@ -283,7 +287,7 @@ namespace Zelda_3_Launcher
             extendY = null!, stretch = null!, linear = null!, mode7 = null!, dimFlashes = null!, dimFlashesGba = null!,
             spriteLimit = null!, unchangedSprites = null!, noVisualFixes = null!,
             customLink = null!, customShader = null!, enableAudio = null!, enableMsu = null!, resumeMsu = null!;
-        private DarkComboBox comboCamera = null!, comboTextSpeed = null!, comboRumble = null!, comboLanguage = null!, comboDisplay = null!,
+        private DarkComboBox comboTextSpeed = null!, comboRumble = null!, comboLanguage = null!, comboDisplay = null!,
             comboWindowSize = null!, comboRender = null!, comboAspect = null!, comboFrequency = null!,
             comboSamples = null!, comboChannels = null!, comboMsu = null!;
         private Stepper stepScale = null!, stepMsuVolume = null!;
@@ -658,8 +662,6 @@ namespace Zelda_3_Launcher
             dimFlashesGba.CheckedChanged += (s, e) => { if (dimFlashesGba.Checked) dimFlashes.Checked = false; ApplyFlashRainRule(); };
 
             var hd = AddCard(p, 0, "HD look");
-            comboCamera = Combo(hd, "Smooth camera", new[] { "Off", "Light", "Medium", "Strong" },
-                "Follows Link with a slight delay instead of staying locked to him.");
             Toggle(hd, HighRefresh);
             Toggle(hd, Lighting);
             fourSwords = Toggle(hd, "Four Swords Adventures shader", "Painted look in the style of Four Swords Adventures (uses OpenGL). The HUD, text and characters stay sharp.");
@@ -699,6 +701,7 @@ namespace Zelda_3_Launcher
             Toggle(maps, ImprovedDungeonMap);
             Toggle(maps, ProgressiveMap);
             Toggle(maps, LakeClearing);
+            Toggle(maps, PitDepth);
 
             var hud = AddCard(p, 1, "Interface");
             Toggle(hud, ModernHud);
@@ -1086,7 +1089,7 @@ namespace Zelda_3_Launcher
         // Senza la PPU ottimizzata il vecchio renderer disegna solo 256 pixel (lo
         // schermo largo resterebbe nero ai lati) e la mappa del mondo a bassa
         // risoluzione: Mode 7 migliorato e rapporto d'aspetto largo si spengono.
-        // Anche gli effetti HD, la telecamera fluida, la fluidita' oltre i 60 Hz,
+        // Anche gli effetti HD, la fluidita' oltre i 60 Hz,
         // il mondo continuo e le transizioni rapide si spengono e non si possono
         // accendere: lavorano sull'immagine sapendo da quale strato viene ogni
         // pixel (HUD, sprite, acqua) e spostano la vista, cose che il vecchio
@@ -1097,12 +1100,11 @@ namespace Zelda_3_Launcher
         private void ApplyRendererRule()
         {
             bool on = ppu.Checked;
-            mode7.Enabled = comboAspect.Enabled = comboCamera.Enabled = on;
+            mode7.Enabled = comboAspect.Enabled = on;
             if (!on)
             {
                 mode7.Checked = false;
                 comboAspect.SelectedIndex = 0;
-                comboCamera.SelectedIndex = 0;
             }
             foreach (var (o, t) in options)
             {
@@ -1168,13 +1170,11 @@ namespace Zelda_3_Launcher
             fourSwords.Checked = on;
             if (on)
             {
-                if (comboCamera.SelectedIndex == 0) comboCamera.SelectedIndex = 2;
                 if (comboTextSpeed.SelectedIndex == 0) comboTextSpeed.SelectedIndex = 1;
                 if (comboRumble.SelectedIndex == 0) comboRumble.SelectedIndex = 2;
             }
             else
             {
-                comboCamera.SelectedIndex = 0;
                 comboTextSpeed.SelectedIndex = 0;
                 comboRumble.SelectedIndex = 0;
             }
@@ -1276,7 +1276,6 @@ namespace Zelda_3_Launcher
                     t.Checked = o.Hd ? GetInt(ini, o.Section, o.Key, 0) != 0 : GetBool(ini, o.Section, o.Key);
             }
             ApplyItemSwitchRule();
-            comboCamera.SelectedIndex = Math.Clamp(GetInt(ini, "Graphics", "SmoothCamera", 0), 0, 3);
             comboTextSpeed.SelectedIndex = Math.Clamp(GetInt(ini, "Features", "TextSpeed", 0), 0, 2);
             comboRumble.SelectedIndex = Math.Clamp(GetInt(ini, "Features", "Rumble", 0), 0, 3);
 
@@ -1385,8 +1384,6 @@ namespace Zelda_3_Launcher
                 if (o.Hd || t.Checked != GetBool(ini, o.Section, o.Key))
                     Set(ini, o.Section, o.Key, Bit(t.Checked), o.Comment);
             }
-            Set(ini, "Graphics", "SmoothCamera", comboCamera.SelectedIndex.ToString(),
-                "Smooth camera: 0 = off, 1 = light, 2 = medium, 3 = strong");
             Set(ini, "Features", "TextSpeed", comboTextSpeed.SelectedIndex.ToString(),
                 "Dialogue speed: 0 = original, 1 = fast holding A or B, 2 = instant");
             Set(ini, "Features", "Rumble", comboRumble.SelectedIndex.ToString(),

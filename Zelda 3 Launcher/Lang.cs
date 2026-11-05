@@ -91,6 +91,7 @@ namespace Zelda_3_Launcher
             // Finestra principale
             ["Download"] = "Scarica",
             ["Update"] = "Aggiorna",
+            ["Repair"] = "Ripara",
             ["Restore"] = "Ripristina",
             ["Re-build"] = "Ricompila",
             ["Launch Zelda 3"] = "Avvia Zelda 3",
@@ -388,14 +389,12 @@ namespace Zelda_3_Launcher
             ["You can also change these while playing, from the options menu (Esc or right stick click)."] =
                 "Si possono cambiare anche durante il gioco dal menu opzioni (Esc oppure clic della levetta destra).",
             ["Effects"] = "Effetti",
-            ["Smooth camera"] = "Telecamera fluida",
             ["Off"] = "Spenta",
             ["Light"] = "Leggera",
             ["Medium"] = "Media",
             ["Strong"] = "Forte",
-            ["Follows Link with a slight delay instead of staying locked to him."] = "Segue Link con un leggero ritardo invece di restare agganciata.",
             ["Sharp dialogue text"] = "Testo nitido nei dialoghi",
-            ["Modern dialogue text"] = "Testo moderno nei dialoghi",
+            ["Modern text"] = "Testo moderno",
             ["Dialogues with light upright letters on a translucent dark band instead of the original box. It replaces the sharp text."] =
                 "Dialoghi con lettere chiare e dritte su una fascia scura trasparente al posto del riquadro originale. Sostituisce il testo nitido.",
             ["Redraws the dialogue box on top of the shader so the letters stay sharp."] = "Ridisegna il riquadro dei dialoghi sopra lo shader, così le lettere restano nitide.",
@@ -423,6 +422,8 @@ namespace Zelda_3_Launcher
                 "Acqua come in Four Swords Adventures: profondità, schiuma lungo le rive e attorno ai sassi, superficie che si muove; cascate che scorrono con nebbia.",
             ["Tell whirlpools from Zoras"] = "Distingui vortici da Zora",
             ["Teleport whirlpools give off magic sparkles."] = "I vortici di teletrasporto emettono bagliori magici",
+            ["Room below in pits"] = "Stanza sotto le buche",
+            ["Dungeon pits show the room you fall into, darker and with depth, instead of the plain pattern."] = "Nelle buche dei labirinti si vede la stanza in cui si cade, più scura e in profondità, invece della trama originale",
             ["Blur behind menus and dialogues"] = "Sfocatura dietro menu e dialoghi",
             ["The game is blurred and darkened behind the inventory and menus, and blurred inside dialogue boxes."] =
                 "Il gioco si sfoca e si scurisce dietro l'inventario e i menu, e si sfoca dentro i riquadri dei dialoghi.",

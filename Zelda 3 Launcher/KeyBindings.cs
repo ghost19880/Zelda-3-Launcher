@@ -12,6 +12,8 @@ namespace Zelda_3_Launcher
     internal class KeyBindings
     {
         private const double kWait = 5;
+        // grilletto premuto oltre meta' corsa, poi lasciato (valori da 0 a 32767)
+        private const short kTriggerPressed = 16000, kTriggerReleased = 4000;
 
         private IniData settings = new();
         private readonly string iniFile = IniFile.UserIni;
@@ -261,17 +263,20 @@ namespace Zelda_3_Launcher
                 }
                 else if (ev.type == SDL.SDL_EventType.SDL_CONTROLLERAXISMOTION)
                 {
-                    // i grilletti contano quando si lasciano
+                    // i grilletti contano quando si lasciano, e solo dopo averli premuti
+                    // oltre meta' corsa: i controller PlayStation mandano movimenti dei
+                    // grilletti anche da fermi (o tremolii di quelli consumati)
                     var axis = (SDL.SDL_GameControllerAxis)ev.caxis.axis;
+                    short value = ev.caxis.axisValue;
                     if (axis == SDL.SDL_GameControllerAxis.SDL_CONTROLLER_AXIS_TRIGGERLEFT)
                     {
-                        if (ev.caxis.axisValue == 0 && c.LeftTrigger) { Finish("L2"); return; }
-                        c.LeftTrigger = true;
+                        if (value > kTriggerPressed) c.LeftTrigger = true;
+                        else if (value < kTriggerReleased && c.LeftTrigger) { Finish("L2"); return; }
                     }
                     else if (axis == SDL.SDL_GameControllerAxis.SDL_CONTROLLER_AXIS_TRIGGERRIGHT)
                     {
-                        if (ev.caxis.axisValue == 0 && c.RightTrigger) { Finish("R2"); return; }
-                        c.RightTrigger = true;
+                        if (value > kTriggerPressed) c.RightTrigger = true;
+                        else if (value < kTriggerReleased && c.RightTrigger) { Finish("R2"); return; }
                     }
                 }
             }
