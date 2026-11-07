@@ -46,6 +46,9 @@ namespace Zelda_3_Launcher
             ModernHud = new("Features", "ModernHud", "Modern HUD",
                 "Hearts and magic top left, Y/A/B buttons top right with the item, the sword and what the A button does (Talk, Read, Open...), rupees and keys bottom left.",
                 "Modern HUD: hearts and magic top left, Y/A/B buttons top right, rupees and keys bottom left"),
+            GbaHud = new("Features", "GbaHud", "GBA HUD",
+                "HUD with the items on the right like on Game Boy Advance: magic and counters on the left, hearts and the item box on the right, at the edges of the screen in every aspect ratio. With items on X, L and R their boxes sit next to the Y box.\n\nNot together with \"Modern HUD\": turning one on turns the other off.",
+                "GBA HUD: magic and counters on the left, hearts and the item boxes (Y, X, L, R) on the right like on GBA"),
             DungeonNames = new("Features", "DungeonNames", "Dungeon names",
                 "When Link enters a dungeon from outside, its name appears in the middle of the screen like on GBA and disappears as soon as he moves.",
                 "Dungeon name in the middle of the screen when entering from outside, like on GBA"),
@@ -79,7 +82,7 @@ namespace Zelda_3_Launcher
                 "Limit the items you will cycle through to just the first four items",
                 "L/R only cycle through the first four items", false),
             TurnWhileDashing = new("Features", "TurnWhileDashing", "Allow Turning While Dashing",
-                "Allows you to turn when dashing with the Pegasus Boots, as in BS Zelda", "Allow turning while dashing", false),
+                "Allows you to turn when dashing with the Pegasus Boots, as in Ancient Stone Tablets", "Allow turning while dashing", false),
             MirrorToDarkworld = new("Features", "MirrorToDarkworld", "Mirror Teleports to Dark World",
                 "Magic Mirror works in both directions", "Magic Mirror works in both directions", false),
             SwordInteraction = new("Features", "SwordAndItemsInteraction", "Sword and items world interaction",
@@ -94,12 +97,15 @@ namespace Zelda_3_Launcher
             HurricaneSpin = new("Features", "HurricaneSpin", "Hurricane Spin",
                 "As on GBA, once you have the Bug-Catching Net: hold the sword charge longer and the spin attack becomes a Hurricane Spin. Press B while spinning to spin again and move with the D-pad; each spin costs magic.",
                 "Hurricane Spin as on GBA, once you have the Bug-Catching Net: hold the charge longer, press B while spinning to spin again (costs magic)", From: "SwordAndItemsInteraction"),
+            FsaBoomerang = new("Features", "FsaBoomerang", "Boomerang as in FSA",
+                "The boomerang can be stopped in mid-air, as in Four Swords Adventures: hold Y and at the end of its flight it waits until you let go, then comes back.",
+                "Boomerang as in Four Swords Adventures: hold the button that threw it and the boomerang waits in mid-air at the end of its flight; let go and it comes back"),
             ItemsRefill = new("Features", "ItemsRefillResources", "Items refill resources",
                 "Getting a magic item refills the magic meter, the Master Sword also the hearts; the Bow comes with 10 arrows",
                 "Getting a magic item refills the magic meter, the Master Sword also the hearts; the Bow comes with 10 arrows (as on GBA)", false),
             GoldPotion = new("Features", "GoldPotion", "Gold Medicine",
-                "From BS Zelda: a fourth cauldron in the witch's shop, 50 rupees, one per day (computer clock, back at midnight). Like the blue medicine it refills life and magic, and for 10 minutes the Spin Attack charges twice as fast.",
-                "Gold Medicine from BS Zelda: a fourth cauldron in the witch's shop (50 rupees, one per day); refills life and magic, the Spin Attack charges twice as fast for 10 minutes", false),
+                "As in Ancient Stone Tablets, a fourth cauldron in the Magic Shop, 50 rupees, one medicine per day (resets at midnight). Refills life and magic, and for 10 minutes the Spin Attack recharges in half the time.",
+                "Gold Medicine from BS Zelda: a fourth cauldron in the Magic Shop (50 rupees, one per day, resets at midnight); refills life and magic, and for 10 minutes the Spin Attack recharges in half the time", false),
             IcePalaceGba = new("Features", "IcePalaceGba", "Palace 6 as on GBA",
                 "Changes the Palace 6 puzzle to match the GBA version",
                 "Palace 6 as on GBA: the block puzzle of the Ice Palace (rooms 0x9E and 0xBE) matches the GBA version", false),
@@ -116,7 +122,7 @@ namespace Zelda_3_Launcher
                 "The map now has the shortcuts of Zelda: A Link Between Worlds.",
                 "Map like A Link Between Worlds: the map has the shortcuts of Zelda: A Link Between Worlds", false),
             MoreBombs = new("Features", "MoreActiveBombs", "More Active Bombs",
-                "Can have 10 active bombs instead of 2", "10 active bombs instead of 2", false),
+                "Can have 5 active bombs instead of 2", "5 active bombs instead of 2", false),
             LargerWallet = new("Features", "CarryMoreRupees", "Larger Wallet",
                 "Can carry 9999 rupees", "Carry up to 9999 rupees", false),
             CancelBird = new("Features", "CancelBirdTravel", "Cancel Bird",
@@ -144,7 +150,7 @@ namespace Zelda_3_Launcher
                 "Bug fixes that change game behavior", false),
             GbaFixes = new("Features", "GbaMinorFixes", "Various GBA fixes",
                 "Various bug fixes from the GBA version",
-                "GBA minor fixes: small differences of the GBA version (sounds, graphics, fixed bugs)", false),
+                "Various GBA fixes: small differences of the GBA version (sounds, graphics, bugs fixed on GBA such as Mothula and the Golden Sword)", false),
             BlondLink = new("Graphics", "BlondLink", "Blond Link",
                 "Link with blond hair, as in the official artwork. Custom Link sprites can't be used while it is on.",
                 "Blond Link as in the official artwork (custom Link sprites are turned off)", From: "OfficialArtwork");
@@ -704,7 +710,11 @@ namespace Zelda_3_Launcher
             Toggle(maps, PitDepth);
 
             var hud = AddCard(p, 1, "Interface");
-            Toggle(hud, ModernHud);
+            var modernHud = Toggle(hud, ModernHud);
+            var gbaHud = Toggle(hud, GbaHud);
+            // HUD moderno oppure HUD GBA: accesa una, l'altra si spegne
+            modernHud.CheckedChanged += (s, e) => { if (modernHud.Checked) gbaHud.Checked = false; };
+            gbaHud.CheckedChanged += (s, e) => { if (gbaHud.Checked) modernHud.Checked = false; };
             Toggle(hud, DungeonNames);
             Toggle(hud, ButtonHints);
             Toggle(hud, MaxInYellow);
@@ -754,6 +764,7 @@ namespace Zelda_3_Launcher
             Toggle(items, GoldPotion);
             Toggle(items, GbaDamage);
             Toggle(items, HurricaneSpin);
+            Toggle(items, FsaBoomerang);
             Toggle(items, MoreBombs);
             Toggle(items, LargerWallet);
 
@@ -1164,6 +1175,8 @@ namespace Zelda_3_Launcher
             if (on) ppu.Checked = true;
             foreach (var (o, t) in options)
                 if (o.Hd) t.Checked = on;
+            // HUD moderno e HUD GBA sono alternativi: "Attiva tutto" sceglie il moderno
+            if (on) options[ModernHud].Checked = true;
             ApplyItemSwitchRule();
             ApplyAspectRule();
             ApplyFlashRainRule();

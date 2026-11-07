@@ -172,9 +172,9 @@ namespace Zelda_3_Launcher
             ["Cancel Bird"] = "Annulla viaggio uccello",
             ["Bird travel point 9"] = "Punto di volo 9",
             ["Adds the ninth bird travel point of the GBA version, on the eastern summit of Death Mountain. It appears once Turtle Rock is open."] =
-                "Aggiunge il nono punto di volo della versione GBA, in cima al Monte della Morte a est. Compare quando la Rocca della Tartaruga è aperta.",
+                "Aggiunge il nono punto di volo della versione GBA, in cima al Monte Morte a est. Compare quando la Rocca Tartaruga è aperta.",
             ["Adds a ninth point to the bird travel map: the eastern summit of Death Mountain, on the plateau with the pegs above Turtle Rock."] =
-                "Aggiunge un nono punto alla mappa del volo con l'uccello: la cima a est del Monte della Morte, sulla piattaforma dei pioli sopra la Roccia della Tartaruga.",
+                "Aggiunge un nono punto alla mappa del volo con l'uccello: la cima a est del Monte Morte, sulla piattaforma dei pioli sopra la Rocca Tartaruga.",
             ["Autosave"] = "Autosalva",
             ["Performance in Title"] = "Prestazioni nel titolo",
             ["Unchanged Sprites"] = "Sprite invariati",
@@ -223,7 +223,7 @@ namespace Zelda_3_Launcher
 
             // Suggerimenti delle impostazioni
             ["Limit the items you will cycle through to just the first four items"] = "Con L e R scorri solo i primi quattro oggetti",
-            ["Allows you to turn when dashing with the Pegasus Boots, as in BS Zelda"] = "Puoi cambiare direzione mentre corri con i Calzari di Pegaso come su BS Zelda",
+            ["Allows you to turn when dashing with the Pegasus Boots, as in Ancient Stone Tablets"] = "Puoi cambiare direzione mentre corri con i Calzari di Pegaso come su Ancient Stone Tablets",
             ["Magic Mirror works in both directions"] = "Lo Specchio Magico funziona in entrambe le direzioni",
             ["You can collect items with your sword from a distance"] = "Puoi raccogliere oggetti a distanza con la spada",
             ["You can break pots if you have a L2 or higher sword"] = "Puoi rompere i vasi se hai una spada di livello 2 o superiore",
@@ -233,7 +233,7 @@ namespace Zelda_3_Launcher
             ["Allows you to skip the intro by pressing a key"] = "Puoi saltare l'introduzione premendo un tasto",
             ["Values will appear as yellow/orange when you have max resources (rupees, arrows, bombs)"] =
                 "I valori diventano gialli/arancioni quando rupie, frecce o bombe sono al massimo",
-            ["Can have 10 active bombs instead of 2"] = "Puoi avere fino a 10 bombe attive anziché 2",
+            ["Can have 5 active bombs instead of 2"] = "Puoi avere fino a 5 bombe attive anziché 2",
             ["Can carry 9999 rupees"] = "Puoi portare 9999 rupie",
             ["Miscellaneous bug fixes"] = "Correzioni di errori varie",
             ["Some bug fixes that are significant enough to impact game behavior"] = "Correzioni di errori abbastanza importanti da cambiare il comportamento del gioco",
@@ -453,6 +453,9 @@ namespace Zelda_3_Launcher
             ["Modern HUD"] = "HUD moderno",
             ["Hearts and magic top left, Y/A/B buttons top right with the item, the sword and what the A button does (Talk, Read, Open...), rupees and keys bottom left."] =
                 "Cuori e magia in alto a sinistra, tasti Y/A/B in alto a destra con oggetto, spada e azione del tasto A (Parla, Leggi, Apri...), rupie e chiavi in basso a sinistra.",
+            ["GBA HUD"] = "HUD GBA",
+            ["HUD with the items on the right like on Game Boy Advance: magic and counters on the left, hearts and the item box on the right, at the edges of the screen in every aspect ratio. With items on X, L and R their boxes sit next to the Y box.\n\nNot together with \"Modern HUD\": turning one on turns the other off."] =
+                "HUD con gli oggetti a destra come su Game Boy Advance: magia e contatori a sinistra, cuori e riquadro dell'oggetto a destra, ai bordi dello schermo in ogni formato. Con gli oggetti su X, L e R i loro riquadri stanno accanto a quello di Y.\n\nNon insieme a \"HUD moderno\": accesa una, l'altra si spegne.",
             ["Extended inventory"] = "Inventario esteso",
             ["The inventory has 6 columns like on GBA: four separate bottles, shovel and flute in separate slots."] =
                 "L'inventario è su 6 colonne come su GBA: quattro bottiglie separate, pala e ocarina in posti separati.",
@@ -478,8 +481,8 @@ namespace Zelda_3_Launcher
             ["Sword and items world interaction"] = "Spada e oggetti interazione ambiente",
             ["Items refill resources"] = "Oggetti riempiono le risorse",
             ["Gold Medicine"] = "Pozione d'oro",
-            ["From BS Zelda: a fourth cauldron in the witch's shop, 50 rupees, one per day (computer clock, back at midnight). Like the blue medicine it refills life and magic, and for 10 minutes the Spin Attack charges twice as fast."] =
-                "Da BS Zelda: un quarto calderone nella bottega della strega, 50 rupie, una al giorno (orologio del computer, torna a mezzanotte). Come la pozione blu ridà energia e Magia, e per 10 minuti l'attacco rotante si carica al doppio della velocità.",
+            ["As in Ancient Stone Tablets, a fourth cauldron in the Magic Shop, 50 rupees, one medicine per day (resets at midnight). Refills life and magic, and for 10 minutes the Spin Attack recharges in half the time."] =
+                "Come su Ancient Stone Tablets, un quarto calderone nella Bottega Magica, 50 rupie, una pozione al giorno (si resetta a mezzanotte). Riempie vita, magia e per 10 minuti l'attacco vortice si ricarica in metà tempo.",
             ["Palace 6 as on GBA"] = "Palazzo 6 come GBA",
             ["Changes the Palace 6 puzzle to match the GBA version"] = "Modifica l'enigma del Palazzo 6 perché rispecchi la versione GBA",
             ["Getting a magic item refills the magic meter, the Master Sword also the hearts; the Bow comes with 10 arrows"] =
@@ -498,7 +501,10 @@ namespace Zelda_3_Launcher
                 "I nemici subiscono i danni della versione GBA: alcuni cambiano con i Medaglioni dell'Etere, della Fiamma e Sisma, il Rampino e la Polvere Magica. Vale dall'avvio del gioco.",
             ["Hurricane Spin"] = "Giravolta Tornado",
             ["As on GBA, once you have the Bug-Catching Net: hold the sword charge longer and the spin attack becomes a Hurricane Spin. Press B while spinning to spin again and move with the D-pad; each spin costs magic."] =
-                "Come su GBA, una volta ottenuto il Retino per Farfalle: tenendo la carica della spada più a lungo, il colpo rotante diventa la Giravolta Tornado. Premi B mentre giri per fare un altro giro e muoverti con la croce; ogni giro costa magia.",
+                "Come su GBA, una volta ottenuto il Retino per Farfalle: tenendo la carica della spada più a lungo, l'attacco vortice diventa la Giravolta Tornado. Premi B mentre giri per fare un altro giro e muoverti con la croce; ogni giro costa magia.",
+            ["Boomerang as in FSA"] = "Boomerang come FSA",
+            ["The boomerang can be stopped in mid-air, as in Four Swords Adventures: hold Y and at the end of its flight it waits until you let go, then comes back."] =
+                "Il boomerang si può bloccare a mezz'aria, come in Four Swords Adventures: tenendo premuto Y, a fine corsa resta fermo finché non lasci il tasto, poi torna.",
             ["Dive with the flippers"] = "Immersione con le pinne",
             ["While swimming, B makes Link dive underwater for a moment, as on GBA."] =
                 "Mentre nuota, con B Link si immerge per un momento, come su GBA.",
@@ -665,7 +671,7 @@ namespace Zelda_3_Launcher
             ["Cane of Byrna"] = "Bastone di Byrna",
             ["Magic Cape"] = "Mantello Magico",
             ["Magic Mirror"] = "Specchio Magico",
-            ["Pegasus Boots"] = "Stivali di Pegaso",
+            ["Pegasus Boots"] = "Calzari di Pegaso",
             ["Zora's Flippers"] = "Pinne di Zora",
             ["Moon Pearl"] = "Perla Lunare",
             ["Pendants and crystals"] = "Amuleti e cristalli",
@@ -774,11 +780,11 @@ namespace Zelda_3_Launcher
             ["Spectacle Rock: at the top"] = "Roccia Belvedere: in cima",
             ["Pyramid of Power: on a ledge right of the pyramid"] = "Piramide: su una sporgenza a destra della piramide",
             ["Lake Hylia: on an island"] = "Lago Hylia: su un'isola",
-            ["South of the Haunted Grove: in a cave on the plateau"] = "A sud del Boschetto Infestato: in una grotta sull'altopiano",
+            ["South of the Haunted Grove: in a cave on the plateau"] = "A sud del Boschetto Spiritato: in una grotta sull'altopiano",
             ["Treasure Field: dug up in the mini-game"] = "Campo Tesori: dissotterrato nel minigioco",
             ["Village of Outcasts: treasure chest mini-game"] = "Villaggio dei Reietti: minigioco dei forzieri",
             ["Stake Garden: in a secret cave"] = "Giardino dei paletti: in una grotta segreta",
-            ["Swamp of Evil: inside the left head"] = "Palude del Male: dentro la testa di sinistra",
+            ["Swamp of Evil: inside the left head"] = "Malapalude: dentro la testa di sinistra",
             ["Items"] = "Oggetti",
             ["Audio"] = "Audio",
             ["Controls"] = "Controlli",

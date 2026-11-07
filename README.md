@@ -79,14 +79,14 @@ There are a number of settings available for you to change here. I will briefly 
 - Switch items with L and R: L and R cycle through the items of the Y button without opening the menu.
 - L and R buttons for items: hold L or R in the item menu to assign an item to that button (not together with switching items with L and R). An item can be on one button only among Y, X, L and R, and the HUD shows the buttons that take items.
 - Limit L/R Switch to First 4 Items: This can only be enabled when the above option is turned on. It limits the quick swaping of items to just the first four items.
-- Allow Turning While Dashing
+- Allow Turning While Dashing: Allows you to turn when dashing with the Pegasus Boots, as in Ancient Stone Tablets.
 - Mirror Teleports to Dark World: This allows you to use the Magic Mirror regardless of which world you are in to swap back and forth between them.
 - Collect Items w/Sword: Allows you to collect items like hearts and rupees with a swing of your sword.
 - Break Pots w/Sword: Allows you break pots with your sword if you have the Master Sword or higher.
 - Disable Low Heart Beep
 - Skip Intro w/Keypress: Allows you to skip the Triforce intro when you boot the game.
 - Indicate Max Resources: When you have as many of an item as you can carry (bombs, rupees, etc.), the numbers will change color to yellow/orange.
-- More Active Bombs: You are normally allowed only two bombs at once. This allows you to place up to four at once.
+- More Active Bombs: You are normally allowed only two bombs at once. This allows you to place up to five at once.
 - Large Wallet
 - Bug fixes: miscellaneous minor fixes, game changing fixes and GBA minor fixes ([list on the wiki](https://github.com/ghost19880/zelda3/wiki/Bug-fixes)).
 - Cancel Bird: the sword button (B) cancels traveling via bird/flute, like on GBA.
