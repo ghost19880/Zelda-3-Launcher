@@ -503,8 +503,8 @@ namespace Zelda_3_Launcher
             ["As on GBA, once you have the Bug-Catching Net: hold the sword charge longer and the spin attack becomes a Hurricane Spin. Press B while spinning to spin again and move with the D-pad; each spin costs magic."] =
                 "Come su GBA, una volta ottenuto il Retino per Farfalle: tenendo la carica della spada più a lungo, l'attacco vortice diventa la Giravolta Tornado. Premi B mentre giri per fare un altro giro e muoverti con la croce; ogni giro costa magia.",
             ["Boomerang as in FSA"] = "Boomerang come FSA",
-            ["The boomerang can be stopped in mid-air, as in Four Swords Adventures: hold Y and at the end of its flight it waits until you let go, then comes back."] =
-                "Il boomerang si può bloccare a mezz'aria, come in Four Swords Adventures: tenendo premuto Y, a fine corsa resta fermo finché non lasci il tasto, poi torna.",
+            ["The boomerang can be stopped in mid-air, as in Four Swords Adventures: hold Y and at the end of its flight it waits until you let go, then comes back. It leaves a trail of fading copies."] =
+                "Il boomerang si può bloccare a mezz'aria, come in Four Swords Adventures: tenendo premuto Y, a fine corsa resta fermo finché non lasci il tasto, poi torna. Lascia una scia di copie che svaniscono.",
             ["Dive with the flippers"] = "Immersione con le pinne",
             ["While swimming, B makes Link dive underwater for a moment, as on GBA."] =
                 "Mentre nuota, con B Link si immerge per un momento, come su GBA.",
