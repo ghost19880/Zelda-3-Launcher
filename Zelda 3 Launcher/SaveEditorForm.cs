@@ -477,7 +477,7 @@ namespace Zelda_3_Launcher
             var nameRow = new Panel { Height = 56, BackColor = Theme.CardBack };
             nameRow.Controls.Add(name);
             nameRow.Layout += (s, e) => name.Location = new Point((nameRow.Width - name.Width) / 2, 4);
-            Hover(nameRow, "Player name", "Type letters (A-Z, a-z), numbers and space on the keyboard, or use the buttons. The Link icon takes two boxes, as in the game. As in the game, a lowercase l looks like an uppercase I.");
+            Hover(nameRow, "Player name", "You can type letters, numbers and spaces. The Link icon takes two boxes.");
             player.Controls.Add(nameRow);
             name.Changed += () =>
             {
@@ -520,7 +520,7 @@ namespace Zelda_3_Launcher
             Number(life, "Pieces of heart", 0x36B, 0, 3, 1, "Pieces of heart collected towards the next heart container (4 make a container).");
             Number(life, "Magic", 0x36E, 0, 128, 8, "Magic meter: 128 is full.").TypeStep = 1;  // a mano qualsiasi valore
             Choice(life, "Magic upgrade", 0x37B, new[] { (0, "Normal"), (1, "Half magic") },
-                "Magic consumption: normal, or halved by the fairy of the Pyramid's fountain.");
+                "Magic consumption normal or halved by the bat.");
 
             var money = AddCard(page, cols, 1, "Rupees");
             Typed(money, "Rupees", 0x360, rupeeMax, "Rupees of the game file (999, or 9999 with the Larger Wallet option).");
@@ -576,9 +576,9 @@ namespace Zelda_3_Launcher
             bombs = MakeNumber(0x343, 0, 50, 1);
             arrows = MakeNumber(0x377, 0, 70, 1);
             Row(ammo, "Bombs", Pair(bombs, MakeChoice(0x370, bombBag, ClampAmmo, 120)),
-                "Bombs held and the most the bag can hold (upgrades from the fairy of the Pyramid's fountain).");
+                "Bombs held and the most the bag can hold.");
             Row(ammo, "Arrows", Pair(arrows, MakeChoice(0x371, quiver, ClampAmmo, 120)),
-                "Arrows held and the most the quiver can hold (upgrades from the fairy of the Pyramid's fountain).");
+                "Arrows held and the most the quiver can hold.");
             refresh.Add(ClampAmmo);
 
             var bottles = AddCard(page, cols, 1, "Bottles");

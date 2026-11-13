@@ -35,7 +35,7 @@ namespace Zelda_3_Launcher
                 "Soft edge on the circle transition when entering and leaving places.",
                 "Soft edge on the circle transition (entering and leaving places)"),
             ButtonHints = new("Graphics", "FxButtonHints", "Button hints",
-                "On-screen hints for the buttons in the inventory and on the maps. Only with a wide aspect ratio: they sit in the side bands, in 4:3 there is no room.",
+                "On-screen hints for the buttons in the inventory and on the maps. Wide screens only.",
                 "On-screen hints for the buttons in the inventory and on the maps (wide aspect ratios only)"),
             FastTransitions = new("Features", "FastTransitions", "Fast transitions",
                 "Moving between areas and rooms is quick and smooth: no loading pauses, Link keeps walking and the camera starts and stops gently.",
@@ -47,7 +47,7 @@ namespace Zelda_3_Launcher
                 "Hearts and magic top left, Y/A/B buttons top right with the item, the sword and what the A button does (Talk, Read, Open...), rupees and keys bottom left.",
                 "Modern HUD: hearts and magic top left, Y/A/B buttons top right, rupees and keys bottom left"),
             GbaHud = new("Features", "GbaHud", "GBA HUD",
-                "HUD with the items on the right like on Game Boy Advance: magic and counters on the left, hearts and the item box on the right, at the edges of the screen in every aspect ratio. With items on X, L and R their boxes sit next to the Y box.\n\nNot together with \"Modern HUD\": turning one on turns the other off.",
+                "Items on the right like on GBA: magic and counters on the left, hearts and item boxes on the right, at the screen edges. The X, L and R boxes sit next to Y.\n\nNot together with \"Modern HUD\": turning one on turns the other off.",
                 "GBA HUD: magic and counters on the left, hearts and the item boxes (Y, X, L, R) on the right like on GBA"),
             DungeonNames = new("Features", "DungeonNames", "Dungeon names",
                 "When Link enters a dungeon from outside, its name appears in the middle of the screen like on GBA and disappears as soon as he moves.",
@@ -70,23 +70,23 @@ namespace Zelda_3_Launcher
                 "Dungeon pits show the room below, darker and with depth"),
 
             ItemOnX = new("Features", "ItemOnX", "X button for items",
-                "In the item menu, hold X and pick an item: X will use it in the game.\n\nWith an item on X, Select opens the map; to save and quit, press Select in the item menu. An item can be on one button only among Y, X, L and R.",
+                "In the item menu, hold X and pick an item: X will use it.\n\nSelect then opens the map; to save and quit, press Select in the item menu. One item per button among Y, X, L and R.",
                 "X button for items: hold X in the item menu to give it an item", false, From: "ItemSwitchLR"),
             ItemSwitch = new("Features", "ItemSwitchLR", "Switch items with L and R",
                 "L and R change the item of the Y button without opening the menu.\n\nNot together with \"L and R buttons for items\": turning one on turns the other off.",
                 "L and R switch the item of the Y button without opening the menu", false),
             ItemOnLR = new("Features", "ItemOnLR", "L and R buttons for items",
-                "In the item menu, hold L or R and pick an item: that button will use it in the game. An item can be on one button only among Y, X, L and R.\n\nNot together with \"Switch items with L and R\": turning one on turns the other off.",
+                "In the item menu, hold L or R and pick an item: that button will use it. One item per button among Y, X, L and R.\n\nNot together with \"Switch items with L and R\": turning one on turns the other off.",
                 "L and R buttons for items: hold L or R in the item menu to give it an item", false, From: "ItemSwitchLR"),
             ItemSwitchLimit = new("Features", "ItemSwitchLRLimit", "Limit L/R Switch to First 4 Items",
-                "Limit the items you will cycle through to just the first four items",
+                "Limit the items you will cycle through to just the first four items.",
                 "L/R only cycle through the first four items", false),
             TurnWhileDashing = new("Features", "TurnWhileDashing", "Allow Turning While Dashing",
-                "Allows you to turn when dashing with the Pegasus Boots, as in Ancient Stone Tablets", "Allow turning while dashing", false),
+                "Allows you to turn when dashing with the Pegasus Boots, as in Ancient Stone Tablets.", "Allow turning while dashing", false),
             MirrorToDarkworld = new("Features", "MirrorToDarkworld", "Mirror Teleports to Dark World",
-                "Magic Mirror works in both directions", "Magic Mirror works in both directions", false),
-            SwordInteraction = new("Features", "SwordAndItemsInteraction", "Sword and items world interaction",
-                "Swords and items behave like on GBA: every sword collects hearts, rupees and other items, the Master Sword breaks signs, the Gold Sword breaks pots; arrows break pots, the hammer breaks bushes and small rocks, the lamp and the fire rod cut grass and bushes and the lamp flame hurts enemies.",
+                "Magic Mirror works in both directions.", "Magic Mirror works in both directions", false),
+            SwordInteraction = new("Features", "SwordAndItemsInteraction", "Sword and items as on GBA",
+                "Swords collect hearts and rupees, the stronger ones break signs and pots; arrows break pots, the hammer bushes and small rocks; the lamp and fire rod cut grass, the lamp flame hurts enemies.",
                 "Swords and items behave like on GBA and interact with the world", false),
             GbaDamage = new("Features", "GbaEnemyDamage", "Enemy damage as on GBA",
                 "Enemies take the damage of the GBA version: some change with Ether, Bombos, Quake, the hookshot and the magic powder. Takes effect when the game starts.",
@@ -97,17 +97,17 @@ namespace Zelda_3_Launcher
             HurricaneSpin = new("Features", "HurricaneSpin", "Hurricane Spin",
                 "As on GBA, once you have the Bug-Catching Net: hold the sword charge longer and the spin attack becomes a Hurricane Spin. Press B while spinning to spin again and move with the D-pad; each spin costs magic.",
                 "Hurricane Spin as on GBA, once you have the Bug-Catching Net: hold the charge longer, press B while spinning to spin again (costs magic)", From: "SwordAndItemsInteraction"),
-            FsaBoomerang = new("Features", "FsaBoomerang", "Boomerang as in FSA",
-                "The boomerang can be stopped in mid-air, as in Four Swords Adventures: hold Y and at the end of its flight it waits until you let go, then comes back. It leaves a trail of fading copies.",
-                "Boomerang as in Four Swords Adventures: hold the button that threw it and the boomerang waits in mid-air at the end of its flight; let go and it comes back. It leaves a trail of fading copies"),
+            FsaItems = new("Features", "FsaItems", "Items as in FSA",
+                "Hold the button, as in Four Swords Adventures: the boomerang waits in mid-air, the bow charges a faster arrow, the Fire and Ice Rods keep a stream going (uses magic). The hammer sends out a shock wave.",
+                "Items as in Four Swords Adventures: holding the button the boomerang waits in mid-air, the bow charges a faster arrow, the Fire and Ice Rods keep a stream coming; the hammer blow sends out a shock wave"),
             ItemsRefill = new("Features", "ItemsRefillResources", "Items refill resources",
-                "Getting a magic item refills the magic meter, the Master Sword also the hearts; the Bow comes with 10 arrows",
+                "Getting a magic item refills the magic meter, the Master Sword also the hearts; the Bow comes with 10 arrows.",
                 "Getting a magic item refills the magic meter, the Master Sword also the hearts; the Bow comes with 10 arrows (as on GBA)", false),
             GoldPotion = new("Features", "GoldPotion", "Gold Medicine",
                 "As in Ancient Stone Tablets, a fourth cauldron in the Magic Shop, 50 rupees, one medicine per day (resets at midnight). Refills life and magic, and for 10 minutes the Spin Attack recharges in half the time.",
                 "Gold Medicine from BS Zelda: a fourth cauldron in the Magic Shop (50 rupees, one per day, resets at midnight); refills life and magic, and for 10 minutes the Spin Attack recharges in half the time", false),
             IcePalaceGba = new("Features", "IcePalaceGba", "Palace 6 as on GBA",
-                "Changes the Palace 6 puzzle to match the GBA version",
+                "Changes the Palace 6 puzzle to match the GBA version.",
                 "Palace 6 as on GBA: the block puzzle of the Ice Palace (rooms 0x9E and 0xBE) matches the GBA version", false),
             BurnFreeze = new("Features", "BurnAndFreezeInteraction", "Burn and freeze interaction",
                 "The world physically reacts to fire and ice: the lamp, the rods and the medallions burn or freeze bushes and grass.",
@@ -122,34 +122,34 @@ namespace Zelda_3_Launcher
                 "The map now has the shortcuts of Zelda: A Link Between Worlds.",
                 "Map like A Link Between Worlds: the map has the shortcuts of Zelda: A Link Between Worlds", false),
             MoreBombs = new("Features", "MoreActiveBombs", "More Active Bombs",
-                "Can have 5 active bombs instead of 2", "5 active bombs instead of 2", false),
+                "Can have 5 active bombs instead of 2.", "5 active bombs instead of 2", false),
             LargerWallet = new("Features", "CarryMoreRupees", "Larger Wallet",
-                "Can carry 9999 rupees", "Carry up to 9999 rupees", false),
+                "Can carry 9999 rupees.", "Carry up to 9999 rupees", false),
             CancelBird = new("Features", "CancelBirdTravel", "Cancel Bird",
-                "Allows you to cancel bird travel with the sword button (B), like on GBA", "Cancel bird travel with the sword button (B), like on GBA", false),
+                "Allows you to cancel bird travel with the sword button (B), like on GBA.", "Cancel bird travel with the sword button (B), like on GBA", false),
             BirdPoint9 = new("Features", "BirdTravelPoint9", "Bird travel point 9",
                 "Adds the ninth bird travel point of the GBA version, on the eastern summit of Death Mountain. It appears once Turtle Rock is open.",
                 "Ninth bird travel point on the eastern summit of Death Mountain", false),
             NoLowHealthBeep = new("Features", "DisableLowHealthBeep", "Disable Low Heart Beep",
-                "Disables the beeping when you are low health", "No beep at low health", false),
+                "Disables the beeping when you are low health.", "No beep at low health", false),
             SaveHearts = new("Features", "SaveHeartsAndMagic", "Save hearts and magic state",
-                "Save and quit remembers the hearts and magic you have instead of giving back the starting ones; on the file select, hearts not saved yet are black.",
+                "Save and quit remembers the hearts and magic you have instead of giving back the starting ones; on the file select, hearts that aren't full are shown.",
                 "Save and quit remembers the current hearts and magic; unsaved hearts are black on the file select"),
             TriforceTitle = new("Graphics", "TriforceTitle", "Title \"Triforce of the Gods\"",
                 "The title screen shows \"Triforce of the Gods\" instead of \"A Link to the Past\", like the Japanese title. With the dialogue in Italian it shows \"La Triforza degli Dei\".",
                 "Title subtitle \"Triforce of the Gods\" (\"La Triforza degli Dei\" in Italian) instead of \"A Link to the Past\""),
             SkipIntro = new("Features", "SkipIntroOnKeypress", "Skip Intro w/ Keypress",
-                "Allows you to skip the intro by pressing a key", "Skip the intro with a key", false),
+                "You can skip the intro as in the EUR version.", "Skip the intro with a key", false),
             MaxInYellow = new("Features", "ShowMaxItemsInYellow", "Indicate Max Resources",
-                "Values will appear as yellow/orange when you have max resources (rupees, arrows, bombs)",
+                "Values will appear as yellow/orange when you have max resources (rupees, arrows, bombs).",
                 "Show maxed rupees, arrows and bombs in yellow", false),
             MiscFixes = new("Features", "MiscBugFixes", "Miscellaneous Minor Fixes",
-                "Miscellaneous bug fixes", "Miscellaneous minor bug fixes", false),
+                "Miscellaneous bug fixes.", "Miscellaneous minor bug fixes", false),
             GameFixes = new("Features", "GameChangingBugFixes", "Game Changing Bug Fixes",
-                "Some bug fixes that are significant enough to impact game behavior",
+                "Some bug fixes that are significant enough to impact game behavior.",
                 "Bug fixes that change game behavior", false),
             GbaFixes = new("Features", "GbaMinorFixes", "Various GBA fixes",
-                "Various bug fixes from the GBA version",
+                "Various bug fixes from the GBA version.",
                 "Various GBA fixes: small differences of the GBA version (sounds, graphics, bugs fixed on GBA such as Mothula and the Golden Sword)", false),
             BlondLink = new("Graphics", "BlondLink", "Blond Link",
                 "Link with blond hair, as in the official artwork. Custom Link sprites can't be used while it is on.",
@@ -644,10 +644,10 @@ namespace Zelda_3_Launcher
                 if (!loading && comboRender.SelectedIndex != 2)
                     fourSwords.Checked = customShader.Checked = false;
             };
-            ppu = Toggle(perf, "Optimized SNES PPU", "Use an optimized SNES PPU implementation (potentially buggy)");
+            ppu = Toggle(perf, "Optimized SNES PPU", "Use an optimized SNES PPU implementation (potentially buggy).");
             ppu.CheckedChanged += (s, e) => ApplyRendererRule();
-            frameDelay = Toggle(perf, "Disable Frame Delay", "Disable the SDL_Delay that happens on each frame (Gives slightly better performance if your display is set to exactly 60Hz)");
-            performance = Toggle(perf, "Performance in Title", "Show current performance in window title");
+            frameDelay = Toggle(perf, "Disable Frame Delay", "Disable the SDL_Delay that happens on each frame (Gives slightly better performance if your display is set to exactly 60Hz).");
+            performance = Toggle(perf, "Performance in Title", "Show current performance in window title.");
         }
 
         private void BuildGraphics()
@@ -657,12 +657,12 @@ namespace Zelda_3_Launcher
             var image = AddCard(p, 0, "Image");
             comboAspect = Combo(image, "Aspect ratio", new[] { "Normal (4:3)", "Widescreen (16:9)", "Steam Deck (16:10)", "Laptop / tablet (3:2)", "Ultrawide (18:9)" },
                 "This is the aspect ratio which the game will render. All aspect ratios other than Normal will result in black bars on the left and right in various scenarios.");
-            extendY = Toggle(image, "Extend Y", "Displays 240 vertical lines rather than the default 224");
+            extendY = Toggle(image, "Extend Y", "Displays 240 vertical lines rather than the default 224.");
             stretch = Toggle(image, "Stretch", "Stretches the graphics to take up the entire window/screen regardless of aspect ratio.");
             linear = Toggle(image, "Linear Filtering", "Use linear filter. Softens image and results in less crisp pixels.");
-            mode7 = Toggle(image, "Enhanced Mode7", "Display the world map with higher resolution");
-            dimFlashes = Toggle(image, "Fewer flashes (VC)", "Fewer flashes during gameplay, like on Virtual Console");
-            dimFlashesGba = Toggle(image, "Fewer flashes (GBA)", "Fewer flashes during gameplay, like on GBA");
+            mode7 = Toggle(image, "Enhanced Mode7", "Display the world map with higher resolution.");
+            dimFlashes = Toggle(image, "Fewer flashes (VC)", "Fewer flashes during gameplay, like on Virtual Console.");
+            dimFlashesGba = Toggle(image, "Fewer flashes (GBA)", "Fewer flashes during gameplay, like on GBA.");
             // VC o GBA, non tutti e due
             dimFlashes.CheckedChanged += (s, e) => { if (dimFlashes.Checked) dimFlashesGba.Checked = false; ApplyFlashRainRule(); };
             dimFlashesGba.CheckedChanged += (s, e) => { if (dimFlashesGba.Checked) dimFlashes.Checked = false; ApplyFlashRainRule(); };
@@ -755,6 +755,7 @@ namespace Zelda_3_Launcher
 
             var world = AddCard(p, 1, "World interaction");
             Toggle(world, SwordInteraction);
+            Toggle(world, FsaItems);
             Toggle(world, BurnFreeze);
             Toggle(world, StuckArrows);
             Toggle(world, EnchantedRocks);
@@ -764,7 +765,6 @@ namespace Zelda_3_Launcher
             Toggle(items, GoldPotion);
             Toggle(items, GbaDamage);
             Toggle(items, HurricaneSpin);
-            Toggle(items, FsaBoomerang);
             Toggle(items, MoreBombs);
             Toggle(items, LargerWallet);
 
@@ -781,9 +781,9 @@ namespace Zelda_3_Launcher
             var p = AddPage("Audio", "Sound output and MSU music");
 
             var output = AddCard(p, 0, "Output");
-            enableAudio = Toggle(output, "Enable Audio", "Enable audio output by the game");
-            comboFrequency = Combo(output, "Frequency", kFrequencies, "DSP frequency in samples per second");
-            comboSamples = Combo(output, "Buffer", kSamples, "Audio buffer size in samples");
+            enableAudio = Toggle(output, "Enable Audio", "Enable audio output by the game.");
+            comboFrequency = Combo(output, "Frequency", kFrequencies, "DSP frequency in samples per second.");
+            comboSamples = Combo(output, "Buffer", kSamples, "Audio buffer size in samples.");
             comboChannels = Combo(output, "Channels", new[] { "Mono", "Stereo" },
                 "Mono: uniform audio output across all speakers. Stereo: outputs audio to the left or right speakers based where the sound is generated on screen.");
             foreach (Control c in output.Controls) if (c != enableAudio) audioRows.Add(c);
@@ -792,11 +792,11 @@ namespace Zelda_3_Launcher
 
             var msu = AddCard(p, 1, "MSU music");
             enableMsu = Toggle(msu, "Enable MSU", "Enable MSU support for audio.\n\nSupports MSU or MSU Deluxe in PCM or OPUZ format.");
-            comboMsu = Combo(msu, "MSU Version", new[] { "MSU", "MSU Deluxe", "OPUZ", "OPUZ Deluxe" }, "Select the version of MSU you wish to use");
-            rowMsuFolder = PathField(msu, "Folder", out textMsu, "Directory where MSU files are located", BrowseMsu);
-            stepMsuVolume = Step(msu, "MSU volume", 0, 100, 5, "Volume of MSU output (0-100)");
+            comboMsu = Combo(msu, "MSU Version", new[] { "MSU", "MSU Deluxe", "OPUZ", "OPUZ Deluxe" }, "Select the version of MSU you wish to use.");
+            rowMsuFolder = PathField(msu, "Folder", out textMsu, "Directory where MSU files are located.", BrowseMsu);
+            stepMsuVolume = Step(msu, "MSU volume", 0, 100, 5, "Volume of MSU output (0-100).");
             stepMsuVolume.TypeStep = 1;  // a mano qualsiasi valore: il gioco legge un numero intero
-            resumeMsu = Toggle(msu, "Resume MSU", "Resume MSU music from the same point in the track when returning to an area");
+            resumeMsu = Toggle(msu, "Resume MSU", "Resume MSU music from the same point in the track when returning to an area.");
             foreach (Control c in msu.Controls) if (c != enableMsu) msuRows.Add(c);
             enableMsu.CheckedChanged += (s, e) => UpdateAudioState();
             comboMsu.SelectedIndexChanged += (s, e) => UpdateAudioState();
@@ -813,22 +813,22 @@ namespace Zelda_3_Launcher
             p.Panel.Controls.Add(pad);
             p.Wide = pad;
             Hover(keys.View.Input, "Input Type", "Select the input type you want to configure. Controller can be chosen when one is connected.");
-            Hover(keys.View.AssignAll, "Assign All", "Set each input sequentially (hit ESC to skip to the next input)");
+            Hover(keys.View.AssignAll, "Assign All", "Set each input sequentially (hit ESC to skip to the next input).");
             Hover(keys.View.Defaults, "Default keys", "Puts back the default keys of both keyboard and controller. They are saved with Save.");
             for (int i = 0; i < keys.View.Chips.Length; i++)
                 Hover(keys.View.Chips[i], ControllerView.Names[i],
                     "Click the box and press the key, or the controller button if Controller is chosen above. Esc cancels; after 5 seconds the previous one stays.");
 
             var game = AddCard(p, 0, "Game Functions");
-            KeyField(game, "Reset Game", keys.Reset, "Reset the game");
-            KeyField(game, "Pause", keys.Pause, "Pause the game without opening the menu");
-            keys.Dim = Toggle(game, "Dim When Paused", "If enabled, the game will dim when paused via the special pause key");
+            KeyField(game, "Reset Game", keys.Reset, "Reset the game.");
+            KeyField(game, "Pause", keys.Pause, "Pause the game without opening the menu.");
+            keys.Dim = Toggle(game, "Dim When Paused", "If enabled, the game will dim when paused via the special pause key.");
             comboRumble = Combo(game, "Controller rumble", new[] { "Off", "Light", "Medium", "Strong" },
                 "Vibrates the controller for explosions, damage, crashes with the Pegasus Boots, the screen shaking and other strong moments.");
-            KeyField(game, "Increase Window Size", keys.WindowBigger, "Increase window scale by a factor of 1");
-            KeyField(game, "Decrease Window Size", keys.WindowSmaller, "Decrease window scale by a factor of 1");
-            KeyField(game, "Volume Up", keys.VolumeUp, "Increases the volume output of the game");
-            KeyField(game, "Volume Down", keys.VolumeDown, "Decreases the volume output of the game");
+            KeyField(game, "Increase Window Size", keys.WindowBigger, "Increase window scale by a factor of 1.");
+            KeyField(game, "Decrease Window Size", keys.WindowSmaller, "Decrease window scale by a factor of 1.");
+            KeyField(game, "Volume Up", keys.VolumeUp, "Increases the volume output of the game.");
+            KeyField(game, "Volume Down", keys.VolumeDown, "Decreases the volume output of the game.");
 
             var perf = AddCard(p, 0, "Performance");
             KeyField(perf, "Toggle Renderer", keys.Renderer, "Switches between the renderers while playing.");
@@ -846,7 +846,7 @@ namespace Zelda_3_Launcher
                 Text = "F1 - F10: Load savestates/replays\nShift+F1 - F10: Saves savestate/replay\n" +
                     "Ctrl: When held while loading a savestate, the game replays itself up to point of the savestate rather than immediately load the savestate.",
             };
-            Hover(note, "Replay Controls", "The game has an integrated replay/savestate system. Here are the controls:");
+            Hover(note, "Replay Controls", "The game has an integrated replay and savestate system; its controls are listed here.");
             replays.Controls.Add(note);
         }
 
@@ -859,7 +859,7 @@ namespace Zelda_3_Launcher
 
         private void BuildCheats()
         {
-            var p = AddPage("Cheats", "All off at the start; the ones with a key only work when on");
+            var p = AddPage("Cheats", "Bend the rules to make things easier or to experiment");
             cheatsPage = p.Panel;
 
             var withKey = AddCard(p, 0, "Cheats with a key");
@@ -1044,8 +1044,8 @@ namespace Zelda_3_Launcher
             var p = AddPage("Advanced", "Compatibility, custom files and maintenance");
 
             var compat = AddCard(p, 0, "Compatibility");
-            spriteLimit = Toggle(compat, "No Sprite Limit", "Remove the sprite limit per scan line");
-            unchangedSprites = Toggle(compat, "Unchanged Sprites", "Avoid changing sprite spawn/die behavior. (Required for replay compatibility)");
+            spriteLimit = Toggle(compat, "No Sprite Limit", "Remove the sprite limit per scan line.");
+            unchangedSprites = Toggle(compat, "Unchanged Sprites", "Avoid changing sprite spawn/die behavior. (Required for replay compatibility).");
             noVisualFixes = Toggle(compat, "No Visual Fixes", "Avoid fixing some graphics glitches. If enabled, memory compare will not work.");
 
             var maintenance = AddCard(p, 0, "Maintenance");
@@ -1059,11 +1059,11 @@ namespace Zelda_3_Launcher
 
             var files = AddCard(p, 1, "Custom files");
             customLink = Toggle(files, "Custom Link Sprites", "Enables custom ZSPR Link sprites. Not available with Blond Link (Graphics).");
-            rowLink = PathField(files, "", out textLink, "The path where your .zspr file is located", BrowseSprite);
-            Link(files, "", "Click here for some custom sprites you can download",
+            rowLink = PathField(files, "", out textLink, "The path where your .zspr file is located.", BrowseSprite);
+            Link(files, "", "Click here for some custom sprites you can download.",
                 ("Custom Sprite Downloads", "https://snesrev.github.io/sprites-gfx/snes/zelda3/link/"));
             customShader = Toggle(files, "Use GLSL Shader", "This will enable the use of GLSL shaders.\r\n\r\nThis is only supported by the OpenGL renderer.");
-            rowShader = PathField(files, "", out textShader, "The path where your .glsl or .slslp file is located", BrowseShader);
+            rowShader = PathField(files, "", out textShader, "The path where your .glsl or .slslp file is located.", BrowseShader);
             Link(files, "", "Shaders you can download", ("Suggested Shaders", "https://github.com/snesrev/glsl-shaders"));
             customLink.CheckedChanged += (s, e) => ApplyBlondLinkRule();
             options[BlondLink].CheckedChanged += (s, e) => ApplyBlondLinkRule();

@@ -159,7 +159,7 @@ namespace Zelda_3_Launcher
             ["Miscellaneous Minor Fixes"] = "Correzioni minori varie",
             ["Game Changing Bug Fixes"] = "Correzioni maggiori",
             ["Various GBA fixes"] = "Correzioni varie GBA",
-            ["Various bug fixes from the GBA version"] = "Correzioni errori vari derivati dalla versione GBA",
+            ["Various bug fixes from the GBA version."] = "Correzioni errori vari derivati dalla versione GBA.",
             ["Enchanted rocks"] = "Rocce incantate",
             ["As on GBA, when Link enters an area, sometimes one small rock sparkles. Hit it with the sword for a few seconds: it drops rupees and then bombs."] =
                 "Come su GBA, entrando in un'area a volte una roccia piccola brilla. Colpiscila con la spada per qualche secondo: lascia cadere rupie e poi bombe.",
@@ -222,32 +222,32 @@ namespace Zelda_3_Launcher
             ["Copying MSU Files..."] = "Copia dei file MSU...",
 
             // Suggerimenti delle impostazioni
-            ["Limit the items you will cycle through to just the first four items"] = "Con L e R scorri solo i primi quattro oggetti",
-            ["Allows you to turn when dashing with the Pegasus Boots, as in Ancient Stone Tablets"] = "Puoi cambiare direzione mentre corri con i Calzari di Pegaso come su Ancient Stone Tablets",
-            ["Magic Mirror works in both directions"] = "Lo Specchio Magico funziona in entrambe le direzioni",
+            ["Limit the items you will cycle through to just the first four items."] = "Con L e R scorri solo i primi quattro oggetti.",
+            ["Allows you to turn when dashing with the Pegasus Boots, as in Ancient Stone Tablets."] = "Puoi cambiare direzione mentre corri con i Calzari di Pegaso come su Ancient Stone Tablets.",
+            ["Magic Mirror works in both directions."] = "Lo Specchio Magico funziona in entrambe le direzioni.",
             ["You can collect items with your sword from a distance"] = "Puoi raccogliere oggetti a distanza con la spada",
             ["You can break pots if you have a L2 or higher sword"] = "Puoi rompere i vasi se hai una spada di livello 2 o superiore",
-            ["Disables the beeping when you are low health"] = "Disattiva il bip quando hai pochi cuori",
-            ["Save and quit remembers the hearts and magic you have instead of giving back the starting ones; on the file select, hearts not saved yet are black."] =
-                "Salva ed esci ricorda i cuori e la magia che hai invece di ridare quelli di partenza; nella scelta del salvataggio i cuori non ancora salvati sono neri.",
-            ["Allows you to skip the intro by pressing a key"] = "Puoi saltare l'introduzione premendo un tasto",
-            ["Values will appear as yellow/orange when you have max resources (rupees, arrows, bombs)"] =
-                "I valori diventano gialli/arancioni quando rupie, frecce o bombe sono al massimo",
-            ["Can have 5 active bombs instead of 2"] = "Puoi avere fino a 5 bombe attive anziché 2",
-            ["Can carry 9999 rupees"] = "Puoi portare 9999 rupie",
-            ["Miscellaneous bug fixes"] = "Correzioni di errori varie",
-            ["Some bug fixes that are significant enough to impact game behavior"] = "Correzioni di errori abbastanza importanti da cambiare il comportamento del gioco",
-            ["Allows you to cancel bird travel with the sword button (B), like on GBA"] = "Puoi annullare il viaggio con l'uccello col tasto della spada (B), come su GBA",
-            ["Displays 240 vertical lines rather than the default 224"] = "Mostra 240 righe verticali invece delle 224 originali",
+            ["Disables the beeping when you are low health."] = "Disattiva il bip quando hai pochi cuori.",
+            ["Save and quit remembers the hearts and magic you have instead of giving back the starting ones; on the file select, hearts that aren't full are shown."] =
+                "Salva ed esci ricorda i cuori e la magia che hai invece di ridare quelli di partenza; nella scelta della partita i cuori non pieni vengono visualizzati.",
+            ["You can skip the intro as in the EUR version."] = "Puoi saltare l'introduzione come nella versione EUR.",
+            ["Values will appear as yellow/orange when you have max resources (rupees, arrows, bombs)."] =
+                "I valori diventano gialli/arancioni quando rupie, frecce o bombe sono al massimo.",
+            ["Can have 5 active bombs instead of 2."] = "Puoi avere fino a 5 bombe attive anziché 2.",
+            ["Can carry 9999 rupees."] = "Puoi portare 9999 rupie.",
+            ["Miscellaneous bug fixes."] = "Correzioni di errori varie.",
+            ["Some bug fixes that are significant enough to impact game behavior."] = "Correzioni di errori abbastanza importanti da cambiare il comportamento del gioco.",
+            ["Allows you to cancel bird travel with the sword button (B), like on GBA."] = "Puoi annullare il viaggio con l'uccello col tasto della spada (B), come su GBA.",
+            ["Displays 240 vertical lines rather than the default 224."] = "Mostra 240 righe verticali invece delle 224 originali.",
             ["Avoid fixing some graphics glitches. If enabled, memory compare will not work."] = "Non corregge alcuni difetti grafici. Se attivo, il confronto della memoria non funziona.",
-            ["Avoid changing sprite spawn/die behavior. (Required for replay compatibility)"] = "Non cambia la comparsa e scomparsa degli sprite (serve per la compatibilità dei replay)",
+            ["Avoid changing sprite spawn/die behavior. (Required for replay compatibility)."] = "Non cambia la comparsa e scomparsa degli sprite (serve per la compatibilità dei replay).",
             ["Steam Deck\'s untraditional aspect ratio"] = "Le proporzioni particolari dello Steam Deck",
             ["Traditional widescreen screens"] = "Schermi panoramici tradizionali",
             ["Original output of the SNES"] = "L'immagine originale dello SNES",
-            ["Show current performance in window title"] = "Mostra le prestazioni nel titolo della finestra",
+            ["Show current performance in window title."] = "Mostra le prestazioni nel titolo della finestra.",
             ["Automatically save state on quit and reload on start"] = "Salva lo stato all'uscita e lo ricarica all'avvio",
-            ["Disable the SDL_Delay that happens on each frame (Gives slightly better performance if your display is set to exactly 60Hz)"] =
-                "Disattiva l'SDL_Delay a ogni frame (prestazioni un po' migliori se lo schermo è esattamente a 60 Hz)",
+            ["Disable the SDL_Delay that happens on each frame (Gives slightly better performance if your display is set to exactly 60Hz)."] =
+                "Disattiva l'SDL_Delay a ogni frame (prestazioni un po' migliori se lo schermo è esattamente a 60 Hz).",
             ["This is the aspect ratio which the game will render. All aspect ratios other than Normal will result in black bars on the left and right in various scenarios."] =
                 "Le proporzioni con cui il gioco viene disegnato. Con proporzioni diverse da Normale in alcune scene compaiono bande nere ai lati.",
             ["The game will play within a window on the desktop at your selected aspect ratio and window scaling"] =
@@ -258,36 +258,36 @@ namespace Zelda_3_Launcher
             ["Width"] = "Larghezza",
             ["Set a custom aspect ratio"] = "Imposta una dimensione personalizzata",
             ["Automatically resize window to match selected aspect ratio"] = "Ridimensiona la finestra in base alle proporzioni scelte",
-            ["Use an optimized SNES PPU implementation (potentially buggy)"] = "Usa una versione ottimizzata della PPU dello SNES (può avere difetti)",
+            ["Use an optimized SNES PPU implementation (potentially buggy)."] = "Usa una versione ottimizzata della PPU dello SNES (può avere difetti).",
             ["This sets the scaling of the game window when not fullscreen"] = "La scala della finestra di gioco quando non è a schermo intero",
-            ["Display the world map with higher resolution"] = "Mostra la mappa del mondo ad alta risoluzione",
-            ["Remove the sprite limit per scan line"] = "Rimuove il limite di sprite per riga",
+            ["Display the world map with higher resolution."] = "Mostra la mappa del mondo ad alta risoluzione.",
+            ["Remove the sprite limit per scan line."] = "Rimuove il limite di sprite per riga.",
             ["Use linear filter. Softens image and results in less crisp pixels."] = "Usa il filtro lineare: l'immagine è più morbida e i pixel meno netti.",
             ["Stretches the graphics to take up the entire window/screen regardless of aspect ratio."] = "Allarga l'immagine fino a riempire finestra o schermo, ignorando le proporzioni.",
             ["This will enable the use of GLSL shaders.\r\n\r\nThis is only supported by the OpenGL renderer."] =
                 "Attiva l'uso degli shader GLSL.\r\n\r\nFunziona solo con il rendering OpenGL.",
             ["Opens a dialog for selecting your GLSL shader file."] = "Apre una finestra per scegliere il file dello shader GLSL.",
-            ["The path where your .glsl or .slslp file is located"] = "Il percorso del file .glsl o .glslp",
+            ["The path where your .glsl or .slslp file is located."] = "Il percorso del file .glsl o .glslp.",
             ["Opens a dialog for selecting your ZSPR custom sprite file."] = "Apre una finestra per scegliere il file ZSPR dello sprite.",
-            ["The path where your .zspr file is located"] = "Il percorso del file .zspr",
+            ["The path where your .zspr file is located."] = "Il percorso del file .zspr.",
             ["Enables custom ZSPR Link sprites. Not available with Blond Link (Graphics)."] =
                 "Attiva gli sprite ZSPR personalizzati di Link. Non disponibile con Link biondo (Grafica).",
-            ["Click here for some custom sprites you can download"] = "Clicca qui per scaricare sprite personalizzati",
+            ["Click here for some custom sprites you can download."] = "Clicca qui per scaricare sprite personalizzati.",
             ["Rendering software used. SDL-software rendering may give better performance on Raspberry Pi"] =
                 "Il sistema di rendering usato. SDL-Software può andare meglio su Raspberry Pi",
-            ["Enable audio output by the game"] = "Attiva l'audio del gioco",
-            ["DSP frequency in samples per second"] = "Frequenza del DSP in campioni al secondo",
-            ["Audio buffer size in samples"] = "Dimensione del buffer audio in campioni",
+            ["Enable audio output by the game."] = "Attiva l'audio del gioco.",
+            ["DSP frequency in samples per second."] = "Frequenza del DSP in campioni al secondo.",
+            ["Audio buffer size in samples."] = "Dimensione del buffer audio in campioni.",
             ["Outputs audio to the left or right speakers based where the sound is generated on screen"] =
                 "Manda il suono a sinistra o a destra in base a dove nasce sullo schermo",
             ["Uniform audio output across all speakers"] = "Stesso suono su tutti gli altoparlanti",
             ["Settings specifically for MSU"] = "Impostazioni dedicate alla musica MSU",
-            ["Select the version of MSU you wish to use"] = "Scegli la versione MSU da usare",
+            ["Select the version of MSU you wish to use."] = "Scegli la versione MSU da usare.",
             ["MSU directory path"] = "Percorso della cartella MSU",
-            ["Directory where MSU files are located"] = "La cartella dei file MSU",
-            ["Volume of MSU output (0-100)"] = "Volume della musica MSU (0-100)",
-            ["Resume MSU music from the same point in the track when returning to an area"] =
-                "Tornando in un'area, la musica MSU riprende dal punto in cui era",
+            ["Directory where MSU files are located."] = "La cartella dei file MSU.",
+            ["Volume of MSU output (0-100)."] = "Volume della musica MSU (0-100).",
+            ["Resume MSU music from the same point in the track when returning to an area."] =
+                "Tornando in un'area, la musica MSU riprende dal punto in cui era.",
             ["Open dialog to select MSU directory"] = "Apre una finestra per scegliere la cartella MSU",
             ["Reset all settings to their default values"] = "Riporta tutte le impostazioni ai valori predefiniti",
             ["Save current settings and close window"] = "Salva le impostazioni e chiude la finestra",
@@ -322,25 +322,25 @@ namespace Zelda_3_Launcher
             ["Reset:"] = "Reset:",
             ["Replays"] = "Replay",
             ["Replay Controls"] = "Comandi dei replay",
-            ["The game has an integrated replay/savestate system. Here are the controls:"] =
-                "Il gioco ha un sistema integrato di replay e salvataggi rapidi. Ecco i comandi:",
+            ["The game has an integrated replay and savestate system; its controls are listed here."] =
+                "Il gioco ha un sistema integrato di replay e salvataggi rapidi; qui sono elencati i comandi.",
             ["Toggle Replay Speed:"] = "Velocità replay:",
             ["Stop Replay:"] = "Ferma replay:",
             ["Performance"] = "Prestazioni",
             ["Toggle Renderer:"] = "Cambia renderer:",
             ["ToggleFPS:"] = "Mostra FPS:",
-            ["Set each input sequentially (hit ESC to skip to the next input)"] = "Assegna i tasti uno dopo l'altro (ESC passa al successivo)",
+            ["Set each input sequentially (hit ESC to skip to the next input)."] = "Assegna i tasti uno dopo l'altro (ESC passa al successivo).",
             ["Select the input type you want to configure"] = "Scegli il tipo di comando da configurare",
             ["Allows you to walk through walls"] = "Permette di attraversare i muri",
             ["If you have no keys, give yourself a single key."] = "Se non hai chiavi, te ne dà una.",
             ["The game plays at an extremely fast speed."] = "Il gioco va a velocità molto alta.",
-            ["Decreases the volume output of the game"] = "Abbassa il volume del gioco",
-            ["Increases the volume output of the game"] = "Alza il volume del gioco",
-            ["Decrease window scale by a factor of 1"] = "Riduce la scala della finestra di 1",
-            ["Increase window scale by a factor of 1"] = "Aumenta la scala della finestra di 1",
-            ["If enabled, the game will dim when paused via the special pause key"] = "Se attivo, il gioco si scurisce quando lo metti in pausa con il tasto apposito",
-            ["Pause the game without opening the menu"] = "Mette in pausa senza aprire il menu",
-            ["Reset the game"] = "Riavvia il gioco",
+            ["Decreases the volume output of the game."] = "Abbassa il volume del gioco.",
+            ["Increases the volume output of the game."] = "Alza il volume del gioco.",
+            ["Decrease window scale by a factor of 1."] = "Riduce la scala della finestra di 1.",
+            ["Increase window scale by a factor of 1."] = "Aumenta la scala della finestra di 1.",
+            ["If enabled, the game will dim when paused via the special pause key."] = "Se attivo, il gioco si scurisce quando lo metti in pausa con il tasto apposito.",
+            ["Pause the game without opening the menu."] = "Mette in pausa senza aprire il menu.",
+            ["Reset the game."] = "Riavvia il gioco.",
             ["Toggle between Turbo and regular speed of the replays."] = "Alterna velocità turbo e normale dei replay.",
             ["Stop the current replay in progress."] = "Ferma il replay in corso.",
             ["Save all controller settings and close menu"] = "Salva i tasti e chiude la finestra",
@@ -421,9 +421,9 @@ namespace Zelda_3_Launcher
             ["Water as in Four Swords Adventures: depth, foam along the shores and around rocks, moving surface; flowing waterfalls with mist."] =
                 "Acqua come in Four Swords Adventures: profondità, schiuma lungo le rive e attorno ai sassi, superficie che si muove; cascate che scorrono con nebbia.",
             ["Tell whirlpools from Zoras"] = "Distingui vortici da Zora",
-            ["Teleport whirlpools give off magic sparkles."] = "I vortici di teletrasporto emettono bagliori magici",
+            ["Teleport whirlpools give off magic sparkles."] = "I vortici di teletrasporto emettono bagliori magici.",
             ["Room below in pits"] = "Stanza sotto le buche",
-            ["Dungeon pits show the room you fall into, darker and with depth, instead of the plain pattern."] = "Nelle buche dei labirinti si vede la stanza in cui si cade, più scura e in profondità, invece della trama originale",
+            ["Dungeon pits show the room you fall into, darker and with depth, instead of the plain pattern."] = "Nelle buche dei labirinti si vede la stanza in cui si cade, più scura e in profondità, invece della trama originale.",
             ["Blur behind menus and dialogues"] = "Sfocatura dietro menu e dialoghi",
             ["The game is blurred and darkened behind the inventory and menus, and blurred inside dialogue boxes."] =
                 "Il gioco si sfoca e si scurisce dietro l'inventario e i menu, e si sfoca dentro i riquadri dei dialoghi.",
@@ -436,8 +436,8 @@ namespace Zelda_3_Launcher
             ["Soft edge on the circle transition when entering and leaving places."] =
                 "Bordo sfumato nel cerchio di transizione quando si entra e si esce dai luoghi.",
             ["Button hints"] = "Suggerimenti dei tasti",
-            ["On-screen hints for the buttons in the inventory and on the maps. Only with a wide aspect ratio: they sit in the side bands, in 4:3 there is no room."] =
-                "Suggerimenti a schermo dei tasti nell'inventario e sulle mappe. Solo con lo schermo largo: stanno nelle fasce laterali, in 4:3 non c'è spazio.",
+            ["On-screen hints for the buttons in the inventory and on the maps. Wide screens only."] =
+                "Suggerimenti a schermo dei tasti nell'inventario e sulle mappe. Solo schermi larghi.",
             ["On-screen hints for the buttons in the inventory and on the maps (wide aspect ratios only)"] =
                 "Suggerimenti a schermo dei tasti nell'inventario e sulle mappe (solo con lo schermo largo)",
             ["Dialogue speed"] = "Velocità dei dialoghi",
@@ -454,8 +454,8 @@ namespace Zelda_3_Launcher
             ["Hearts and magic top left, Y/A/B buttons top right with the item, the sword and what the A button does (Talk, Read, Open...), rupees and keys bottom left."] =
                 "Cuori e magia in alto a sinistra, tasti Y/A/B in alto a destra con oggetto, spada e azione del tasto A (Parla, Leggi, Apri...), rupie e chiavi in basso a sinistra.",
             ["GBA HUD"] = "HUD GBA",
-            ["HUD with the items on the right like on Game Boy Advance: magic and counters on the left, hearts and the item box on the right, at the edges of the screen in every aspect ratio. With items on X, L and R their boxes sit next to the Y box.\n\nNot together with \"Modern HUD\": turning one on turns the other off."] =
-                "HUD con gli oggetti a destra come su Game Boy Advance: magia e contatori a sinistra, cuori e riquadro dell'oggetto a destra, ai bordi dello schermo in ogni formato. Con gli oggetti su X, L e R i loro riquadri stanno accanto a quello di Y.\n\nNon insieme a \"HUD moderno\": accesa una, l'altra si spegne.",
+            ["Items on the right like on GBA: magic and counters on the left, hearts and item boxes on the right, at the screen edges. The X, L and R boxes sit next to Y.\n\nNot together with \"Modern HUD\": turning one on turns the other off."] =
+                "Oggetti a destra come su GBA: magia e contatori a sinistra, cuori e riquadri degli oggetti a destra, ai bordi dello schermo. I riquadri di X, L e R stanno accanto a Y.\n\nNon insieme a \"HUD moderno\": accesa una, l'altra si spegne.",
             ["Extended inventory"] = "Inventario esteso",
             ["The inventory has 6 columns like on GBA: four separate bottles, shovel and flute in separate slots."] =
                 "L'inventario è su 6 colonne come su GBA: quattro bottiglie separate, pala e ocarina in posti separati.",
@@ -478,33 +478,33 @@ namespace Zelda_3_Launcher
             ["Disable all"] = "Disattiva tutto",
             ["Only the HD improvements: graphics, effects and gameplay."] = "Solo le migliorie HD: grafica, effetti e gioco.",
             ["Convenience"] = "Comodità",
-            ["Sword and items world interaction"] = "Spada e oggetti interazione ambiente",
+            ["Sword and items as on GBA"] = "Spada e oggetti come su GBA",
             ["Items refill resources"] = "Oggetti riempiono le risorse",
             ["Gold Medicine"] = "Pozione d'oro",
             ["As in Ancient Stone Tablets, a fourth cauldron in the Magic Shop, 50 rupees, one medicine per day (resets at midnight). Refills life and magic, and for 10 minutes the Spin Attack recharges in half the time."] =
                 "Come su Ancient Stone Tablets, un quarto calderone nella Bottega Magica, 50 rupie, una pozione al giorno (si resetta a mezzanotte). Riempie vita, magia e per 10 minuti l'attacco vortice si ricarica in metà tempo.",
             ["Palace 6 as on GBA"] = "Palazzo 6 come GBA",
-            ["Changes the Palace 6 puzzle to match the GBA version"] = "Modifica l'enigma del Palazzo 6 perché rispecchi la versione GBA",
-            ["Getting a magic item refills the magic meter, the Master Sword also the hearts; the Bow comes with 10 arrows"] =
-                "Ottenere un oggetto magico riempie la barra della magia, la Spada Suprema anche i cuori; l'Arco arriva con 10 frecce",
+            ["Changes the Palace 6 puzzle to match the GBA version."] = "Modifica l'enigma del Palazzo 6 perché rispecchi la versione GBA.",
+            ["Getting a magic item refills the magic meter, the Master Sword also the hearts; the Bow comes with 10 arrows."] =
+                "Ottenere un oggetto magico riempie la barra della magia, la Spada Suprema anche i cuori; l'Arco arriva con 10 frecce.",
             ["Burn and freeze interaction"] = "Interazione bruciatura e congelamento",
             ["The world physically reacts to fire and ice: the lamp, the rods and the medallions burn or freeze bushes and grass."] =
                 "Il mondo reagisce fisicamente a fuoco e ghiaccio: Lanterna, bacchette e medaglioni bruciano o congelano cespugli ed erba.",
-            ["Fewer flashes during gameplay, like on Virtual Console"] =
-                "Meno lampeggiamenti durante il gioco come su Virtual Console",
-            ["Fewer flashes during gameplay, like on GBA"] =
-                "Meno lampeggiamenti durante il gioco come su GBA",
-            ["Swords and items behave like on GBA: every sword collects hearts, rupees and other items, the Master Sword breaks signs, the Gold Sword breaks pots; arrows break pots, the hammer breaks bushes and small rocks, the lamp and the fire rod cut grass and bushes and the lamp flame hurts enemies."] =
-                "Spade e oggetti si comportano come su GBA: ogni spada raccoglie cuori, rupie e altri oggetti, la Spada Suprema rompe i cartelli, la Spada d'Oro i vasi; le frecce rompono i vasi, il martello cespugli e rocce piccole, Lanterna e Bacchetta del Fuoco tagliano erba e cespugli e la fiamma della Lanterna ferisce i nemici.",
+            ["Fewer flashes during gameplay, like on Virtual Console."] =
+                "Meno lampeggiamenti durante il gioco come su Virtual Console.",
+            ["Fewer flashes during gameplay, like on GBA."] =
+                "Meno lampeggiamenti durante il gioco come su GBA.",
+            ["Swords collect hearts and rupees, the stronger ones break signs and pots; arrows break pots, the hammer bushes and small rocks; the lamp and fire rod cut grass, the lamp flame hurts enemies."] =
+                "Le spade raccolgono cuori e rupie, le più forti rompono cartelli e vasi, le frecce i vasi, il martello cespugli e sassi; Lanterna e Bacchetta del Fuoco tagliano l'erba, la fiamma della Lanterna ferisce i nemici.",
             ["Enemy damage as on GBA"] = "Danni dei nemici come su GBA",
             ["Enemies take the damage of the GBA version: some change with Ether, Bombos, Quake, the hookshot and the magic powder. Takes effect when the game starts."] =
                 "I nemici subiscono i danni della versione GBA: alcuni cambiano con i Medaglioni dell'Etere, della Fiamma e Sisma, il Rampino e la Polvere Magica. Vale dall'avvio del gioco.",
             ["Hurricane Spin"] = "Giravolta Tornado",
             ["As on GBA, once you have the Bug-Catching Net: hold the sword charge longer and the spin attack becomes a Hurricane Spin. Press B while spinning to spin again and move with the D-pad; each spin costs magic."] =
                 "Come su GBA, una volta ottenuto il Retino per Farfalle: tenendo la carica della spada più a lungo, l'attacco vortice diventa la Giravolta Tornado. Premi B mentre giri per fare un altro giro e muoverti con la croce; ogni giro costa magia.",
-            ["Boomerang as in FSA"] = "Boomerang come FSA",
-            ["The boomerang can be stopped in mid-air, as in Four Swords Adventures: hold Y and at the end of its flight it waits until you let go, then comes back. It leaves a trail of fading copies."] =
-                "Il boomerang si può bloccare a mezz'aria, come in Four Swords Adventures: tenendo premuto Y, a fine corsa resta fermo finché non lasci il tasto, poi torna. Lascia una scia di copie che svaniscono.",
+            ["Items as in FSA"] = "Oggetti come FSA",
+            ["Hold the button, as in Four Swords Adventures: the boomerang waits in mid-air, the bow charges a faster arrow, the Fire and Ice Rods keep a stream going (uses magic). The hammer sends out a shock wave."] =
+                "Tieni premuto il tasto, come in Four Swords Adventures: il boomerang resta a mezz'aria, l'arco carica una freccia più veloce, le Bacchette del Fuoco e del Ghiaccio fanno un getto continuo (usa magia). Il martello manda un'onda d'urto.",
             ["Dive with the flippers"] = "Immersione con le pinne",
             ["While swimming, B makes Link dive underwater for a moment, as on GBA."] =
                 "Mentre nuota, con B Link si immerge per un momento, come su GBA.",
@@ -520,12 +520,12 @@ namespace Zelda_3_Launcher
             ["Saves and start"] = "Salvataggi e avvio",
             ["Items and controls"] = "Oggetti e comandi",
             ["Bug fixes"] = "Correzioni",
-            ["In the item menu, hold X and pick an item: X will use it in the game.\n\nWith an item on X, Select opens the map; to save and quit, press Select in the item menu. An item can be on one button only among Y, X, L and R."] =
-                "Nel menu degli oggetti tieni premuto X e scegli un oggetto: X lo userà in gioco.\n\nCon un oggetto su X la mappa si apre con Select; per salvare e uscire premi Select nel menu degli oggetti. Un oggetto può stare su un solo tasto fra Y, X, L e R.",
+            ["In the item menu, hold X and pick an item: X will use it.\n\nSelect then opens the map; to save and quit, press Select in the item menu. One item per button among Y, X, L and R."] =
+                "Nel menu degli oggetti tieni premuto X e scegli un oggetto: X lo userà.\n\nLa mappa si apre poi con Select; per salvare e uscire premi Select nel menu degli oggetti. Un oggetto per tasto fra Y, X, L e R.",
             ["L and R change the item of the Y button without opening the menu.\n\nNot together with \"L and R buttons for items\": turning one on turns the other off."] =
                 "L e R cambiano l'oggetto del tasto Y senza aprire il menu.\n\nNon si può usare insieme a \"Tasti L e R per gli oggetti\": accendendone una, l'altra si spegne.",
-            ["In the item menu, hold L or R and pick an item: that button will use it in the game. An item can be on one button only among Y, X, L and R.\n\nNot together with \"Switch items with L and R\": turning one on turns the other off."] =
-                "Nel menu degli oggetti tieni premuto L o R e scegli un oggetto: quel tasto lo userà in gioco. Un oggetto può stare su un solo tasto fra Y, X, L e R.\n\nNon si può usare insieme a \"Cambio oggetti con L e R\": accendendone una, l'altra si spegne.",
+            ["In the item menu, hold L or R and pick an item: that button will use it. One item per button among Y, X, L and R.\n\nNot together with \"Switch items with L and R\": turning one on turns the other off."] =
+                "Nel menu degli oggetti tieni premuto L o R e scegli un oggetto: quel tasto lo userà. Un oggetto per tasto fra Y, X, L e R.\n\nNon insieme a \"Cambio oggetti con L e R\": accesa una, l'altra si spegne.",
             ["Unable to save zelda3.ini:\n\n"] = "Impossibile salvare zelda3.ini:\n\n",
             ["Error"] = "Errore",
 
@@ -547,7 +547,7 @@ namespace Zelda_3_Launcher
             ["You can also change these in game (Esc)"] = "Si cambiano anche in gioco (Esc)",
 
             // Trucchi
-            ["All off at the start; the ones with a key only work when on"] = "Tutti spenti all'inizio; quelli con un tasto funzionano solo se accesi",
+            ["Bend the rules to make things easier or to experiment"] = "Altera le regole per facilitare o sperimentare",
             ["Cheats with a key"] = "Trucchi con un tasto",
             ["Always active"] = "Sempre attivi",
             ["Walk through walls (No Clip)"] = "Attraversi i muri (No Clip)",
@@ -618,8 +618,8 @@ namespace Zelda_3_Launcher
             ["The game files of the title screen (saves\\sram.dat)"] = "Le partite della schermata iniziale (saves\\sram.dat)",
             ["Game file"] = "Partita",
             ["Space"] = "Spazio",
-            ["Type letters (A-Z, a-z), numbers and space on the keyboard, or use the buttons. The Link icon takes two boxes, as in the game. As in the game, a lowercase l looks like an uppercase I."] =
-                "Scrivi lettere (A-Z, a-z), numeri e spazio con la tastiera, oppure usa i pulsanti. L'icona di Link occupa due caselle, come nel gioco. Come nel gioco, la l minuscola è uguale alla I maiuscola.",
+            ["You can type letters, numbers and spaces. The Link icon takes two boxes."] =
+                "Puoi scrivere lettere, numeri e spazi. L'icona di Link occupa due caselle.",
             ["The name can't be empty."] = "Il nome non può essere vuoto.",
             ["Unable to write the save:"] = "Impossibile scrivere il salvataggio:",
             // Editor del salvataggio
@@ -651,8 +651,8 @@ namespace Zelda_3_Launcher
             ["Magic upgrade"] = "Consumo di magia",
             ["Normal"] = "Normale",
             ["Half magic"] = "Metà magia",
-            ["Magic consumption: normal, or halved by the fairy of the Pyramid's fountain."] =
-                "Consumo di magia: normale, o dimezzato dalla fata della fonte della Piramide.",
+            ["Magic consumption normal or halved by the bat."] =
+                "Consumo di magia normale o dimezzato dal pipistrello.",
             ["Rupees"] = "Rupie",
             ["Rupees of the game file (999, or 9999 with the Larger Wallet option)."] = "Rupie della partita: fino a 999, o fino a 9999 se nel launcher è accesa l'opzione Borsa più grande (Oggetti).",
             ["Rupees in the fountain"] = "Rupie nella fonte",
@@ -713,10 +713,10 @@ namespace Zelda_3_Launcher
             ["Up to"] = "Fino a",
             ["Bombs"] = "Bombe",
             ["Arrows"] = "Frecce",
-            ["Bombs held and the most the bag can hold (upgrades from the fairy of the Pyramid's fountain)."] =
-                "Bombe che hai e quante ne può tenere la borsa (aumenti della fata della fonte della Piramide).",
-            ["Arrows held and the most the quiver can hold (upgrades from the fairy of the Pyramid's fountain)."] =
-                "Frecce che hai e quante ne può tenere la faretra (aumenti della fata della fonte della Piramide).",
+            ["Bombs held and the most the bag can hold."] =
+                "Bombe che hai e quante ne può tenere la borsa.",
+            ["Arrows held and the most the quiver can hold."] =
+                "Frecce che hai e quante ne può tenere la faretra.",
             ["Bottles"] = "Ampolle",
             ["Content of the bottles: \"-\" means no bottle."] = "Contenuto delle ampolle: \"-\" vuol dire nessuna ampolla.",
             ["Empty bottle"] = "Ampolla vuota",
