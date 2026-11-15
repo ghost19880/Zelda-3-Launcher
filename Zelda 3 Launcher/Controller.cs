@@ -63,6 +63,46 @@ namespace Zelda_3_Launcher
             }
         }
 
+        // Vibrazione di prova con la forza scelta, come quella del menu del gioco
+        // (Host_Rumble: solo il motore pesante, leggera 40%, media 70%, forte 100%)
+        private static System.Windows.Forms.Timer? rumbleStop;
+        public static void TestRumble(int level)
+        {
+            float[] scale = { 0, 0.4f, 0.7f, 1.0f };
+            if (level <= 0 || level > 3) return;
+            try
+            {
+                SDL.SDL_SetHint(SDL.SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS, "1");
+                if (SDL.SDL_WasInit(SDL.SDL_INIT_GAMECONTROLLER) == 0)
+                    SDL.SDL_InitSubSystem(SDL.SDL_INIT_GAMECONTROLLER);
+                SDL.SDL_GameControllerUpdate();
+                var strength = (ushort)(scale[level] * 0xffff);
+                for (int i = 0; i < SDL.SDL_NumJoysticks(); i++)
+                {
+                    if (SDL.SDL_IsGameController(i) != SDL.SDL_bool.SDL_TRUE) continue;
+                    // restano aperti: chiuderli fermerebbe la vibrazione
+                    var gc = SDL.SDL_GameControllerFromInstanceID(SDL.SDL_JoystickGetDeviceInstanceID(i));
+                    if (gc == IntPtr.Zero) gc = SDL.SDL_GameControllerOpen(i);
+                    if (gc != IntPtr.Zero) SDL.SDL_GameControllerRumble(gc, strength, 0, 500);
+                }
+                // nel launcher nessuno aggiorna SDL: la fermiamo noi dopo 500 ms
+                rumbleStop?.Stop();
+                rumbleStop = new System.Windows.Forms.Timer { Interval = 500 };
+                rumbleStop.Tick += (s, e) =>
+                {
+                    ((System.Windows.Forms.Timer)s!).Stop();
+                    if (SDL.SDL_WasInit(SDL.SDL_INIT_GAMECONTROLLER) == 0) return;
+                    for (int i = 0; i < SDL.SDL_NumJoysticks(); i++)
+                    {
+                        var gc = SDL.SDL_GameControllerFromInstanceID(SDL.SDL_JoystickGetDeviceInstanceID(i));
+                        if (gc != IntPtr.Zero) SDL.SDL_GameControllerRumble(gc, 0, 0, 0);
+                    }
+                };
+                rumbleStop.Start();
+            }
+            catch (Exception) { }  // SDL2.dll mancante o controller staccato
+        }
+
         public void Close()
         {
             // Close the joystick and quit SDL

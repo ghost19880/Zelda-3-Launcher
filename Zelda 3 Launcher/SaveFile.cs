@@ -239,12 +239,22 @@ namespace Zelda_3_Launcher
         private static IEnumerable<string> QuickSaves() =>
             Directory.Exists(SavesDir) ? Directory.EnumerateFiles(SavesDir, "*.sav") : Enumerable.Empty<string>();
 
-        // Nel salvataggio rapido la RAM (128 KB) sta in fondo, prima di 4 byte;
-        // la cartuccia 58 byte prima della RAM. Si accetta solo se almeno una
+        // Nel salvataggio rapido la RAM (128 KB) sta in fondo allo stato del gioco,
+        // prima di 4 byte; la cartuccia 58 byte prima della RAM. Dopo lo stato i
+        // giochi nuovi mettono lo stato HD (fuoco, ghiaccio, mondo continuo): la
+        // fine dello stato si calcola dall'intestazione (8 numeri: [2] lunghezza
+        // del registro dei tasti, [5] bit 0 = c'e' lo stato di partenza del
+        // replay, [6] lunghezza dello stato). Si accetta solo se almeno una
         // partita in quel punto ha la somma giusta
         private static bool QuickSaveLayout(byte[] b, out int sramAt, out int ramAt)
         {
             ramAt = b.Length - 4 - RamSize;
+            if (b.Length >= 32)
+            {
+                long log = BitConverter.ToUInt32(b, 8), state = BitConverter.ToUInt32(b, 24);
+                long end = 32 + log + ((BitConverter.ToUInt32(b, 20) & 1) != 0 ? state : 0) + state;
+                if (end <= b.Length && end - 4 - RamSize >= 0) ramAt = (int)(end - 4 - RamSize);
+            }
             sramAt = ramAt - 58 - SramSize;
             if (sramAt < 0) return false;
             for (int s = 0; s < 3; s++)

@@ -66,6 +66,65 @@ namespace Zelda_3_Launcher
             return added;
         }
 
+        // Sezioni delle opzioni: qui ogni voce del gioco e' nell'ini predefinito
+        // (anche solo commentata, come Language). [KeyMap] e [GamepadMap] no:
+        // il gioco legge tasti che il predefinito non elenca (DisplayPerf...).
+        private static readonly string[] kOptionSections = { "[general]", "[graphics]", "[sound]", "[features]" };
+
+        // Chiavi dell'ini predefinito, comprese quelle commentate ("# Language = de")
+        private static HashSet<string> DefaultKeys(string defaultsText)
+        {
+            var keys = new HashSet<string>();
+            string section = "";
+            foreach (var raw in defaultsText.Replace("\r\n", "\n").Split('\n'))
+            {
+                var t = raw.Trim();
+                if (IsSection(t)) { section = t; continue; }
+                var k = KeyOf(t.TrimStart('#', ';', ' ', '\t'));
+                if (k != null && k.All(c => char.IsLetterOrDigit(c) || c == '_'))
+                    keys.Add(Id(section, k));
+            }
+            return keys;
+        }
+
+        // Toglie dall'ini dell'utente le opzioni che il gioco non ha piu' (non
+        // sono nell'ini predefinito della versione installata, es. SmoothCamera),
+        // con i commenti subito sopra. Restituisce quante voci ha tolto.
+        public static int RemoveObsoleteKeys(string userPath, string defaultsText)
+        {
+            var known = DefaultKeys(defaultsText);
+            // un predefinito vuoto o rovinato toglierebbe tutto
+            if (known.Count < 20) return 0;
+
+            var text = File.ReadAllText(userPath, kBytes);
+            bool crlf = text.Contains("\r\n");
+            var lines = text.Replace("\r\n", "\n").Split('\n').ToList();
+
+            var remove = new SortedSet<int>();
+            string section = "";
+            for (int i = 0; i < lines.Count; i++)
+            {
+                var t = lines[i].Trim();
+                if (IsSection(t)) { section = t.ToLowerInvariant(); continue; }
+                if (Array.IndexOf(kOptionSections, section) < 0) continue;
+                var k = KeyOf(lines[i]);
+                if (k == null || known.Contains(Id(section, k))) continue;
+                remove.Add(i);
+                int j = i - 1;
+                while (j >= 0 && !remove.Contains(j) && lines[j].Trim().StartsWith("#")) remove.Add(j--);
+                // la riga vuota che separava il blocco, se dopo ne resta un'altra
+                if (j >= 0 && lines[j].Trim().Length == 0 && (i + 1 >= lines.Count || lines[i + 1].Trim().Length == 0))
+                    remove.Add(j);
+            }
+            if (remove.Count == 0) return 0;
+
+            int removed = remove.Count(i => KeyOf(lines[i]) != null);
+            foreach (var i in remove.Reverse())
+                lines.RemoveAt(i);
+            IniFile.WriteAtomic(userPath, string.Join(crlf ? "\r\n" : "\n", lines));
+            return removed;
+        }
+
         // Inserisce commenti e voce in fondo alla sezione (creandola se manca)
         private static void Insert(List<string> lines, string section, List<string> comments, string entry)
         {

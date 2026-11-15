@@ -270,6 +270,16 @@ namespace Zelda_3_Launcher
             ["The path where your .glsl or .slslp file is located."] = "Il percorso del file .glsl o .glslp.",
             ["Opens a dialog for selecting your ZSPR custom sprite file."] = "Apre una finestra per scegliere il file ZSPR dello sprite.",
             ["The path where your .zspr file is located."] = "Il percorso del file .zspr.",
+            ["Preview of the chosen sprite: Link standing in the four directions, then from the front with the Blue and Red Mail and as a bunny."] =
+                "Anteprima dello sprite scelto: Link fermo nelle quattro direzioni, poi di fronte con la Corazza Blu, la Corazza Rossa e da coniglio.",
+            ["No sprite chosen."] = "Nessuno sprite scelto.",
+            ["File not found."] = "File non trovato.",
+            ["This is not a valid ZSPR sprite."] = "Non è uno sprite ZSPR valido.",
+            ["Green"] = "Verde",
+            ["Blue"] = "Blu",
+            ["Red"] = "Rossa",
+            ["Bunny"] = "Coniglio",
+            ["by"] = "di",
             ["Enables custom ZSPR Link sprites. Not available with Blond Link (Graphics)."] =
                 "Attiva gli sprite ZSPR personalizzati di Link. Non disponibile con Link biondo (Grafica).",
             ["Click here for some custom sprites you can download."] = "Clicca qui per scaricare sprite personalizzati.",
@@ -317,8 +327,11 @@ namespace Zelda_3_Launcher
             ["Increase Window Size:"] = "Ingrandisci finestra:",
             ["Dim When Paused"] = "Scurisci in pausa",
             ["Controller rumble"] = "Vibrazione del controller",
-            ["Vibrates the controller for explosions, damage, crashes with the Pegasus Boots, the screen shaking and other strong moments."] = "Fa vibrare il controller per esplosioni, danni, schianti con gli Stivali di Pegaso, lo schermo che trema e altri momenti forti.",
+            ["Vibrates the controller as in Four Swords Adventures: bombs, damage, Pegasus Boots crashes, landings, hammer, medallions, boss defeats. Choosing a strength gives a test rumble."] = "Fa vibrare il controller come in Four Swords Adventures: bombe, danni, schianti con gli Stivali di Pegaso, atterraggi, martello, medaglioni, boss sconfitti. Scegliendo una forza il controller vibra per prova.",
             ["Pause:"] = "Pausa:",
+            ["Rewind"] = "Riavvolgi",
+            ["While the key is held the game goes back in time, as in the emulators, up to one minute; let go and it plays on from there."] =
+                "Finché tieni premuto il tasto il gioco torna indietro nel tempo, come negli emulatori, fino a un minuto; lasciato il tasto riprende da lì.",
             ["Reset:"] = "Reset:",
             ["Replays"] = "Replay",
             ["Replay Controls"] = "Comandi dei replay",
@@ -451,8 +464,11 @@ namespace Zelda_3_Launcher
             ["Outdoors you see the neighbouring areas beyond the edge, the camera follows Link across it and the world remembers what you changed while you stay outdoors."] =
                 "All'aperto si vedono le aree vicine oltre il bordo, la telecamera segue Link oltre il bordo e il mondo ricorda quello che hai cambiato finché resti all'aperto.",
             ["Modern HUD"] = "HUD moderno",
-            ["Hearts and magic top left, Y/A/B buttons top right with the item, the sword and what the A button does (Talk, Read, Open...), rupees and keys bottom left."] =
-                "Cuori e magia in alto a sinistra, tasti Y/A/B in alto a destra con oggetto, spada e azione del tasto A (Parla, Leggi, Apri...), rupie e chiavi in basso a sinistra.",
+            ["Hearts and magic top left, Y/A/B buttons top right with the item, the sword and what the A button does (Talk, Read, Open...), plus X, L and R when they are used for items; rupees and keys bottom left."] =
+                "Cuori e magia in alto a sinistra, tasti Y/A/B in alto a destra con oggetto, spada e azione del tasto A (Parla, Leggi, Apri...), più X, L e R se usati per gli oggetti; rupie e chiavi in basso a sinistra.",
+            ["Modern item menu"] = "Menu oggetti moderno",
+            ["The START menu in HD on two pages, Items and Quest, with the item names. L/R change page unless \"L and R buttons for items\" is on: then go past the edge onto the side arrow. It brings the extended inventory."] =
+                "Il menu START in HD su due pagine, Oggetti e Missione, con i nomi degli oggetti. L/R cambiano pagina se \"Tasti L e R per gli oggetti\" è spenta, se no si va oltre il bordo sulla freccia. Include l'inventario esteso.",
             ["GBA HUD"] = "HUD GBA",
             ["Items on the right like on GBA: magic and counters on the left, hearts and item boxes on the right, at the screen edges. The X, L and R boxes sit next to Y.\n\nNot together with \"Modern HUD\": turning one on turns the other off."] =
                 "Oggetti a destra come su GBA: magia e contatori a sinistra, cuori e riquadri degli oggetti a destra, ai bordi dello schermo. I riquadri di X, L e R stanno accanto a Y.\n\nNon insieme a \"HUD moderno\": accesa una, l'altra si spegne.",
@@ -460,8 +476,8 @@ namespace Zelda_3_Launcher
             ["The inventory has 6 columns like on GBA: four separate bottles, shovel and flute in separate slots."] =
                 "L'inventario è su 6 colonne come su GBA: quattro bottiglie separate, pala e ocarina in posti separati.",
             ["Improved map"] = "Mappa migliorata",
-            ["Place up to 24 stamps on the map so you don't forget anything. Press B to scroll faster and Y to go back to Link."] =
-                "Inserisci fino a 24 timbri sulla mappa per non dimenticare niente. Premi B per scorrere più veloce e Y per tornare su Link.",
+            ["Place up to 24 stamps on the map with A so you don't forget anything. Hold B to scroll faster, press Y to go back to Link."] =
+                "Inserisci fino a 24 timbri sulla mappa con A per non dimenticare niente. Tieni premuto B per scorrere più veloce, premi Y per tornare su Link.",
             ["Improved dungeon map"] = "Mappa dei labirinti migliorata",
             ["Changing floor on the dungeon map is faster, and the dungeon's name is shown at the top."] = "Sulla mappa del labirinto il cambio di piano è più rapido e in alto compare il nome del labirinto.",
             ["Progressive map"] = "Mappa progressiva",
@@ -488,8 +504,8 @@ namespace Zelda_3_Launcher
             ["Getting a magic item refills the magic meter, the Master Sword also the hearts; the Bow comes with 10 arrows."] =
                 "Ottenere un oggetto magico riempie la barra della magia, la Spada Suprema anche i cuori; l'Arco arriva con 10 frecce.",
             ["Burn and freeze interaction"] = "Interazione bruciatura e congelamento",
-            ["The world physically reacts to fire and ice: the lamp, the rods and the medallions burn or freeze bushes and grass."] =
-                "Il mondo reagisce fisicamente a fuoco e ghiaccio: Lanterna, bacchette e medaglioni bruciano o congelano cespugli ed erba.",
+            ["The world physically reacts to fire and ice: the lamp, the rods, the bombs and the medallions burn or freeze bushes, grass and water; a bomb sets off the bombs near it. In the rain fire doesn't catch and bombs fizzle out."] =
+                "Lanterna, bacchette, bombe e medaglioni bruciano o congelano cespugli, erba e acqua; una bomba fa esplodere le vicine. Con la pioggia niente fuoco e le bombe si spengono.",
             ["Fewer flashes during gameplay, like on Virtual Console."] =
                 "Meno lampeggiamenti durante il gioco come su Virtual Console.",
             ["Fewer flashes during gameplay, like on GBA."] =
@@ -503,8 +519,8 @@ namespace Zelda_3_Launcher
             ["As on GBA, once you have the Bug-Catching Net: hold the sword charge longer and the spin attack becomes a Hurricane Spin. Press B while spinning to spin again and move with the D-pad; each spin costs magic."] =
                 "Come su GBA, una volta ottenuto il Retino per Farfalle: tenendo la carica della spada più a lungo, l'attacco vortice diventa la Giravolta Tornado. Premi B mentre giri per fare un altro giro e muoverti con la croce; ogni giro costa magia.",
             ["Items as in FSA"] = "Oggetti come FSA",
-            ["Hold the button, as in Four Swords Adventures: the boomerang waits in mid-air, the bow charges a faster arrow, the Fire and Ice Rods keep a stream going (uses magic). The hammer sends out a shock wave."] =
-                "Tieni premuto il tasto, come in Four Swords Adventures: il boomerang resta a mezz'aria, l'arco carica una freccia più veloce, le Bacchette del Fuoco e del Ghiaccio fanno un getto continuo (usa magia). Il martello manda un'onda d'urto.",
+            ["Hold the button, as in Four Swords Adventures: the boomerang waits in mid-air, the bow charges a faster arrow, the rods keep a stream going (magic), the charged hammer hits twice as hard with a shock wave. Bomb fuses spark and smoke."] =
+                "Tieni premuto il tasto, come in Four Swords Adventures: il boomerang resta a mezz'aria, l'arco carica una freccia più veloce, le bacchette fanno un getto continuo (magia), il martello carico colpisce il doppio con un'onda d'urto e le micce fumano.",
             ["Dive with the flippers"] = "Immersione con le pinne",
             ["While swimming, B makes Link dive underwater for a moment, as on GBA."] =
                 "Mentre nuota, con B Link si immerge per un momento, come su GBA.",
@@ -520,12 +536,12 @@ namespace Zelda_3_Launcher
             ["Saves and start"] = "Salvataggi e avvio",
             ["Items and controls"] = "Oggetti e comandi",
             ["Bug fixes"] = "Correzioni",
-            ["In the item menu, hold X and pick an item: X will use it.\n\nSelect then opens the map; to save and quit, press Select in the item menu. One item per button among Y, X, L and R."] =
-                "Nel menu degli oggetti tieni premuto X e scegli un oggetto: X lo userà.\n\nLa mappa si apre poi con Select; per salvare e uscire premi Select nel menu degli oggetti. Un oggetto per tasto fra Y, X, L e R.",
+            ["In the item menu, hold X and pick an item (modern menu: cursor on it, then X): X will use it.\n\nWith an item on X, Select opens the map; to save and quit, press Select in the item menu. One item per button among Y, X, L and R."] =
+                "Nel menu oggetti tieni premuto X e scegli un oggetto (menu moderno: cursore sull'oggetto e X).\n\nCon un oggetto su X la mappa si apre con Select; per salvare e uscire, Select nel menu oggetti. Un oggetto per tasto.",
             ["L and R change the item of the Y button without opening the menu.\n\nNot together with \"L and R buttons for items\": turning one on turns the other off."] =
                 "L e R cambiano l'oggetto del tasto Y senza aprire il menu.\n\nNon si può usare insieme a \"Tasti L e R per gli oggetti\": accendendone una, l'altra si spegne.",
-            ["In the item menu, hold L or R and pick an item: that button will use it. One item per button among Y, X, L and R.\n\nNot together with \"Switch items with L and R\": turning one on turns the other off."] =
-                "Nel menu degli oggetti tieni premuto L o R e scegli un oggetto: quel tasto lo userà. Un oggetto per tasto fra Y, X, L e R.\n\nNon insieme a \"Cambio oggetti con L e R\": accesa una, l'altra si spegne.",
+            ["In the item menu, hold L or R and pick an item (modern menu: cursor on it, then L or R): that button will use it. One item per button.\n\nNot together with \"Switch items with L and R\": turning one on turns the other off."] =
+                "Nel menu oggetti tieni premuto L o R e scegli un oggetto (menu moderno: cursore sull'oggetto e L o R): quel tasto lo userà. Un oggetto per tasto.\n\nNon insieme a \"Cambio oggetti con L e R\": accesa una, l'altra si spegne.",
             ["Unable to save zelda3.ini:\n\n"] = "Impossibile salvare zelda3.ini:\n\n",
             ["Error"] = "Errore",
 

@@ -44,11 +44,14 @@ namespace Zelda_3_Launcher
                 "Outdoors you see the neighbouring areas beyond the edge, the camera follows Link across it and the world remembers what you changed while you stay outdoors.",
                 "Continuous world outdoors: neighbouring areas visible, the view follows Link across the edge"),
             ModernHud = new("Features", "ModernHud", "Modern HUD",
-                "Hearts and magic top left, Y/A/B buttons top right with the item, the sword and what the A button does (Talk, Read, Open...), rupees and keys bottom left.",
-                "Modern HUD: hearts and magic top left, Y/A/B buttons top right, rupees and keys bottom left"),
+                "Hearts and magic top left, Y/A/B buttons top right with the item, the sword and what the A button does (Talk, Read, Open...), plus X, L and R when they are used for items; rupees and keys bottom left.",
+                "Modern HUD: hearts and magic top left, Y/A/B buttons top right (and X, L, R when used for items), rupees and keys bottom left"),
             GbaHud = new("Features", "GbaHud", "GBA HUD",
                 "Items on the right like on GBA: magic and counters on the left, hearts and item boxes on the right, at the screen edges. The X, L and R boxes sit next to Y.\n\nNot together with \"Modern HUD\": turning one on turns the other off.",
                 "GBA HUD: magic and counters on the left, hearts and the item boxes (Y, X, L, R) on the right like on GBA"),
+            ModernItems = new("Features", "ModernItemMenu", "Modern item menu",
+                "The START menu in HD on two pages, Items and Quest, with the item names. L/R change page unless \"L and R buttons for items\" is on: then go past the edge onto the side arrow. It brings the extended inventory.",
+                "Modern item menu: the START menu in HD on two pages, Items and Quest; Left/Right past the edge, or L/R when ItemOnLR is off, change page"),
             DungeonNames = new("Features", "DungeonNames", "Dungeon names",
                 "When Link enters a dungeon from outside, its name appears in the middle of the screen like on GBA and disappears as soon as he moves.",
                 "Dungeon name in the middle of the screen when entering from outside, like on GBA"),
@@ -56,7 +59,7 @@ namespace Zelda_3_Launcher
                 "The inventory has 6 columns like on GBA: four separate bottles, shovel and flute in separate slots.",
                 "Extended inventory with 6 columns like on GBA: four separate bottles, shovel and flute separate"),
             ImprovedWorldMap = new("Features", "ImprovedWorldMap", "Improved map",
-                "Place up to 24 stamps on the map so you don't forget anything. Press B to scroll faster and Y to go back to Link.",
+                "Place up to 24 stamps on the map with A so you don't forget anything. Hold B to scroll faster, press Y to go back to Link.",
                 "Improved world map: up to 24 markers with A, Y centers on Link, hold B to scroll faster"),
             ImprovedDungeonMap = new("Features", "ImprovedDungeonMap", "Improved dungeon map",
                 "Changing floor on the dungeon map is faster, and the dungeon's name is shown at the top.",
@@ -70,13 +73,13 @@ namespace Zelda_3_Launcher
                 "Dungeon pits show the room below, darker and with depth"),
 
             ItemOnX = new("Features", "ItemOnX", "X button for items",
-                "In the item menu, hold X and pick an item: X will use it.\n\nSelect then opens the map; to save and quit, press Select in the item menu. One item per button among Y, X, L and R.",
-                "X button for items: hold X in the item menu to give it an item", false, From: "ItemSwitchLR"),
+                "In the item menu, hold X and pick an item (modern menu: cursor on it, then X): X will use it.\n\nWith an item on X, Select opens the map; to save and quit, press Select in the item menu. One item per button among Y, X, L and R.",
+                "X button for items: hold X in the item menu to give it an item; with an item on X, Select opens the map", false, From: "ItemSwitchLR"),
             ItemSwitch = new("Features", "ItemSwitchLR", "Switch items with L and R",
                 "L and R change the item of the Y button without opening the menu.\n\nNot together with \"L and R buttons for items\": turning one on turns the other off.",
                 "L and R switch the item of the Y button without opening the menu", false),
             ItemOnLR = new("Features", "ItemOnLR", "L and R buttons for items",
-                "In the item menu, hold L or R and pick an item: that button will use it. One item per button among Y, X, L and R.\n\nNot together with \"Switch items with L and R\": turning one on turns the other off.",
+                "In the item menu, hold L or R and pick an item (modern menu: cursor on it, then L or R): that button will use it. One item per button.\n\nNot together with \"Switch items with L and R\": turning one on turns the other off.",
                 "L and R buttons for items: hold L or R in the item menu to give it an item", false, From: "ItemSwitchLR"),
             ItemSwitchLimit = new("Features", "ItemSwitchLRLimit", "Limit L/R Switch to First 4 Items",
                 "Limit the items you will cycle through to just the first four items.",
@@ -98,8 +101,8 @@ namespace Zelda_3_Launcher
                 "As on GBA, once you have the Bug-Catching Net: hold the sword charge longer and the spin attack becomes a Hurricane Spin. Press B while spinning to spin again and move with the D-pad; each spin costs magic.",
                 "Hurricane Spin as on GBA, once you have the Bug-Catching Net: hold the charge longer, press B while spinning to spin again (costs magic)", From: "SwordAndItemsInteraction"),
             FsaItems = new("Features", "FsaItems", "Items as in FSA",
-                "Hold the button, as in Four Swords Adventures: the boomerang waits in mid-air, the bow charges a faster arrow, the Fire and Ice Rods keep a stream going (uses magic). The hammer sends out a shock wave.",
-                "Items as in Four Swords Adventures: holding the button the boomerang waits in mid-air, the bow charges a faster arrow, the Fire and Ice Rods keep a stream coming; the hammer blow sends out a shock wave"),
+                "Hold the button, as in Four Swords Adventures: the boomerang waits in mid-air, the bow charges a faster arrow, the rods keep a stream going (magic), the charged hammer hits twice as hard with a shock wave. Bomb fuses spark and smoke.",
+                "Items as in Four Swords Adventures: holding the button the boomerang waits in mid-air, the bow charges a faster arrow, the Fire and Ice Rods keep a stream coming, the charged hammer hits twice as hard; the hammer blow sends out a shock wave, bomb fuses spark and smoke"),
             ItemsRefill = new("Features", "ItemsRefillResources", "Items refill resources",
                 "Getting a magic item refills the magic meter, the Master Sword also the hearts; the Bow comes with 10 arrows.",
                 "Getting a magic item refills the magic meter, the Master Sword also the hearts; the Bow comes with 10 arrows (as on GBA)", false),
@@ -110,8 +113,8 @@ namespace Zelda_3_Launcher
                 "Changes the Palace 6 puzzle to match the GBA version.",
                 "Palace 6 as on GBA: the block puzzle of the Ice Palace (rooms 0x9E and 0xBE) matches the GBA version", false),
             BurnFreeze = new("Features", "BurnAndFreezeInteraction", "Burn and freeze interaction",
-                "The world physically reacts to fire and ice: the lamp, the rods and the medallions burn or freeze bushes and grass.",
-                "The world physically reacts to fire and ice: lamp, rods and medallions burn or freeze bushes and grass", false),
+                "The world physically reacts to fire and ice: the lamp, the rods, the bombs and the medallions burn or freeze bushes, grass and water; a bomb sets off the bombs near it. In the rain fire doesn't catch and bombs fizzle out.",
+                "The world physically reacts to fire and ice: lamp, rods, bombs and medallions burn or freeze bushes, grass and water; no fire in the rain", false),
             StuckArrows = new("Features", "StuckArrows", "Arrows stuck in walls",
                 "The arrows of Link and of the enemies stay stuck in walls instead of vanishing.",
                 "Arrows of Link and of the enemies stuck in walls stay there instead of vanishing", From: "BurnAndFreezeInteraction"),
@@ -286,7 +289,7 @@ namespace Zelda_3_Launcher
         private Panel keysPage = null!, cheatsPage = null!, savePage = null!;
         private FlatButton buttonRestoreSave = null!;
         private Label saveInfo = null!, backupInfo = null!;
-        private bool loading = true, dirty, saved, failed, refilling;
+        private bool loading = true, dirty, saved, failed, refilling, noTestRumble;
 
         // Controlli delle opzioni con una logica propria
         private ToggleSwitch fourSwords = null!, resume = null!, performance = null!, frameDelay = null!, ppu = null!,
@@ -299,6 +302,7 @@ namespace Zelda_3_Launcher
         private Stepper stepScale = null!, stepMsuVolume = null!;
         private TextBox textWidth = null!, textHeight = null!, textLink = null!, textShader = null!, textMsu = null!;
         private FieldRow rowCustomSize = null!, rowLink = null!, rowShader = null!, rowMsuFolder = null!;
+        private LinkPreview linkPreview = null!;
         private readonly List<Control> audioRows = new(), msuRows = new();
 
         public SettingsWindow()
@@ -711,6 +715,7 @@ namespace Zelda_3_Launcher
 
             var hud = AddCard(p, 1, "Interface");
             var modernHud = Toggle(hud, ModernHud);
+            Toggle(hud, ModernItems);
             var gbaHud = Toggle(hud, GbaHud);
             // HUD moderno oppure HUD GBA: accesa una, l'altra si spegne
             modernHud.CheckedChanged += (s, e) => { if (modernHud.Checked) gbaHud.Checked = false; };
@@ -736,6 +741,7 @@ namespace Zelda_3_Launcher
             var onLR = Toggle(selection, ItemOnLR);
             var limit = Toggle(selection, ItemSwitchLimit);
             Toggle(selection, ExtendedInventory);
+            options[ModernItems].CheckedChanged += (s, e) => ApplyModernItemsRule();
             onX.CheckedChanged += (s, e) => ApplyItemSwitchRule();
             // cambio oggetti con L e R oppure tasti L e R per gli oggetti: accesa
             // una, l'altra si spegne
@@ -823,16 +829,18 @@ namespace Zelda_3_Launcher
             KeyField(game, "Reset Game", keys.Reset, "Reset the game.");
             KeyField(game, "Pause", keys.Pause, "Pause the game without opening the menu.");
             keys.Dim = Toggle(game, "Dim When Paused", "If enabled, the game will dim when paused via the special pause key.");
+            KeyField(game, "Rewind", keys.Rewind, "While the key is held the game goes back in time, as in the emulators, up to one minute; let go and it plays on from there.");
             comboRumble = Combo(game, "Controller rumble", new[] { "Off", "Light", "Medium", "Strong" },
-                "Vibrates the controller for explosions, damage, crashes with the Pegasus Boots, the screen shaking and other strong moments.");
+                "Vibrates the controller as in Four Swords Adventures: bombs, damage, Pegasus Boots crashes, landings, hammer, medallions, boss defeats. Choosing a strength gives a test rumble.");
+            // una vibrazione di prova con la forza scelta, come nel menu del gioco
+            comboRumble.SelectedIndexChanged += (s, e) =>
+            {
+                if (!loading && !noTestRumble) MyController.TestRumble(comboRumble.SelectedIndex);
+            };
             KeyField(game, "Increase Window Size", keys.WindowBigger, "Increase window scale by a factor of 1.");
             KeyField(game, "Decrease Window Size", keys.WindowSmaller, "Decrease window scale by a factor of 1.");
             KeyField(game, "Volume Up", keys.VolumeUp, "Increases the volume output of the game.");
             KeyField(game, "Volume Down", keys.VolumeDown, "Decreases the volume output of the game.");
-
-            var perf = AddCard(p, 0, "Performance");
-            KeyField(perf, "Toggle Renderer", keys.Renderer, "Switches between the renderers while playing.");
-            KeyField(perf, "Toggle FPS", keys.Fps, "Shows or hides the frames per second while playing.");
 
             // i tasti dei trucchi sono nella scheda Trucchi
             var replays = AddCard(p, 1, "Replays");
@@ -848,6 +856,11 @@ namespace Zelda_3_Launcher
             };
             Hover(note, "Replay Controls", "The game has an integrated replay and savestate system; its controls are listed here.");
             replays.Controls.Add(note);
+
+            // under the replays: the two columns end at about the same height
+            var perf = AddCard(p, 1, "Performance");
+            KeyField(perf, "Toggle Renderer", keys.Renderer, "Switches between the renderers while playing.");
+            KeyField(perf, "Toggle FPS", keys.Fps, "Shows or hides the frames per second while playing.");
         }
 
         // Riga con la casella di un tasto del gioco
@@ -1060,6 +1073,12 @@ namespace Zelda_3_Launcher
             var files = AddCard(p, 1, "Custom files");
             customLink = Toggle(files, "Custom Link Sprites", "Enables custom ZSPR Link sprites. Not available with Blond Link (Graphics).");
             rowLink = PathField(files, "", out textLink, "The path where your .zspr file is located.", BrowseSprite);
+            linkPreview = new LinkPreview();
+            Hover(linkPreview, "", "Preview of the chosen sprite: Link standing in the four directions, then from the front with the Blue and Red Mail and as a bunny.");
+            files.Controls.Add(linkPreview);
+            textLink.TextChanged += (s, e) => linkPreview.Load(textLink.Text);
+            // il riquadro si allunga solo quando c'e' uno sprite da mostrare
+            linkPreview.SizeChanged += (s, e) => { files.PerformLayout(); if (current != null) LayoutPage(current); };
             Link(files, "", "Click here for some custom sprites you can download.",
                 ("Custom Sprite Downloads", "https://snesrev.github.io/sprites-gfx/snes/zelda3/link/"));
             customShader = Toggle(files, "Use GLSL Shader", "This will enable the use of GLSL shaders.\r\n\r\nThis is only supported by the OpenGL renderer.");
@@ -1151,6 +1170,12 @@ namespace Zelda_3_Launcher
 
         // L/R solo sui primi 4 oggetti senza il cambio oggetti con L e R si
         // spegne e non si puo' accendere
+        // il menu oggetti moderno ha sempre l'inventario esteso: la casella si blocca
+        private void ApplyModernItemsRule()
+        {
+            options[ExtendedInventory].Enabled = !options[ModernItems].Checked;
+        }
+
         private void ApplyItemSwitchRule()
         {
             bool quick = options[ItemSwitch].Checked;
@@ -1167,6 +1192,7 @@ namespace Zelda_3_Launcher
             if (blond) customLink.Checked = false;
             customLink.Enabled = !blond;
             rowLink.Enabled = customLink.Checked;
+            linkPreview.Enabled = customLink.Checked;
         }
 
         private void SetAllHd(bool on)
@@ -1178,9 +1204,12 @@ namespace Zelda_3_Launcher
             // HUD moderno e HUD GBA sono alternativi: "Attiva tutto" sceglie il moderno
             if (on) options[ModernHud].Checked = true;
             ApplyItemSwitchRule();
+            ApplyModernItemsRule();
             ApplyAspectRule();
             ApplyFlashRainRule();
             fourSwords.Checked = on;
+            // "Attiva tutto" non fa la vibrazione di prova
+            noTestRumble = true;
             if (on)
             {
                 if (comboTextSpeed.SelectedIndex == 0) comboTextSpeed.SelectedIndex = 1;
@@ -1191,6 +1220,7 @@ namespace Zelda_3_Launcher
                 comboTextSpeed.SelectedIndex = 0;
                 comboRumble.SelectedIndex = 0;
             }
+            noTestRumble = false;
         }
 
         // Elenchi tradotti nella lingua del launcher, senza perdere la scelta
@@ -1289,6 +1319,7 @@ namespace Zelda_3_Launcher
                     t.Checked = o.Hd ? GetInt(ini, o.Section, o.Key, 0) != 0 : GetBool(ini, o.Section, o.Key);
             }
             ApplyItemSwitchRule();
+            ApplyModernItemsRule();
             comboTextSpeed.SelectedIndex = Math.Clamp(GetInt(ini, "Features", "TextSpeed", 0), 0, 2);
             comboRumble.SelectedIndex = Math.Clamp(GetInt(ini, "Features", "Rumble", 0), 0, 3);
 

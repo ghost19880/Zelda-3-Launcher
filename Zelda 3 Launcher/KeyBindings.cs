@@ -24,7 +24,7 @@ namespace Zelda_3_Launcher
         public readonly ControllerView View;
         public readonly KeyChip Reset = new(), Pause = new(), WindowBigger = new(), WindowSmaller = new(),
             VolumeUp = new(), VolumeDown = new(), Life = new(), Keys = new(), NoClip = new(), KillLink = new(), Turbo = new(),
-            Renderer = new(), Fps = new(), ReplayTurbo = new(), StopReplay = new();
+            Renderer = new(), Fps = new(), ReplayTurbo = new(), StopReplay = new(), Rewind = new();
         public ToggleSwitch Dim = null!;
 
         // Titolo e testo da mostrare in fondo alla finestra mentre si aspetta il tasto
@@ -46,7 +46,7 @@ namespace Zelda_3_Launcher
         }
 
         private IEnumerable<KeyChip> Commands => new[] { Reset, Pause, WindowBigger, WindowSmaller, VolumeUp, VolumeDown,
-            Life, Keys, NoClip, KillLink, Turbo, ReplayTurbo, StopReplay, Renderer, Fps };
+            Life, Keys, NoClip, KillLink, Turbo, ReplayTurbo, StopReplay, Renderer, Fps, Rewind };
 
         //
         // Lettura e scrittura
@@ -100,12 +100,19 @@ namespace Zelda_3_Launcher
             VolumeDown.Key = k["VolumeDown"];
             Renderer.Key = k["ToggleRenderer"] ?? "r";
             Fps.Key = k["DisplayPerf"] ?? "f";
+            // tasto nuovo: negli ini di prima manca, M se nessun altro comando lo usa
+            // (come fa il gioco), altrimenti nessun tasto
+            Rewind.Key = k["Rewind"] ?? (KeyInUse(k, "m") ? "" : "m");
 
             // Pause e PauseDimmed: quella con Shift davanti e' l'altra
             bool dim = k["Pause"]?.Contains("Shift") == true;
             Dim.Checked = dim;
             Pause.Key = dim ? k["PauseDimmed"] : k["Pause"];
         }
+
+        // Il tasto e' gia' di un comando della sezione KeyMap (anche fra i tasti di gioco)
+        private static bool KeyInUse(KeyDataCollection k, string key) =>
+            k.Any(d => d.KeyName != "Rewind" && (d.Value ?? "").Split(',').Any(v => v.Trim().Equals(key, StringComparison.OrdinalIgnoreCase)));
 
         private string PadKey => inputType == 1 ? "GamepadMap" : "KeyMap";
 
@@ -153,6 +160,7 @@ namespace Zelda_3_Launcher
             k["VolumeDown"] = VolumeDown.Key;
             k["ToggleRenderer"] = Renderer.Key;
             k["DisplayPerf"] = Fps.Key;
+            k["Rewind"] = Rewind.Key;
             k["Pause"] = Dim.Checked ? "Shift+" + Pause.Key : Pause.Key;
             k["PauseDimmed"] = Dim.Checked ? Pause.Key : "Shift+" + Pause.Key;
             IniFile.Save(iniFile, settings);

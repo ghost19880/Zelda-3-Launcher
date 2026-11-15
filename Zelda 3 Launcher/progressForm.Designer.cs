@@ -145,6 +145,8 @@ namespace Zelda_3_Launcher
                             {
                                 // le voci nuove arrivano spente, come nell'ini creato dal launcher
                                 try { IniMerge.AddMissingKeys(iniFile, IniFile.LauncherDefaults(defaultsText)); } catch { }
+                                // e si tolgono le opzioni che il gioco non ha piu'
+                                try { IniMerge.RemoveObsoleteKeys(iniFile, defaultsText); } catch { }
                             }
                         }
                     }
@@ -261,6 +263,7 @@ namespace Zelda_3_Launcher
                 if (defaultsText.Length > 0)
                 {
                     try { IniMerge.AddMissingKeys(iniFile, IniFile.LauncherDefaults(defaultsText)); } catch { }
+                    try { IniMerge.RemoveObsoleteKeys(iniFile, defaultsText); } catch { }
                 }
             }
             else if (File.Exists(iniFile))

@@ -67,9 +67,26 @@ namespace Zelda_3_Launcher
         // Legge il file e ricorda i valori letti, per scrivere poi solo quelli cambiati
         public static IniData Load(string path)
         {
+            RemoveObsoleteOnce(path);
             var data = Parse(File.ReadAllText(path, kBytes));
             baselines.AddOrUpdate(data, (IniData)data.Clone());
             return data;
+        }
+
+        // Un ini vecchio puo' avere opzioni che il gioco non ha piu': la prima
+        // volta che il launcher lo legge le toglie (confronto con l'ini
+        // predefinito del repository installato, senza scaricare nulla)
+        private static readonly HashSet<string> cleaned = new(StringComparer.OrdinalIgnoreCase);
+        private static void RemoveObsoleteOnce(string path)
+        {
+            if (!cleaned.Add(Path.GetFullPath(path))) return;
+            try
+            {
+                var defaults = DefaultsText(allowDownload: false);
+                if (defaults != null && File.Exists(path))
+                    IniMerge.RemoveObsoleteKeys(path, defaults);
+            }
+            catch { }
         }
 
         public static void Save(string path, IniData data)
@@ -326,7 +343,7 @@ namespace Zelda_3_Launcher
 
         // L'ini predefinito della versione installata: dal repository del gioco,
         // altrimenti da GitHub. null se non si trova.
-        public static string? DefaultsText()
+        public static string? DefaultsText(bool allowDownload = true)
         {
             try
             {
@@ -340,6 +357,7 @@ namespace Zelda_3_Launcher
                 }
             }
             catch { }
+            if (!allowDownload) return null;
             try
             {
                 using var client = new HttpClient();
