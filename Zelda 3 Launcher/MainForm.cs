@@ -6,7 +6,9 @@ namespace Zelda_3_Launcher
     public partial class MainForm : Form
     {
         // Stato del repository del gioco, letto in sottofondo
-        private record RepoState(bool Exists, bool Online, int Behind, int Modified, string Sha);
+        // FastExe: il gioco installato e' compilato con TCC e nella release c'e'
+        // l'exe veloce (MSVC) dello stesso commit, da scaricare senza ricompilare
+        private record RepoState(bool Exists, bool Online, int Behind, int Modified, string Sha, bool FastExe = false);
 
         private RepoState repoState = new(false, true, 0, 0, "");
         private bool checking, building, running;
@@ -96,6 +98,11 @@ namespace Zelda_3_Launcher
                 build.Text = Lang.T("Repair");
                 build.Enabled = !busy;
             }
+            else if (repoState.FastExe)
+            {
+                build.Text = Lang.T("Update") + " · " + Lang.T("faster game");
+                build.Enabled = !busy;
+            }
             else
             {
                 build.Text = Lang.T("Update") + " · " + Lang.T(repoState.Online ? "no news" : "offline");
@@ -143,7 +150,13 @@ namespace Zelda_3_Launcher
                 }
                 int behind = repo.Head.TrackingDetails.BehindBy ?? 0;
                 var sha = repo.Head.Tip?.Sha ?? "";
-                return new(true, online, behind, SourceChanges(repo), sha.Length > 7 ? sha[..7] : sha);
+                int modified = SourceChanges(repo);
+                // exe lento (TCC) e nella release quello veloce dello stesso commit:
+                // succede a chi ha aggiornato prima che l'exe fosse caricato. Con
+                // sorgenti modificati a mano l'exe della release non e' il loro
+                bool fast = online && behind == 0 && modified == 0 && sha.Length > 0 && GameBuilt &&
+                    GameExe.IsSlowBuild(Path.Combine(Program.repoDir, "zelda3.exe")) && GameExe.Available(sha);
+                return new(true, online, behind, modified, sha.Length > 7 ? sha[..7] : sha, fast);
             }
             catch
             {
@@ -204,7 +217,30 @@ namespace Zelda_3_Launcher
 
         private void build_Click(object sender, EventArgs e)
         {
+            if (repoState.Exists && repoState.Behind == 0 && repoState.FastExe && GameBuilt)
+            {
+                DownloadFastExe();
+                return;
+            }
             RunBuild(Lang.T(!repoState.Exists ? "Download" : GameBuilt ? "Update" : "Repair"));
+        }
+
+        // Solo lo scambio dell'exe lento con quello veloce: sorgenti, dati del
+        // gioco e impostazioni restano come sono
+        private void DownloadFastExe()
+        {
+            building = true;
+            UpdateTexts();
+            try
+            {
+                if (!GameExe.TryDownload())
+                    Lang.Show("Unable to download the faster zelda3.exe.\n\nPlease refer to " + Path.Combine(Program.currentDirectory, "zelda3.log") + " for further details.");
+            }
+            finally
+            {
+                building = false;
+                RefreshStatus(fetch: false);
+            }
         }
 
         private void RunBuild(string action)
