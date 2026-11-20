@@ -1,3 +1,4 @@
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/J7W72B0EZ0)
 # Zelda 3 Launcher – HD fork
 
 A fork of [RadzPrower/Zelda-3-Launcher](https://github.com/RadzPrower/Zelda-3-Launcher) that installs **[Zelda3 HD](https://github.com/ghost19880/zelda3)** instead of the original reimplementation: same one-click download, ROM extraction and build, plus every HD improvement already set up.
